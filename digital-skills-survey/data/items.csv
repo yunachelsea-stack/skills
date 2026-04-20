@@ -1,0 +1,13 @@
+id,module,competency_domain,recommended_core,type,question
+IDL1_verify_info_true,Information & Data Literacy,Evaluating data information and digital content,TRUE,select_one,"Have you ever checked if the information you found online was true?"
+IDL2_search_info_internet,Information & Data Literacy,Browsing searching and filtering,TRUE,select_one,"Have you ever searched for information on the internet (e.g. Google, YouTube)?"
+IDL3_check_news,Information & Data Literacy,Browsing searching and filtering,FALSE,select_one,"Have you ever used a mobile phone or the internet to check the news?"
+IDL4_health_info,Information & Data Literacy,Browsing searching and filtering,FALSE,select_one,"Have you ever used a mobile phone to get health information, for example, on Google, YouTube? For example, what to do when someone is sick, or what foods are healthy to eat?"
+ICC1_share_via_email,Communication & Collaboration,Sharing through digital technologies,FALSE,select_one,"Have you ever shared a document, picture, or video through an email?"
+ICC1_share_via_message,Communication & Collaboration,Sharing through digital technologies,TRUE,select_one,"Have you ever shared a document, picture, or video through a text message or WhatsApp?"
+ICC2_calls_on_apps,Communication & Collaboration,Interacting through digital technologies,TRUE,select_one,"Have you ever made a call on WhatsApp, Facebook Messenger, or any other such apps?"
+ICC3_social_media_use,Communication & Collaboration,Interacting through digital technologies,FALSE,select_one,"Have you ever used social media, such as Facebook or Instagram, on a mobile phone, tablet or computer?"
+DCC1_move_files_folders,Digital Content Creation,Developing digital content,TRUE,select_one,"Have you ever moved files or folders on a mobile phone, tablet or computer?"
+DCC1_copy_paste,Digital Content Creation,Developing digital content,TRUE,select_one,"Have you ever used copy and paste on a mobile phone, tablet or computer?"
+DCC2_edit_photo_video,Digital Content Creation,Developing digital content,FALSE,select_one,"Have you ever edited a photo or video on a mobile phone, tablet or computer? For example, making it smaller/shorter, writing on it, or adding a filter?"
+DCC2_edit_ppt,Digital Content Creation,Developing digital content,FALSE,select_one,"Have you ever created or edited a PowerPoint presentation on a mobile phone, tablet or computer?"
