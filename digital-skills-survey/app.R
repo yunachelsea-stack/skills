@@ -6,13 +6,15 @@ library(readr)
 source("R/export.R")
 
 items_all <- read_csv("data/items.csv", show_col_types = FALSE) |>
-  mutate(recommended_core = as.logical(recommended_core))
+  mutate(
+    recommended_core   = as.logical(recommended_core),
+    cognitively_tested = as.logical(cognitively_tested)
+  )
 
-# ── UI ────────────────────────────────────────────────────────────────────────
+# ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
   title = "Digital Skills Survey Builder",
 
-  # Survey Builder
   tabPanel("Survey Builder",
     tags$head(tags$script(HTML("
       $(document).on('change', '.q-toggle', function() {
@@ -45,7 +47,6 @@ ui <- navbarPage(
     )
   ),
 
-  # Stub pages
   tabPanel("Landing",
     fluidPage(h2("Landing"), p("Coming soon."))
   ),
@@ -60,7 +61,6 @@ ui <- navbarPage(
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
 
-  # Dynamic competency-domain filter (depends on selected modules)
   output$domain_filter_ui <- renderUI({
     domains <- items_all |>
       filter(module %in% input$sel_module) |>
@@ -88,17 +88,15 @@ server <- function(input, output, session) {
     }
   })
 
-  # Items matching current filters
   filtered_df <- reactive({
     req(input$sel_domain)
     items_all |>
       filter(
-        module             %in% input$sel_module,
-        competency_domain  %in% input$sel_domain
+        module            %in% input$sel_module,
+        competency_domain %in% input$sel_domain
       )
   })
 
-  # Table data: add inclusion status + checkbox HTML
   tbl_data <- reactive({
     df <- filtered_df()
     df |> mutate(
@@ -125,6 +123,7 @@ server <- function(input, output, session) {
       ID                  = id,
       Module              = module,
       `Competency Domain` = competency_domain,
+      `Skill Area`        = skill_area,
       Core                = recommended_core,
       Question            = question
     )
@@ -138,7 +137,7 @@ server <- function(input, output, session) {
         dom        = "tip",
         columnDefs = list(
           list(orderable = FALSE, targets = 0),
-          list(visible   = FALSE, targets = 4)  # Core hidden; used only for row colour
+          list(visible   = FALSE, targets = 5)  # Core hidden; used for row colour
         )
       )
     ) |>
