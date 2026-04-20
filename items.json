@@ -1,0 +1,124 @@
+[
+  {
+    "id": "IDL1_verify_info_true",
+    "module": "Information & Data Literacy",
+    "type": "select_one",
+    "question": "Have you ever checked if the information you found online was true?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "IDL2_search_info_internet",
+    "module": "Information & Data Literacy",
+    "type": "select_one",
+    "question": "Have you ever searched for information on the internet (e.g. Google, YouTube)?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "IDL3_check_news",
+    "module": "Information & Data Literacy",
+    "type": "select_one",
+    "question": "Have you ever used a mobile phone or the internet to check the news?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "IDL4_health_info",
+    "module": "Information & Data Literacy",
+    "type": "select_one",
+    "question": "Have you ever used a mobile phone to get health information, for example, on Google, YouTube? For example, what to do when someone is sick, or what foods are healthy to eat?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+
+  {
+    "id": "ICC1_share_via_email",
+    "module": "Communication & Collaboration",
+    "type": "select_one",
+    "question": "Have you ever shared a document, picture, or video through an email?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "ICC1_share_via_message",
+    "module": "Communication & Collaboration",
+    "type": "select_one",
+    "question": "Have you ever shared a document, picture, or video through a text message or WhatsApp {include other locally relevant chat apps}?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "ICC2_calls_on_apps",
+    "module": "Communication & Collaboration",
+    "type": "select_one",
+    "question": "Have you ever made a call on WhatsApp, Facebook Messenger, or any other such apps {insert locally relevant terms}?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "ICC3_social_media_use",
+    "module": "Communication & Collaboration",
+    "type": "select_one",
+    "question": "Have you ever used social media, such as Facebook, Instagram, or Moj {insert locally relevant terms} on a mobile phone, tablet or computer?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+
+  {
+    "id": "DCC1_move_files_folders",
+    "module": "Digital Content Creation",
+    "type": "select_one",
+    "question": "Have you ever moved files or folders on a mobile phone, tablet or computer?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "DCC1_copy_paste",
+    "module": "Digital Content Creation",
+    "type": "select_one",
+    "question": "Have you ever used copy and paste on a mobile phone, tablet or computer?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "DCC2_edit_photo_video",
+    "module": "Digital Content Creation",
+    "type": "select_one",
+    "question": "Have you ever edited a photo or video on a mobile phone, tablet or computer? For example, making it smaller/shorter, writing on it, or adding a filter?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  },
+  {
+    "id": "DCC2_edit_ppt",
+    "module": "Digital Content Creation",
+    "type": "select_one",
+    "question": "Have you ever created or edited a PowerPoint presentation on a mobile phone, tablet or computer?",
+    "choices": [
+      { "name": "1", "label": "Yes" },
+      { "name": "2", "label": "No" }
+    ]
+  }
+]
