@@ -4,9 +4,8 @@ library(officer)
 # ── XLSForm Excel export ────────────────────────────────────────────────────
 detect_type <- function(question, response_options) {
   if (is.na(response_options) || trimws(response_options) == "") return("text")
-  if (grepl("select all|tick all|all that apply", question, ignore.case = TRUE)) {
+  if (grepl("select all|tick all|all that apply", question, ignore.case = TRUE))
     return("select_multiple")
-  }
   "select_one"
 }
 
@@ -59,17 +58,9 @@ export_xlsform <- function(items_df, filepath) {
 # ── Word survey export ────────────────────────────────────────────────────
 export_word <- function(items_df, filepath) {
   doc <- read_docx()
-
-  # Text style definitions
-  q_text_prop  <- fp_text(font.size = 11)
-  opt_prop     <- fp_text(font.size = 10, color = "#888888", italic = TRUE)
-  skip_prop    <- fp_text(font.size = 9,  color = "#b36200", italic = TRUE)
-  opt_par      <- fp_par(padding.left = 300)
-
-  doc <- body_add_par(doc, "Digital Skills Survey", style = "Title")
+  doc <- body_add_par(doc, "Digital Skills Survey", style = "heading 1")
 
   modules <- unique(items_df$module)
-
   for (mod in modules) {
     mod_df <- items_df[items_df$module == mod, ]
     doc <- body_add_par(doc, mod, style = "heading 1")
@@ -88,26 +79,27 @@ export_word <- function(items_df, filepath) {
           row <- sk_df[i, ]
           num <- sub("_.*$", "", row$id)
 
-          # Skip logic note (before the question)
+          # Skip logic note
           if (!is.na(row$relevance) && trimws(row$relevance) != "") {
-            doc <- body_add_fpar(doc,
-              fpar(ftext(paste0("[Ask if: ", row$relevance, "]"),
-                         prop = skip_prop),
-                   fp_p = opt_par)
-            )
+            doc <- body_add_par(doc,
+              paste0("[Ask if: ", row$relevance, "]"),
+              style = "Normal")
           }
 
-          # Question text
-          doc <- body_add_fpar(doc,
-            fpar(ftext(paste0(num, ". ", row$question), prop = q_text_prop))
-          )
+          # Question
+          doc <- body_add_par(doc,
+            paste0(num, ". ", row$question),
+            style = "Normal")
 
           # Response options
           if (!is.na(row$response_options) && trimws(row$response_options) != "") {
-            doc <- body_add_fpar(doc,
-              fpar(ftext(row$response_options, prop = opt_prop), fp_p = opt_par)
-            )
+            doc <- body_add_par(doc,
+              gsub(";\\s*", "  |  ", trimws(row$response_options)),
+              style = "Normal")
           }
+
+          # Blank line between questions
+          doc <- body_add_par(doc, "", style = "Normal")
         }
       }
     }
