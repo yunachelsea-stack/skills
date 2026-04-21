@@ -39,39 +39,26 @@ ui <- navbarPage(
       sidebarPanel(width = 3,
 
         # Foundational skills group
+        tags$p(tags$strong("Foundational Digital Skills"),
+               style = "margin-bottom:4px;"),
         tags$div(
-          tags$p(
-            tags$span("✓ ", style = "color:#e67e22;"),
-            tags$strong("Foundational Digital Skills"),
-            style = "margin-bottom:4px;"
-          ),
-          tags$div(
-            style = "border-left: 3px solid #e67e22; padding-left: 10px;",
-            checkboxGroupInput(
-              "sel_foundational", label = NULL,
-              choices  = foundational_mods,
-              selected = foundational_mods
-            )
+          style = "border-left: 3px solid #e67e22; padding-left: 10px;",
+          checkboxGroupInput(
+            "sel_foundational", label = NULL,
+            choices  = foundational_mods,
+            selected = foundational_mods
           )
         ),
 
         tags$hr(),
 
-        # Device skills group
-        tags$div(
-          tags$p(
-            tags$span("✓ ", style = "color:#2980b9;"),
-            tags$strong("Device Skills"),
-            style = "margin-bottom:4px;"
-          ),
-          tags$div(
-            style = "border-left: 3px solid #2980b9; padding-left: 10px;",
-            checkboxGroupInput(
-              "sel_device", label = NULL,
-              choices  = device_mods,
-              selected = device_mods
-            )
-          )
+        # Device modules — visually separate, no misleading group label
+        tags$p(tags$em("Not part of foundational skills:"),
+               style = "color:#888; font-size:0.85em; margin-bottom:4px;"),
+        checkboxGroupInput(
+          "sel_device", label = NULL,
+          choices  = device_mods,
+          selected = device_mods
         ),
 
         tags$hr(),
@@ -100,7 +87,6 @@ ui <- navbarPage(
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
 
-  # Per-question inclusion state; core items stay TRUE permanently
   inc <- reactiveValues()
   observe({
     for (id in items_all$id) {
@@ -116,7 +102,6 @@ server <- function(input, output, session) {
     }
   })
 
-  # Combined selected modules from both groups
   sel_modules <- reactive({
     c(input$sel_foundational, input$sel_device)
   })
