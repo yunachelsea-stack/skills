@@ -200,15 +200,17 @@ server <- function(input, output, session) {
   })
 
   output$dl_xlsform <- downloadHandler(
-    filename = "digital_skills_survey.xlsx",
-    content  = function(file) {
+    filename    = "digital_skills_survey.xlsx",
+    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    content     = function(file) {
       export_xlsform(all_tbl_data() |> filter(included), file)
     }
   )
 
   output$dl_word <- downloadHandler(
-    filename = "digital_skills_survey.docx",
-    content  = function(file) {
+    filename    = "digital_skills_survey.docx",
+    contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    content     = function(file) {
       export_word(all_tbl_data() |> filter(included), file)
     }
   )
