@@ -98,6 +98,16 @@ ui <- navbarPage(
           "Design and customize digital skills surveys in minutes using a validated,
            modular toolkit. Select the questions you need, ensure comparability,
            and export ready-to-field instruments for your data collection teams."
+        ),
+        tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px;",
+          tags$em("Source: A Practitioner's Toolkit for Inclusive Digital Skills Measurement
+                   in Low- and Middle-Income Countries"),
+          ", developed by a consortium of partners from the ",
+          tags$strong("World Bank"),
+          " and the ",
+          tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
+          " led by the ",
+          tags$strong("University of Cape Town's School of Public Health"), "."
         )
       )
     ),
