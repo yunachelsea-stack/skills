@@ -21,7 +21,6 @@ device_mods <- items_all |>
 
 all_mods <- c(foundational_mods, device_mods)
 
-# Safe output ID from module name
 tab_out_id <- function(m) paste0("dt_", gsub("[^A-Za-z0-9]", "_", m))
 
 # ── UI ───────────────────────────────────────────────────────────────────────
@@ -67,8 +66,7 @@ ui <- navbarPage(
     )
   ),
 
-  tabPanel("Landing",
-    fluidPage(h2("Landing"), p("Coming soon."))
+  tabPanel("Landing",    fluidPage(h2("Landing"), p("Coming soon."))
   ),
   tabPanel("Conceptual Framework",
     fluidPage(h2("Conceptual Framework"), p("Coming soon."))
@@ -81,7 +79,6 @@ ui <- navbarPage(
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
 
-  # Per-question inclusion state
   inc <- reactiveValues()
   observe({
     for (id in items_all$id) {
@@ -97,12 +94,14 @@ server <- function(input, output, session) {
 
   sel_modules <- reactive(c(input$sel_foundational, input$sel_device))
 
-  # Build display + inclusion data for one module (reactive-aware)
   module_tbl <- function(mod) {
     df <- items_all |> filter(module == mod)
+    # Alternating group index per competency domain (for row banding)
+    domains   <- unique(df$competency_domain)
     df |> mutate(
-      number     = sub("_.*$", "", id),
-      included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+      number    = sub("_.*$", "", id),
+      included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+      alt_group = match(competency_domain, domains) %% 2L,
       check_html = mapply(function(i, core, inc_val) {
         if (core) {
           '<input type="checkbox" checked disabled
@@ -116,14 +115,12 @@ server <- function(input, output, session) {
     )
   }
 
-  # All selected data (for count + export)
   all_tbl_data <- reactive({
     mods <- sel_modules()
     if (length(mods) == 0) return(items_all[0, ])
     bind_rows(lapply(mods, module_tbl))
   })
 
-  # Dynamic tab panel: one tab per selected module
   output$module_tabs_ui <- renderUI({
     mods <- sel_modules()
     if (length(mods) == 0)
@@ -135,7 +132,6 @@ server <- function(input, output, session) {
     do.call(tabsetPanel, c(list(id = "module_tabs", type = "tabs"), tabs))
   })
 
-  # Register a renderDT for every possible module upfront
   for (m in all_mods) {
     local({
       mod <- m
@@ -146,8 +142,9 @@ server <- function(input, output, session) {
           `No.`        = number,
           `Competency` = competency_domain,
           `Skill`      = skill_area,
-          Core         = recommended_core,   # hidden; used for row colour
-          Question     = question
+          Question     = question,
+          Core         = recommended_core,  # hidden
+          alt_group    = alt_group          # hidden
         )
         datatable(
           display,
@@ -159,21 +156,26 @@ server <- function(input, output, session) {
             dom        = "tip",
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = 4)  # hide Core
+              list(visible   = FALSE, targets = c(5, 6))  # hide Core + alt_group
             )
           )
         ) |>
+          # Subtle alternating band by competency group
+          formatStyle(
+            "alt_group",
+            target          = "row",
+            backgroundColor = styleEqual(c(0L, 1L), c("#ffffff", "#f4f4f4"))
+          ) |>
+          # Core items: bold only, no colour change
           formatStyle(
             "Core",
-            target          = "row",
-            backgroundColor = styleEqual(TRUE, "#fff3cd"),
-            fontWeight      = styleEqual(TRUE, "600")
+            target     = "row",
+            fontWeight = styleEqual(TRUE, "600")
           )
       }, server = FALSE)
     })
   }
 
-  # When a new module is checked, navigate to its tab
   prev_mods <- reactiveVal(all_mods)
   observeEvent(sel_modules(), {
     newly_added <- setdiff(sel_modules(), prev_mods())
