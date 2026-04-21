@@ -61,19 +61,18 @@ export_word <- function(items_df, filepath) {
   on.exit(unlink(tmp), add = TRUE)
 
   doc <- read_docx()
-
-  # Use Title style if available, otherwise fall back to heading 1
   avail_styles <- styles_info(doc)$style_name
   title_style  <- if ("Title" %in% avail_styles) "Title" else "heading 1"
+  opt_style    <- if ("List Bullet" %in% avail_styles) "List Bullet" else "Normal"
 
+  # Document title — not a heading, so Word won't number it
   doc <- body_add_par(doc, "Digital Skills Survey", style = title_style)
 
   modules <- unique(items_df$module)
-  for (mod_idx in seq_along(modules)) {
-    mod    <- modules[mod_idx]
+  for (mod in modules) {
     mod_df <- items_df[items_df$module == mod, ]
-
-    doc <- body_add_par(doc, paste0(mod_idx, ". ", mod), style = "heading 1")
+    # Plain module name — Word's heading 1 outline numbering handles the number
+    doc <- body_add_par(doc, mod, style = "heading 1")
 
     domains <- unique(mod_df$competency_domain)
     for (dom in domains) {
@@ -98,8 +97,6 @@ export_word <- function(items_df, filepath) {
 
           if (!is.na(row$response_options) && trimws(row$response_options) != "") {
             opts <- trimws(strsplit(row$response_options, ";")[[1]])
-            # Use List Bullet if available, else Normal
-            opt_style <- if ("List Bullet" %in% avail_styles) "List Bullet" else "Normal"
             for (opt in opts)
               doc <- body_add_par(doc, opt, style = opt_style)
           }
