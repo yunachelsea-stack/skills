@@ -66,7 +66,8 @@ ui <- navbarPage(
     )
   ),
 
-  tabPanel("Landing",    fluidPage(h2("Landing"), p("Coming soon."))
+  tabPanel("Landing",
+    fluidPage(h2("Landing"), p("Coming soon."))
   ),
   tabPanel("Conceptual Framework",
     fluidPage(h2("Conceptual Framework"), p("Coming soon."))
@@ -96,12 +97,12 @@ server <- function(input, output, session) {
 
   module_tbl <- function(mod) {
     df <- items_all |> filter(module == mod)
-    # Alternating group index per competency domain (for row banding)
-    domains   <- unique(df$competency_domain)
+    domains <- unique(df$competency_domain)  # order of appearance in CSV
     df |> mutate(
-      number    = sub("_.*$", "", id),
-      included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
-      alt_group = match(competency_domain, domains) %% 2L,
+      number     = sub("_.*$", "", id),
+      included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+      # "odd" = first, third, ... competency group; "even" = second, fourth, ...
+      band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
       check_html = mapply(function(i, core, inc_val) {
         if (core) {
           '<input type="checkbox" checked disabled
@@ -144,29 +145,32 @@ server <- function(input, output, session) {
           `Skill`      = skill_area,
           Question     = question,
           Core         = recommended_core,  # hidden
-          alt_group    = alt_group          # hidden
+          band         = band               # hidden
         )
         datatable(
           display,
           escape    = FALSE,
           rownames  = FALSE,
           selection = "none",
+          # Remove default stripe class so our banding is the only row colouring
+          class     = "hover row-border",
           options   = list(
             pageLength = 25,
             dom        = "tip",
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(5, 6))  # hide Core + alt_group
+              list(visible   = FALSE, targets = c(5, 6))  # hide Core + band
             )
           )
         ) |>
-          # Subtle alternating band by competency group
           formatStyle(
-            "alt_group",
+            "band",
             target          = "row",
-            backgroundColor = styleEqual(c(0L, 1L), c("#ffffff", "#f4f4f4"))
+            backgroundColor = styleEqual(
+              c("odd", "even"),
+              c("#f2f2f2", "#ffffff")
+            )
           ) |>
-          # Core items: bold only, no colour change
           formatStyle(
             "Core",
             target     = "row",
