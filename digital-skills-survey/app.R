@@ -112,6 +112,61 @@ ui <- navbarPage(
       )
     ),
 
+    # Why this matters
+    div(class = "lp-section",
+      tags$h2("Why this matters"),
+      tags$p(style = "max-width:820px; line-height:1.7; color:#444; margin-bottom:16px;",
+        "Millions of people—especially women and underserved groups—remain excluded
+         from the digital world, not just because of access, but because of gaps in skills
+         and confidence. Without reliable data on digital skills, it’s difficult to
+         design effective programs, target investments, or track progress."
+      ),
+      tags$p(style = "max-width:820px; line-height:1.7; color:#444; font-weight:500;",
+        "This platform helps you generate the data needed to close those gaps."
+      )
+    ),
+
+    # What you can do here
+    div(class = "lp-section", style = "background:#f7f9fb; max-width:100%; padding: 48px 40px;",
+      div(style = "max-width:1100px; margin:0 auto;",
+        tags$h2("What you can do here"),
+        tags$br(),
+        fluidRow(
+          column(4,
+            div(style = "padding-right:24px;",
+              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+                      "\U0001F4CB  Build your survey"),
+              tags$p(style = "color:#555; line-height:1.65;",
+                "Choose from pre-validated modules covering different areas of digital skills.
+                 Required questions ensure consistency across projects and countries;
+                 optional modules allow flexibility."
+              )
+            )
+          ),
+          column(4,
+            div(style = "padding-right:24px;",
+              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+                      "\U0001F4E5  Export ready-to-use instruments"),
+              tags$p(style = "color:#555; line-height:1.65;",
+                "Download your survey in formats ready for implementation by survey firms
+                 or data collection teams."
+              )
+            )
+          ),
+          column(4,
+            div(
+              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+                      "\U0001F4DA  Access implementation guidance"),
+              tags$p(style = "color:#555; line-height:1.65;",
+                "Get practical resources on cognitive testing, sampling, survey implementation
+                 and quality assurance, digital skills analysis."
+              )
+            )
+          )
+        )
+      )
+    ),
+
     # Feature cards
     div(class = "lp-section",
       tags$h2("What you’ll find on this platform"),
