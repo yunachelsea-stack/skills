@@ -97,12 +97,22 @@ server <- function(input, output, session) {
 
   module_tbl <- function(mod) {
     df <- items_all |> filter(module == mod)
-    domains <- unique(df$competency_domain)  # order of appearance in CSV
+    domains <- unique(df$competency_domain)
     df |> mutate(
       number     = sub("_.*$", "", id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
-      # "odd" = first, third, ... competency group; "even" = second, fourth, ...
       band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
+      # Question text + response options as HTML in one cell
+      question_html = ifelse(
+        !is.na(response_options) & trimws(response_options) != "",
+        paste0(
+          question,
+          "<br><small style='color:#999; font-style:italic;'>",
+          gsub(";", " &nbsp;&middot;&nbsp; ", response_options),
+          "</small>"
+        ),
+        question
+      ),
       check_html = mapply(function(i, core, inc_val) {
         if (core) {
           '<input type="checkbox" checked disabled
@@ -143,7 +153,7 @@ server <- function(input, output, session) {
           `No.`        = number,
           `Competency` = competency_domain,
           `Skill`      = skill_area,
-          Question     = question,
+          Question     = question_html,
           Core         = recommended_core,  # hidden
           band         = band               # hidden
         )
@@ -152,24 +162,20 @@ server <- function(input, output, session) {
           escape    = FALSE,
           rownames  = FALSE,
           selection = "none",
-          # Remove default stripe class so our banding is the only row colouring
           class     = "hover row-border",
           options   = list(
             pageLength = 25,
             dom        = "tip",
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(5, 6))  # hide Core + band
+              list(visible   = FALSE, targets = c(5, 6))
             )
           )
         ) |>
           formatStyle(
             "band",
             target          = "row",
-            backgroundColor = styleEqual(
-              c("odd", "even"),
-              c("#f2f2f2", "#ffffff")
-            )
+            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))
           ) |>
           formatStyle(
             "Core",
