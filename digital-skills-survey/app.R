@@ -61,7 +61,11 @@ ui <- navbarPage(
       mainPanel(width = 9,
         uiOutput("module_tabs_ui"),
         br(),
-        downloadButton("dl_xlsform", "Export XLSForm (.xlsx)")
+        tags$div(
+          style = "display:flex; gap:10px;",
+          downloadButton("dl_xlsform", "Export XLSForm (.xlsx)"),
+          downloadButton("dl_word",   "Export Survey (.docx)")
+        )
       )
     )
   ),
@@ -102,15 +106,12 @@ server <- function(input, output, session) {
       number     = sub("_.*$", "", id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
-      # Question text + response options as HTML in one cell
       question_html = ifelse(
         !is.na(response_options) & trimws(response_options) != "",
-        paste0(
-          question,
-          "<br><small style='color:#999; font-style:italic;'>",
-          gsub(";", " &nbsp;&middot;&nbsp; ", response_options),
-          "</small>"
-        ),
+        paste0(question,
+               "<br><small style='color:#999; font-style:italic;'>",
+               gsub(";", " &nbsp;&middot;&nbsp; ", response_options),
+               "</small>"),
         question
       ),
       check_html = mapply(function(i, core, inc_val) {
@@ -154,8 +155,8 @@ server <- function(input, output, session) {
           `Competency` = competency_domain,
           `Skill`      = skill_area,
           Question     = question_html,
-          Core         = recommended_core,  # hidden
-          band         = band               # hidden
+          Core         = recommended_core,
+          band         = band
         )
         datatable(
           display,
@@ -202,6 +203,13 @@ server <- function(input, output, session) {
     filename = "digital_skills_survey.xlsx",
     content  = function(file) {
       export_xlsform(all_tbl_data() |> filter(included), file)
+    }
+  )
+
+  output$dl_word <- downloadHandler(
+    filename = "digital_skills_survey.docx",
+    content  = function(file) {
+      export_word(all_tbl_data() |> filter(included), file)
     }
   )
 }
