@@ -11,6 +11,15 @@ items_all <- read_csv("data/items.csv", show_col_types = FALSE) |>
     cognitively_tested = as.logical(cognitively_tested)
   )
 
+# Preserve module order as it appears in CSV (no sorting)
+foundational_mods <- items_all |>
+  filter(section == "1.4.1 Foundational") |>
+  pull(module) |> unique()
+
+device_mods <- items_all |>
+  filter(section != "1.4.1 Foundational") |>
+  pull(module) |> unique()
+
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
   title = "Digital Skills Survey Builder",
@@ -28,17 +37,47 @@ ui <- navbarPage(
     ))),
     sidebarLayout(
       sidebarPanel(width = 3,
-        h4("Filters"),
-        checkboxGroupInput(
-          "sel_module", "Module",
-          choices  = sort(unique(items_all$module)),
-          selected = unique(items_all$module)
+
+        # Foundational skills group
+        tags$div(
+          tags$p(
+            tags$span("✓ ", style = "color:#e67e22;"),
+            tags$strong("Foundational Digital Skills"),
+            style = "margin-bottom:4px;"
+          ),
+          tags$div(
+            style = "border-left: 3px solid #e67e22; padding-left: 10px;",
+            checkboxGroupInput(
+              "sel_foundational", label = NULL,
+              choices  = foundational_mods,
+              selected = foundational_mods
+            )
+          )
         ),
-        hr(),
-        uiOutput("domain_filter_ui"),
-        hr(),
+
+        tags$hr(),
+
+        # Device skills group
+        tags$div(
+          tags$p(
+            tags$span("✓ ", style = "color:#2980b9;"),
+            tags$strong("Device Skills"),
+            style = "margin-bottom:4px;"
+          ),
+          tags$div(
+            style = "border-left: 3px solid #2980b9; padding-left: 10px;",
+            checkboxGroupInput(
+              "sel_device", label = NULL,
+              choices  = device_mods,
+              selected = device_mods
+            )
+          )
+        ),
+
+        tags$hr(),
         tags$strong(textOutput("count_label"))
       ),
+
       mainPanel(width = 9,
         DTOutput("items_tbl"),
         br(),
@@ -61,17 +100,6 @@ ui <- navbarPage(
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
 
-  output$domain_filter_ui <- renderUI({
-    domains <- items_all |>
-      filter(module %in% input$sel_module) |>
-      pull(competency_domain) |>
-      unique() |> sort()
-    checkboxGroupInput(
-      "sel_domain", "Competency Domain",
-      choices = domains, selected = domains
-    )
-  })
-
   # Per-question inclusion state; core items stay TRUE permanently
   inc <- reactiveValues()
   observe({
@@ -88,13 +116,14 @@ server <- function(input, output, session) {
     }
   })
 
+  # Combined selected modules from both groups
+  sel_modules <- reactive({
+    c(input$sel_foundational, input$sel_device)
+  })
+
   filtered_df <- reactive({
-    req(input$sel_domain)
-    items_all |>
-      filter(
-        module            %in% input$sel_module,
-        competency_domain %in% input$sel_domain
-      )
+    req(sel_modules())
+    items_all |> filter(module %in% sel_modules())
   })
 
   tbl_data <- reactive({
@@ -137,7 +166,7 @@ server <- function(input, output, session) {
         dom        = "tip",
         columnDefs = list(
           list(orderable = FALSE, targets = 0),
-          list(visible   = FALSE, targets = 5)  # Core hidden; used for row colour
+          list(visible   = FALSE, targets = 5)
         )
       )
     ) |>
