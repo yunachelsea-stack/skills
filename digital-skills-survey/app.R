@@ -45,15 +45,6 @@ ui <- navbarPage(
         max-width: 820px; line-height: 1.65;
         margin-bottom: 28px;
       }
-      .lp-partners {
-        display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;
-      }
-      .lp-partner-badge {
-        background: rgba(255,255,255,0.15);
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 20px; padding: 5px 14px;
-        font-size: 0.85em; font-weight: 500;
-      }
       .lp-section {
         padding: 48px 40px;
         max-width: 1100px; margin: 0 auto;
@@ -100,25 +91,13 @@ ui <- navbarPage(
     # Hero
     div(class = "lp-hero",
       div(style = "max-width:860px;",
-        tags$p(style = "font-size:0.75em; opacity:0.65; text-transform:uppercase;
-                        letter-spacing:1.2px; margin-bottom:10px;",
-               "Practitioner’s Resource • Low- and Middle-Income Countries"),
-        tags$h1("Inclusive Digital Skills", tags$br(), "Measurement Toolkit"),
+        tags$h1("Measure digital skills.", tags$br(),
+                "Build better surveys.", tags$br(),
+                "Generate actionable data."),
         tags$p(class = "lp-lead",
-          "This platform provides resources from ",
-          tags$em("A Practitioner’s Toolkit for Inclusive Digital Skills Measurement
-                   in Low- and Middle-Income Countries"),
-          ", developed by a consortium of partners from the ",
-          tags$strong("World Bank"),
-          " and the ",
-          tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
-          ", led by the ",
-          tags$strong("University of Cape Town’s School of Public Health"), "."
-        ),
-        div(class = "lp-partners",
-          span(class = "lp-partner-badge", "\U0001F30D  World Bank"),
-          span(class = "lp-partner-badge", "\U0001F393  University of Cape Town"),
-          span(class = "lp-partner-badge", "\U0001F4A1  EDiT Consortium")
+          "Design and customize digital skills surveys in minutes using a validated,
+           modular toolkit. Select the questions you need, ensure comparability,
+           and export ready-to-field instruments for your data collection teams."
         )
       )
     ),
