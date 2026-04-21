@@ -57,17 +57,21 @@ export_xlsform <- function(items_df, filepath) {
 
 # ── Word survey export ────────────────────────────────────────────────────
 export_word <- function(items_df, filepath) {
-  # officer requires a .docx extension; Shiny passes an extensionless temp path
   tmp <- tempfile(fileext = ".docx")
   on.exit(unlink(tmp), add = TRUE)
 
   doc <- read_docx()
-  doc <- body_add_par(doc, "Digital Skills Survey", style = "heading 1")
+
+  # Document title (not numbered)
+  doc <- body_add_par(doc, "Digital Skills Survey", style = "Title")
 
   modules <- unique(items_df$module)
-  for (mod in modules) {
+  for (mod_idx in seq_along(modules)) {
+    mod    <- modules[mod_idx]
     mod_df <- items_df[items_df$module == mod, ]
-    doc <- body_add_par(doc, mod, style = "heading 1")
+
+    # Numbered module heading
+    doc <- body_add_par(doc, paste0(mod_idx, ". ", mod), style = "heading 1")
 
     domains <- unique(mod_df$competency_domain)
     for (dom in domains) {
@@ -83,18 +87,23 @@ export_word <- function(items_df, filepath) {
           row <- sk_df[i, ]
           num <- sub("_.*$", "", row$id)
 
+          # Skip logic note
           if (!is.na(row$relevance) && trimws(row$relevance) != "")
-            doc <- body_add_par(doc, paste0("[Ask if: ", row$relevance, "]"),
-                                style = "Normal")
-
-          doc <- body_add_par(doc, paste0(num, ". ", row$question),
-                              style = "Normal")
-
-          if (!is.na(row$response_options) && trimws(row$response_options) != "")
             doc <- body_add_par(doc,
-                                gsub(";\\s*", "  |  ", trimws(row$response_options)),
-                                style = "Normal")
+              paste0("[Ask if: ", row$relevance, "]"), style = "Normal")
 
+          # Question text
+          doc <- body_add_par(doc,
+            paste0(num, ". ", row$question), style = "Normal")
+
+          # Response options: one per line
+          if (!is.na(row$response_options) && trimws(row$response_options) != "") {
+            opts <- trimws(strsplit(row$response_options, ";")[[1]])
+            for (opt in opts)
+              doc <- body_add_par(doc, opt, style = "List Bullet")
+          }
+
+          # Blank spacer between questions
           doc <- body_add_par(doc, "", style = "Normal")
         }
       }
