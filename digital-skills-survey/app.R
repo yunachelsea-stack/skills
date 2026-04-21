@@ -38,7 +38,6 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(width = 3,
 
-        # Foundational skills group
         tags$p(tags$strong("Foundational Digital Skills"),
                style = "margin-bottom:4px;"),
         tags$div(
@@ -52,9 +51,6 @@ ui <- navbarPage(
 
         tags$hr(),
 
-        # Device modules — visually separate, no misleading group label
-        tags$p(tags$em("Not part of foundational skills:"),
-               style = "color:#888; font-size:0.85em; margin-bottom:4px;"),
         checkboxGroupInput(
           "sel_device", label = NULL,
           choices  = device_mods,
@@ -114,6 +110,8 @@ server <- function(input, output, session) {
   tbl_data <- reactive({
     df <- filtered_df()
     df |> mutate(
+      # Short reference number: extract prefix+digit from id (e.g. IDL1, ICC4, SAF2)
+      number     = sub("_.*$", "", id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       check_html = mapply(function(i, core, included) {
         if (core) {
@@ -133,13 +131,13 @@ server <- function(input, output, session) {
   output$items_tbl <- renderDT({
     df <- tbl_data()
     display <- df |> select(
-      ` `                 = check_html,
-      ID                  = id,
-      Module              = module,
-      `Competency Domain` = competency_domain,
-      `Skill Area`        = skill_area,
-      Core                = recommended_core,
-      Question            = question
+      ` `                = check_html,
+      `No.`             = number,
+      `Competency Area` = module,
+      `Competency`      = competency_domain,
+      `Skill`           = skill_area,
+      Core              = recommended_core,  # hidden; used for row colour
+      Question          = question
     )
     datatable(
       display,
@@ -151,7 +149,7 @@ server <- function(input, output, session) {
         dom        = "tip",
         columnDefs = list(
           list(orderable = FALSE, targets = 0),
-          list(visible   = FALSE, targets = 5)
+          list(visible   = FALSE, targets = 5)  # hide Core
         )
       )
     ) |>
@@ -170,6 +168,7 @@ server <- function(input, output, session) {
   output$dl_xlsform <- downloadHandler(
     filename = "digital_skills_survey.xlsx",
     content  = function(file) {
+      # Pass full tbl_data (with id column) to export
       export_xlsform(tbl_data() |> filter(included), file)
     }
   )
