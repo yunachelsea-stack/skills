@@ -25,8 +25,172 @@ tab_out_id <- function(m) paste0("dt_", gsub("[^A-Za-z0-9]", "_", m))
 
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
-  title = "Digital Skills Survey Builder",
+  title = "Digital Skills Measurement Toolkit",
 
+  # ── Landing page ──────────────────────────────────────────────────────────────
+  tabPanel("Home",
+    tags$style(HTML("
+      .lp-hero {
+        background: linear-gradient(135deg, #003366 0%, #0a5fa8 100%);
+        color: white;
+        padding: 64px 40px 52px;
+        margin: -15px -15px 0;
+      }
+      .lp-hero h1 {
+        font-size: 2.2em; font-weight: 700;
+        line-height: 1.25; margin-bottom: 16px;
+      }
+      .lp-lead {
+        font-size: 1.05em; opacity: 0.92;
+        max-width: 820px; line-height: 1.65;
+        margin-bottom: 28px;
+      }
+      .lp-partners {
+        display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;
+      }
+      .lp-partner-badge {
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 20px; padding: 5px 14px;
+        font-size: 0.85em; font-weight: 500;
+      }
+      .lp-section {
+        padding: 48px 40px;
+        max-width: 1100px; margin: 0 auto;
+      }
+      .lp-section h2 {
+        font-size: 1.4em; font-weight: 600;
+        color: #222; margin-bottom: 6px;
+      }
+      .lp-section-sub {
+        color: #888; margin-bottom: 32px; font-size: 0.95em;
+      }
+      .lp-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        padding: 24px 22px;
+        height: 100%;
+        margin-bottom: 20px;
+        border-top: 4px solid #ccc;
+        transition: box-shadow 0.2s;
+      }
+      .lp-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+      .lp-card.active  { border-top-color: #e67e22; }
+      .lp-card.planned { border-top-color: #aabfcc; }
+      .lp-card-num {
+        font-size: 1.6em; font-weight: 700;
+        color: #aabfcc; margin-bottom: 6px;
+      }
+      .lp-card.active .lp-card-num { color: #e67e22; }
+      .lp-card h4 {
+        font-size: 1em; font-weight: 600;
+        color: #222; margin-bottom: 8px;
+      }
+      .lp-card p { font-size: 0.88em; color: #666; line-height: 1.55; margin: 0; }
+      .lp-pill {
+        display: inline-block; font-size: 0.7em; font-weight: 600;
+        padding: 2px 9px; border-radius: 10px; margin-bottom: 10px;
+        text-transform: uppercase; letter-spacing: 0.04em;
+      }
+      .lp-pill.active  { background: #fef0e0; color: #e67e22; }
+      .lp-pill.planned { background: #f0f4f6; color: #7a99aa; }
+    ")),
+
+    # Hero
+    div(class = "lp-hero",
+      div(style = "max-width:860px;",
+        tags$p(style = "font-size:0.75em; opacity:0.65; text-transform:uppercase;
+                        letter-spacing:1.2px; margin-bottom:10px;",
+               "Practitioner’s Resource • Low- and Middle-Income Countries"),
+        tags$h1("Inclusive Digital Skills", tags$br(), "Measurement Toolkit"),
+        tags$p(class = "lp-lead",
+          "This platform provides resources from ",
+          tags$em("A Practitioner’s Toolkit for Inclusive Digital Skills Measurement
+                   in Low- and Middle-Income Countries"),
+          ", developed by a consortium of partners from the ",
+          tags$strong("World Bank"),
+          " and the ",
+          tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
+          ", led by the ",
+          tags$strong("University of Cape Town’s School of Public Health"), "."
+        ),
+        div(class = "lp-partners",
+          span(class = "lp-partner-badge", "\U0001F30D  World Bank"),
+          span(class = "lp-partner-badge", "\U0001F393  University of Cape Town"),
+          span(class = "lp-partner-badge", "\U0001F4A1  EDiT Consortium")
+        )
+      )
+    ),
+
+    # Feature cards
+    div(class = "lp-section",
+      tags$h2("What you’ll find on this platform"),
+      tags$p(class = "lp-section-sub",
+             "Six integrated resources supporting end-to-end digital skills measurement."),
+
+      fluidRow(
+        column(4,
+          div(class = "lp-card active",
+            span(class = "lp-pill active", "Available"),
+            div(class = "lp-card-num", "01"),
+            tags$h4("Survey Builder"),
+            tags$p("Build a digital skills measurement survey including required and optional
+                    questions recommended in the toolkit. Export as XLSForm or Word.")
+          )
+        ),
+        column(4,
+          div(class = "lp-card planned",
+            span(class = "lp-pill planned", "Coming soon"),
+            div(class = "lp-card-num", "02"),
+            tags$h4("Conceptual Adaptations"),
+            tags$p("Steps for adapting survey items to local contexts
+                    through cognitive interview protocols.")
+          )
+        ),
+        column(4,
+          div(class = "lp-card planned",
+            span(class = "lp-pill planned", "Coming soon"),
+            div(class = "lp-card-num", "03"),
+            tags$h4("Sampling Methods"),
+            tags$p("Guidance on probability and non-probability sampling
+                    approaches for digital skills surveys in LMICs.")
+          )
+        )
+      ),
+      fluidRow(
+        column(4,
+          div(class = "lp-card planned",
+            span(class = "lp-pill planned", "Coming soon"),
+            div(class = "lp-card-num", "04"),
+            tags$h4("Survey Implementation"),
+            tags$p("Practical approaches to field implementation, enumerator
+                    training, and data collection protocols.")
+          )
+        ),
+        column(4,
+          div(class = "lp-card planned",
+            span(class = "lp-pill planned", "Coming soon"),
+            div(class = "lp-card-num", "05"),
+            tags$h4("Data Quality Assurance"),
+            tags$p("A framework for monitoring and ensuring the quality
+                    of digital skills measurement data.")
+          )
+        ),
+        column(4,
+          div(class = "lp-card planned",
+            span(class = "lp-pill planned", "Coming soon"),
+            div(class = "lp-card-num", "06"),
+            tags$h4("Analyzing Digital Skills"),
+            tags$p("Analytical approaches and tools for interpreting
+                    and reporting digital skills data.")
+          )
+        )
+      )
+    )
+  ),
+
+  # ── Survey Builder ────────────────────────────────────────────────────────────
   tabPanel("Survey Builder",
     tags$head(tags$script(HTML("
       $(document).on('change', '.q-toggle', function() {
@@ -57,7 +221,6 @@ ui <- navbarPage(
         tags$hr(),
         tags$strong(textOutput("count_label"))
       ),
-
       mainPanel(width = 9,
         uiOutput("module_tabs_ui"),
         br(),
@@ -70,9 +233,7 @@ ui <- navbarPage(
     )
   ),
 
-  tabPanel("Landing",
-    fluidPage(h2("Landing"), p("Coming soon."))
-  ),
+  # ── Stub pages ─────────────────────────────────────────────────────────────────
   tabPanel("Conceptual Framework",
     fluidPage(h2("Conceptual Framework"), p("Coming soon."))
   ),
@@ -173,16 +334,10 @@ server <- function(input, output, session) {
             )
           )
         ) |>
-          formatStyle(
-            "band",
-            target          = "row",
-            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))
-          ) |>
-          formatStyle(
-            "Core",
-            target     = "row",
-            fontWeight = styleEqual(TRUE, "600")
-          )
+          formatStyle("band", target = "row",
+            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
+          formatStyle("Core", target = "row",
+            fontWeight = styleEqual(TRUE, "600"))
       }, server = FALSE)
     })
   }
