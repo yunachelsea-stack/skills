@@ -62,15 +62,17 @@ export_word <- function(items_df, filepath) {
 
   doc <- read_docx()
 
-  # Document title (not numbered)
-  doc <- body_add_par(doc, "Digital Skills Survey", style = "Title")
+  # Use Title style if available, otherwise fall back to heading 1
+  avail_styles <- styles_info(doc)$style_name
+  title_style  <- if ("Title" %in% avail_styles) "Title" else "heading 1"
+
+  doc <- body_add_par(doc, "Digital Skills Survey", style = title_style)
 
   modules <- unique(items_df$module)
   for (mod_idx in seq_along(modules)) {
     mod    <- modules[mod_idx]
     mod_df <- items_df[items_df$module == mod, ]
 
-    # Numbered module heading
     doc <- body_add_par(doc, paste0(mod_idx, ". ", mod), style = "heading 1")
 
     domains <- unique(mod_df$competency_domain)
@@ -87,23 +89,21 @@ export_word <- function(items_df, filepath) {
           row <- sk_df[i, ]
           num <- sub("_.*$", "", row$id)
 
-          # Skip logic note
           if (!is.na(row$relevance) && trimws(row$relevance) != "")
             doc <- body_add_par(doc,
               paste0("[Ask if: ", row$relevance, "]"), style = "Normal")
 
-          # Question text
           doc <- body_add_par(doc,
             paste0(num, ". ", row$question), style = "Normal")
 
-          # Response options: one per line
           if (!is.na(row$response_options) && trimws(row$response_options) != "") {
             opts <- trimws(strsplit(row$response_options, ";")[[1]])
+            # Use List Bullet if available, else Normal
+            opt_style <- if ("List Bullet" %in% avail_styles) "List Bullet" else "Normal"
             for (opt in opts)
-              doc <- body_add_par(doc, opt, style = "List Bullet")
+              doc <- body_add_par(doc, opt, style = opt_style)
           }
 
-          # Blank spacer between questions
           doc <- body_add_par(doc, "", style = "Normal")
         }
       }
