@@ -105,6 +105,12 @@ tab_cols <- list(
     `Skill`    = "skill_area",
     `Question` = "question_html"
   ),
+  `Device Access` = c(
+    ` `        = "check_html",
+    `No.`      = "number",
+    `Topic`    = "skill_area",
+    `Question` = "question_html"
+  ),
   `PWD::Accessibility settings` = c(
     ` `        = "check_html",
     `No.`      = "number",
