@@ -98,6 +98,12 @@ seq_prefixes <- c(
   "OOS Youth"                 = "YTH"
 )
 
+# Column used to compute row-banding. Default is competency_domain.
+band_cols <- c(
+  "Device Access" = "skill_area",
+  "OOS Youth"     = "skill_area"
+)
+
 # Column config: names = display labels, values = source column names.
 # Add an entry here to change what any tab shows — no touching render code.
 tab_cols <- list(
@@ -763,14 +769,15 @@ server <- function(input, output, session) {
     } else {
       df <- items_all |> filter(module == mod)
     }
-    domains <- unique(df$competency_domain)
+    band_col <- band_cols[[mod]] %||% "competency_domain"
+    domains  <- unique(df[[band_col]])
     df |> mutate(
       number = if (mod %in% names(seq_prefixes))
         paste0(seq_prefixes[[mod]], seq_len(n()))
       else
         extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
-      band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
+      band       = ifelse(match(.data[[band_col]], domains) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
         !is.na(response_options) & trimws(response_options) != "",
         paste0(question,
