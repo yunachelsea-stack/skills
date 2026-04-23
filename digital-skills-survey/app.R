@@ -952,15 +952,19 @@ server <- function(input, output, session) {
     if (nrow(oos_df) > 0)
       sections[[length(sections)+1]] <- q_rows(oos_df)
 
-    # Device modules (always last): module → domain → questions
+    # Device modules (always last): Access = flat list; Use = domain → questions
     d_df <- items_all |> filter(id %in% inc_ids, section != "1 Foundational Skills")
     for (mod in intersect(device_mods, unique(d_df$module))) {
       mdf <- d_df[d_df$module == mod, ]
+      is_access <- unique(mdf$section) == "2 Device Access"
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
-        lapply(unique(mdf$competency_domain), function(dom)
-          tagList(tags$h4(style = h4_style, dom),
-                  q_rows(mdf[mdf$competency_domain == dom, ])))
+        if (is_access)
+          q_rows(mdf)
+        else
+          lapply(unique(mdf$competency_domain), function(dom)
+            tagList(tags$h4(style = h4_style, dom),
+                    q_rows(mdf[mdf$competency_domain == dom, ])))
       )
     }
 
