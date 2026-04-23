@@ -545,11 +545,6 @@ ui <- navbarPage(
           )
         ),
         tags$hr(),
-        checkboxGroupInput(
-          "sel_device", label = NULL,
-          choices = device_mods, selected = device_mods
-        ),
-        tags$hr(),
         tags$p(tags$strong("Population-specific Digital Skills"),
                style = "margin-bottom:4px;"),
         tags$div(
@@ -558,6 +553,11 @@ ui <- navbarPage(
             "sel_pop", label = NULL,
             choices = pop_mods, selected = NULL
           )
+        ),
+        tags$hr(),
+        checkboxGroupInput(
+          "sel_device", label = NULL,
+          choices = device_mods, selected = device_mods
         ),
         tags$hr(),
         tags$strong(textOutput("count_label"))
