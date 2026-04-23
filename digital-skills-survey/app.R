@@ -11,6 +11,12 @@ items_all <- read_csv("data/items.csv", show_col_types = FALSE) |>
     cognitively_tested = as.logical(cognitively_tested)
   )
 
+items_pop <- read_csv("data/items_population_specific.csv", show_col_types = FALSE) |>
+  mutate(
+    recommended_core   = as.logical(recommended_core),
+    cognitively_tested = as.logical(cognitively_tested)
+  )
+
 foundational_mods <- items_all |>
   filter(section == "1.4.1 Foundational") |>
   pull(module) |> unique()
@@ -19,7 +25,14 @@ device_mods <- items_all |>
   filter(section != "1.4.1 Foundational") |>
   pull(module) |> unique()
 
-all_mods <- c(foundational_mods, device_mods)
+pop_section_map <- c(
+  "Community Health Workers" = "4. Community Health Workers",
+  "Persons with Disabilities" = "5. Persons with Disabilities",
+  "OOS Youth"                 = "6. OOS Job-Seeking Youth"
+)
+pop_mods <- names(pop_section_map)
+
+all_mods <- c(foundational_mods, device_mods, pop_mods)
 
 tab_out_id <- function(m) paste0("dt_", gsub("[^A-Za-z0-9]", "_", m))
 
@@ -537,6 +550,16 @@ ui <- navbarPage(
           choices = device_mods, selected = device_mods
         ),
         tags$hr(),
+        tags$p(tags$strong("Population-specific Digital Skills"),
+               style = "margin-bottom:4px;"),
+        tags$div(
+          style = "border-left:3px solid #27ae60; padding-left:10px;",
+          checkboxGroupInput(
+            "sel_pop", label = NULL,
+            choices = pop_mods, selected = NULL
+          )
+        ),
+        tags$hr(),
         tags$strong(textOutput("count_label"))
       ),
       mainPanel(width = 9,
@@ -565,7 +588,7 @@ server <- function(input, output, session) {
 
   inc <- reactiveValues()
   observe({
-    for (id in items_all$id) {
+    for (id in c(items_all$id, items_pop$id)) {
       if (is.null(inc[[id]])) inc[[id]] <- TRUE
     }
   })
@@ -573,16 +596,27 @@ server <- function(input, output, session) {
   observeEvent(input$toggle_q, {
     ev  <- input$toggle_q
     row <- items_all[items_all$id == ev$id, ]
-    if (nrow(row) > 0 && !row$recommended_core) inc[[ev$id]] <- ev$val
+    if (nrow(row) == 0) row <- items_pop[items_pop$id == ev$id, ]
+    if (nrow(row) > 0 && !isTRUE(row$recommended_core)) inc[[ev$id]] <- ev$val
   })
 
-  sel_modules <- reactive(c(input$sel_foundational, input$sel_device))
+  sel_modules <- reactive(c(input$sel_foundational, input$sel_device, input$sel_pop))
 
   module_tbl <- function(mod) {
-    df <- items_all |> filter(module == mod)
+    is_pop <- mod %in% pop_mods
+    if (is_pop) {
+      df <- items_pop |>
+        filter(section == pop_section_map[[mod]]) |>
+        mutate(module = mod)
+    } else {
+      df <- items_all |> filter(module == mod)
+    }
     domains <- unique(df$competency_domain)
     df |> mutate(
-      number     = sub("_.*$", "", id),
+      number = if (is_pop)
+        gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id)
+      else
+        sub("_.*$", "", id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -594,7 +628,7 @@ server <- function(input, output, session) {
         question
       ),
       check_html = mapply(function(i, core, inc_val) {
-        if (core) {
+        if (isTRUE(core)) {
           '<input type="checkbox" checked disabled
              title="Required core item"
              style="accent-color:#e67e22;cursor:not-allowed;">'
@@ -660,7 +694,7 @@ server <- function(input, output, session) {
     })
   }
 
-  prev_mods <- reactiveVal(all_mods)
+  prev_mods <- reactiveVal(c(foundational_mods, device_mods))
   observeEvent(sel_modules(), {
     newly_added <- setdiff(sel_modules(), prev_mods())
     if (length(newly_added) > 0)
