@@ -243,7 +243,6 @@ ui <- navbarPage(
     div(class = "lp-hero",
       div(style = "max-width:860px;",
         tags$h1("Measure digital skills.", tags$br(),
-                "Build better surveys.", tags$br(),
                 "Generate actionable data."),
         tags$p(class = "lp-lead",
           "Design and customize digital skills surveys in minutes using a validated,
