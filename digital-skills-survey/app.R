@@ -724,12 +724,6 @@ ui <- navbarPage(
   ),
 
   # ── Stub pages ─────────────────────────────────────────────────────────────────
-  tabPanel("Conceptual Framework",
-    fluidPage(h2("Conceptual Framework"), p("Coming soon."))
-  ),
-  tabPanel("Sampling",
-    fluidPage(h2("Sampling"), p("Coming soon."))
-  )
 )
 
 # ── Server ────────────────────────────────────────────────────────────────────
