@@ -309,12 +309,11 @@ ui <- navbarPage(
       tags$h2("The measurement framework"),
       tags$br(),
 
-      # Two columns: what it includes + what it's built on
-      fluidRow(
-        column(4,
-          div(style = "background:#fff; border-radius:10px; padding:24px 22px;
-                       box-shadow:0 2px 10px rgba(0,0,0,0.07); height:100%;
-                       border-left:4px solid #003366;",
+      # Two cards stacked vertically
+      div(
+        div(style = "background:#fff; border-radius:10px; padding:24px 22px;
+                     box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:16px;
+                     border-left:4px solid #003366;",
             tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
                     "The framework includes"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.75;",
@@ -324,12 +323,10 @@ ui <- navbarPage(
                        out-of-school / job-seeking youth)"),
               tags$li("Device access and device use")
             )
-          )
         ),
-        column(8,
-          div(style = "background:#fff; border-radius:10px; padding:24px 22px;
-                       box-shadow:0 2px 10px rgba(0,0,0,0.07); height:100%;
-                       border-left:4px solid #0a5fa8;",
+        div(style = "background:#fff; border-radius:10px; padding:24px 22px;
+                     box-shadow:0 2px 10px rgba(0,0,0,0.07);
+                     border-left:4px solid #0a5fa8;",
             tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
                     "Built on several frameworks"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.7;",
@@ -370,7 +367,6 @@ ui <- navbarPage(
               )
             )
           )
-        )
       ),
 
       tags$br(), tags$br(),
