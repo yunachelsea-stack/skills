@@ -80,6 +80,66 @@ pwd_domains <- items_pop |>
   filter(section == pop_section_map[["Persons with Disabilities"]]) |>
   pull(competency_domain) |> unique()
 
+`%||%` <- function(a, b) if (!is.null(a)) a else b
+
+# Column config: names = display labels, values = source column names.
+# Add an entry here to change what any tab shows — no touching render code.
+tab_cols <- list(
+  default = c(
+    ` `          = "check_html",
+    `No.`        = "number",
+    `Competency` = "competency_domain",
+    `Skill`      = "skill_area",
+    `Question`   = "question_html"
+  ),
+  `OOS Youth` = c(
+    ` `        = "check_html",
+    `No.`      = "number",
+    `Skill`    = "skill_area",
+    `Question` = "question_html"
+  ),
+  `PWD::Accessibility settings` = c(
+    ` `        = "check_html",
+    `No.`      = "number",
+    `Setting`  = "skill_area",
+    `Question` = "question_html"
+  ),
+  `PWD::Assistive software` = c(
+    ` `        = "check_html",
+    `No.`      = "number",
+    `Software` = "skill_area",
+    `Question` = "question_html"
+  )
+)
+
+make_display <- function(df, key) {
+  cfg <- tab_cols[[key]] %||% tab_cols[["default"]]
+  vis <- df[, cfg, drop = FALSE]
+  colnames(vis) <- names(cfg)
+  cbind(vis, Core = df$recommended_core, band = df$band)
+}
+
+render_module_dt <- function(df, key, page_len = 25) {
+  display <- make_display(df, key)
+  n_vis   <- ncol(display) - 2L
+  datatable(
+    display,
+    escape = FALSE, rownames = FALSE, selection = "none",
+    class  = "hover row-border",
+    options = list(
+      pageLength = page_len, dom = "tip",
+      columnDefs = list(
+        list(orderable = FALSE, targets = 0),
+        list(visible   = FALSE, targets = c(n_vis, n_vis + 1L))
+      )
+    )
+  ) |>
+    formatStyle("band", target = "row",
+      backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
+    formatStyle("Core", target = "row",
+      fontWeight = styleEqual(TRUE, "600"))
+}
+
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
   title = "Digital Skills Measurement Toolkit",
@@ -700,6 +760,28 @@ server <- function(input, output, session) {
     )
   }
 
+  prep_pop_df <- function(df, band_by) {
+    groups <- unique(df[[band_by]])
+    df |> mutate(
+      number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
+      included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+      band      = ifelse(match(.data[[band_by]], groups) %% 2 == 1, "odd", "even"),
+      question_html = ifelse(
+        !is.na(response_options) & trimws(response_options) != "",
+        paste0(question, "<br><small style='color:#999;font-style:italic;'>",
+               gsub(";", " &nbsp;&middot;&nbsp;", response_options), "</small>"),
+        question
+      ),
+      check_html = mapply(function(i, core, inc_val) {
+        if (isTRUE(core))
+          '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
+        else
+          sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
+                  i, if (inc_val) " checked" else "")
+      }, id, recommended_core, included, SIMPLIFY = TRUE)
+    )
+  }
+
   all_tbl_data <- reactive({
     mods <- sel_modules()
     if (length(mods) == 0) return(items_all[0, ])
@@ -737,37 +819,7 @@ server <- function(input, output, session) {
     local({
       mod <- m
       output[[tab_out_id(mod)]] <- renderDT({
-        df <- module_tbl(mod)
-        drop_comp <- mod == "OOS Youth"
-        display <- if (drop_comp) {
-          df |> select(` ` = check_html, `No.` = number,
-                       `Skill` = skill_area, Question = question_html,
-                       Core = recommended_core, band = band)
-        } else {
-          df |> select(` ` = check_html, `No.` = number,
-                       `Competency` = competency_domain, `Skill` = skill_area,
-                       Question = question_html, Core = recommended_core, band = band)
-        }
-        hidden_cols <- if (drop_comp) c(4, 5) else c(5, 6)
-        datatable(
-          display,
-          escape    = FALSE,
-          rownames  = FALSE,
-          selection = "none",
-          class     = "hover row-border",
-          options   = list(
-            pageLength = 25,
-            dom        = "tip",
-            columnDefs = list(
-              list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = hidden_cols)
-            )
-          )
-        ) |>
-          formatStyle("band", target = "row",
-            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
-          formatStyle("Core", target = "row",
-            fontWeight = styleEqual(TRUE, "600"))
+        render_module_dt(module_tbl(mod), key = mod)
       }, server = FALSE)
     })
   }
@@ -778,101 +830,22 @@ server <- function(input, output, session) {
       output[[chw_tab_out_id(domain)]] <- renderDT({
         df <- items_pop |>
           filter(section == pop_section_map[["Community Health Workers"]],
-                 module == domain)
-        comps <- unique(df$competency_domain)
-        df <- df |> mutate(
-          number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
-          included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
-          band      = ifelse(match(competency_domain, comps) %% 2 == 1, "odd", "even"),
-          question_html = ifelse(
-            !is.na(response_options) & trimws(response_options) != "",
-            paste0(question, "<br><small style='color:#999;font-style:italic;'>",
-                   gsub(";", " &nbsp;&middot;&nbsp;", response_options), "</small>"),
-            question
-          ),
-          check_html = mapply(function(i, core, inc_val) {
-            if (isTRUE(core))
-              '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
-            else
-              sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
-                      i, if (inc_val) " checked" else "")
-          }, id, recommended_core, included, SIMPLIFY = TRUE)
-        )
-        display <- df |> select(
-          ` `          = check_html,
-          `No.`        = number,
-          `Competency` = competency_domain,
-          `Skill`      = skill_area,
-          Question     = question_html,
-          Core         = recommended_core,
-          band         = band
-        )
-        datatable(
-          display,
-          escape = FALSE, rownames = FALSE, selection = "none",
-          class  = "hover row-border",
-          options = list(
-            pageLength = 50, dom = "tip",
-            columnDefs = list(
-              list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(5, 6))
-            )
-          )
-        ) |>
-          formatStyle("band", target = "row",
-            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
-          formatStyle("Core", target = "row",
-            fontWeight = styleEqual(TRUE, "600"))
+                 module == domain) |>
+          prep_pop_df(band_by = "competency_domain")
+        render_module_dt(df, key = "default", page_len = 50)
       }, server = FALSE)
     })
   }
 
   for (d in pwd_domains) {
     local({
-      domain     <- d
-      skill_name <- if (domain == "Accessibility settings") "Setting" else "Software"
+      domain <- d
       output[[pwd_tab_out_id(domain)]] <- renderDT({
         df <- items_pop |>
           filter(section == pop_section_map[["Persons with Disabilities"]],
-                 competency_domain == domain)
-        skills <- unique(df$skill_area)
-        df <- df |> mutate(
-          number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
-          included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
-          band      = ifelse(match(skill_area, skills) %% 2 == 1, "odd", "even"),
-          question_html = ifelse(
-            !is.na(response_options) & trimws(response_options) != "",
-            paste0(question, "<br><small style='color:#999;font-style:italic;'>",
-                   gsub(";", " &nbsp;&middot;&nbsp;", response_options), "</small>"),
-            question
-          ),
-          check_html = mapply(function(i, core, inc_val) {
-            if (isTRUE(core))
-              '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
-            else
-              sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
-                      i, if (inc_val) " checked" else "")
-          }, id, recommended_core, included, SIMPLIFY = TRUE)
-        )
-        display <- df |>
-          select(` ` = check_html, `No.` = number,
-                 skill_area, Question = question_html,
-                 Core = recommended_core, band = band) |>
-          rename(!!skill_name := skill_area)
-        datatable(
-          display,
-          escape = FALSE, rownames = FALSE, selection = "none",
-          class  = "hover row-border",
-          options = list(
-            pageLength = 50, dom = "tip",
-            columnDefs = list(
-              list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(4, 5))
-            )
-          )
-        ) |>
-          formatStyle("band", target = "row",
-            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff")))
+                 competency_domain == domain) |>
+          prep_pop_df(band_by = "skill_area")
+        render_module_dt(df, key = paste0("PWD::", domain), page_len = 50)
       }, server = FALSE)
     })
   }
