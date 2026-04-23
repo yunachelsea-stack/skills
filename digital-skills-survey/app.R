@@ -328,7 +328,7 @@ ui <- navbarPage(
                      box-shadow:0 2px 10px rgba(0,0,0,0.07);
                      border-left:4px solid #0a5fa8;",
             tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
-                    "Built on several frameworks"),
+                    "Survey questions were adapted from several frameworks:"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.7;",
               tags$li(
                 tags$strong("DigComp Framework"),
