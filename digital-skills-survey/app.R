@@ -70,11 +70,15 @@ module_checkbox_group <- function(input_id, mods, selected, req_mods = required_
 
 tab_out_id     <- function(m) paste0("dt_",      gsub("[^A-Za-z0-9]", "_", m))
 chw_tab_out_id <- function(d) paste0("dt_CHW__", gsub("[^A-Za-z0-9]", "_", d))
+pwd_tab_out_id <- function(d) paste0("dt_PWD__", gsub("[^A-Za-z0-9]", "_", d))
 
 chw_domains <- items_pop |>
   filter(section == pop_section_map[["Community Health Workers"]]) |>
-  pull(module) |>
-  unique()
+  pull(module) |> unique()
+
+pwd_domains <- items_pop |>
+  filter(section == pop_section_map[["Persons with Disabilities"]]) |>
+  pull(competency_domain) |> unique()
 
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
@@ -715,6 +719,13 @@ server <- function(input, output, session) {
         tabPanel(title = m, value = m, br(),
           do.call(tabsetPanel, c(list(id = "chw_domain_tabs", type = "tabs"), domain_tabs))
         )
+      } else if (m == "Persons with Disabilities") {
+        domain_tabs <- lapply(pwd_domains, function(d) {
+          tabPanel(title = d, value = d, br(), DTOutput(pwd_tab_out_id(d)))
+        })
+        tabPanel(title = m, value = m, br(),
+          do.call(tabsetPanel, c(list(id = "pwd_domain_tabs", type = "tabs"), domain_tabs))
+        )
       } else {
         tabPanel(title = m, value = m, br(), DTOutput(tab_out_id(m)))
       }
@@ -810,6 +821,56 @@ server <- function(input, output, session) {
             backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
           formatStyle("Core", target = "row",
             fontWeight = styleEqual(TRUE, "600"))
+      }, server = FALSE)
+    })
+  }
+
+  for (d in pwd_domains) {
+    local({
+      domain     <- d
+      skill_name <- if (domain == "Accessibility settings") "Setting" else "Software"
+      output[[pwd_tab_out_id(domain)]] <- renderDT({
+        df <- items_pop |>
+          filter(section == pop_section_map[["Persons with Disabilities"]],
+                 competency_domain == domain)
+        skills <- unique(df$skill_area)
+        df <- df |> mutate(
+          number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
+          included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+          band      = ifelse(match(skill_area, skills) %% 2 == 1, "odd", "even"),
+          question_html = ifelse(
+            !is.na(response_options) & trimws(response_options) != "",
+            paste0(question, "<br><small style='color:#999;font-style:italic;'>",
+                   gsub(";", " &nbsp;&middot;&nbsp;", response_options), "</small>"),
+            question
+          ),
+          check_html = mapply(function(i, core, inc_val) {
+            if (isTRUE(core))
+              '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
+            else
+              sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
+                      i, if (inc_val) " checked" else "")
+          }, id, recommended_core, included, SIMPLIFY = TRUE)
+        )
+        display <- df |>
+          select(` ` = check_html, `No.` = number,
+                 skill_area, Question = question_html,
+                 Core = recommended_core, band = band) |>
+          rename(!!skill_name := skill_area)
+        datatable(
+          display,
+          escape = FALSE, rownames = FALSE, selection = "none",
+          class  = "hover row-border",
+          options = list(
+            pageLength = 50, dom = "tip",
+            columnDefs = list(
+              list(orderable = FALSE, targets = 0),
+              list(visible   = FALSE, targets = c(4, 5))
+            )
+          )
+        ) |>
+          formatStyle("band", target = "row",
+            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff")))
       }, server = FALSE)
     })
   }
