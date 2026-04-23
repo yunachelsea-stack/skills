@@ -676,7 +676,11 @@ ui <- navbarPage(
         tags$hr(),
         module_checkbox_group("sel_device", device_mods, selected = device_mods),
         tags$hr(),
-        tags$strong(textOutput("count_label"))
+        tags$strong(textOutput("count_label")),
+        br(),
+        actionButton("btn_preview", "Preview Survey",
+                     icon = icon("eye"),
+                     style = "width:100%; margin-top:4px;")
       ),
       mainPanel(width = 9,
         uiOutput("module_tabs_ui"),
@@ -862,6 +866,86 @@ server <- function(input, output, session) {
     paste("Selected questions:", sum(all_tbl_data()$included))
   })
 
+  observeEvent(input$btn_preview, {
+    items <- all_tbl_data() |> filter(included)
+    if (nrow(items) == 0) {
+      showModal(modalDialog(
+        title = "Preview Survey",
+        "No questions selected.",
+        easyClose = TRUE, footer = modalButton("Close")
+      ))
+      return()
+    }
+
+    build_preview_html <- function(df) {
+      modules <- unique(df$module)
+      tagList(lapply(modules, function(mod) {
+        mod_df <- df[df$module == mod, ]
+        domains <- unique(mod_df$competency_domain)
+        tagList(
+          tags$h3(style = "font-size:1.15em; font-weight:700; color:#003366;
+                           border-bottom:2px solid #003366; padding-bottom:6px;
+                           margin-top:28px; margin-bottom:12px;", mod),
+          lapply(domains, function(dom) {
+            dom_df <- mod_df[mod_df$competency_domain == dom, ]
+            skills  <- unique(dom_df$skill_area)
+            tagList(
+              tags$h4(style = "font-size:1em; font-weight:600; color:#333;
+                               margin-top:16px; margin-bottom:4px;", dom),
+              lapply(skills, function(sk) {
+                sk_df <- dom_df[dom_df$skill_area == sk, ]
+                tagList(
+                  tags$p(style = "font-size:0.8em; color:#999; font-style:italic;
+                                  margin:6px 0 4px 0; text-transform:uppercase;
+                                  letter-spacing:0.04em;", sk),
+                  lapply(seq_len(nrow(sk_df)), function(i) {
+                    row <- sk_df[i, ]
+                    num <- sub("_.*$", "", row$id)
+                    opts_html <- if (!is.na(row$response_options) &&
+                                     trimws(row$response_options) != "") {
+                      opts <- trimws(strsplit(row$response_options, ";")[[1]])
+                      tags$p(style = "color:#888; font-style:italic; font-size:0.88em;
+                                      margin:2px 0 0 18px; line-height:1.6;",
+                             paste(opts, collapse = "  ·  "))
+                    }
+                    tags$div(style = "margin:6px 0 6px 0;",
+                      tags$p(style = "margin:0; line-height:1.6;",
+                        tags$span(style = "font-weight:600; margin-right:6px; color:#555;",
+                                  paste0(num, ".")),
+                        row$question
+                      ),
+                      opts_html
+                    )
+                  })
+                )
+              })
+            )
+          })
+        )
+      }))
+    }
+
+    showModal(modalDialog(
+      title = tags$span(
+        style = "font-weight:700;",
+        paste0("Survey Preview  ·  ", nrow(items), " questions")
+      ),
+      size       = "l",
+      easyClose  = TRUE,
+      footer     = tagList(
+        modalButton("Close"),
+        downloadButton("dl_word_preview",   "Export Word (.docx)",
+                       style = "margin-left:8px;"),
+        downloadButton("dl_xlsform_preview", "Export XLSForm (.xlsx)",
+                       style = "margin-left:4px;")
+      ),
+      tags$div(
+        style = "max-height:70vh; overflow-y:auto; padding:0 8px;",
+        build_preview_html(items)
+      )
+    ))
+  })
+
   output$dl_xlsform <- downloadHandler(
     filename    = "digital_skills_survey.xlsx",
     contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -875,6 +959,22 @@ server <- function(input, output, session) {
     contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     content     = function(file) {
       export_word(all_tbl_data() |> filter(included), file)
+    }
+  )
+
+  output$dl_word_preview <- downloadHandler(
+    filename    = "digital_skills_survey.docx",
+    contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    content     = function(file) {
+      export_word(all_tbl_data() |> filter(included), file)
+    }
+  )
+
+  output$dl_xlsform_preview <- downloadHandler(
+    filename    = "digital_skills_survey.xlsx",
+    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    content     = function(file) {
+      export_xlsform(all_tbl_data() |> filter(included), file)
     }
   )
 }
