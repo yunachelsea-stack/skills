@@ -82,6 +82,13 @@ pwd_domains <- items_pop |>
 
 `%||%` <- function(a, b) if (!is.null(a)) a else b
 
+# ID formats: "IDL1_desc" → "IDL1"   "DU_HEA1_desc" → "HEA1"   "CHW_IDL1_desc" → "IDL1"
+extract_num <- function(id) {
+  ifelse(grepl("^[A-Z]+_", id),
+         gsub("^[^_]+_([^_]+)_.*$", "\\1", id),
+         sub("_.*$", "", id))
+}
+
 # Column config: names = display labels, values = source column names.
 # Add an entry here to change what any tab shows — no touching render code.
 tab_cols <- list(
@@ -737,10 +744,7 @@ server <- function(input, output, session) {
     }
     domains <- unique(df$competency_domain)
     df |> mutate(
-      number = if (is_pop)
-        gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id)
-      else
-        sub("_.*$", "", id),
+      number = extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -767,7 +771,7 @@ server <- function(input, output, session) {
   prep_pop_df <- function(df, band_by) {
     groups <- unique(df[[band_by]])
     df |> mutate(
-      number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
+      number    = extract_num(id),
       included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band      = ifelse(match(.data[[band_by]], groups) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -886,10 +890,7 @@ server <- function(input, output, session) {
     q_rows <- function(df) {
       lapply(seq_len(nrow(df)), function(i) {
         row <- df[i, ]
-        num <- if (grepl("^[A-Z]+_[A-Z0-9]+_", row$id))
-          gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", row$id)
-        else
-          sub("_.*$", "", row$id)
+        num <- extract_num(row$id)
         opts_html <- if (!is.na(row$response_options) &&
                          trimws(row$response_options) != "") {
           opts <- trimws(strsplit(row$response_options, ";")[[1]])
