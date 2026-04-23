@@ -748,6 +748,10 @@ server <- function(input, output, session) {
         paste0("DU", seq_len(n()))
       else if (mod == "Device Access")
         paste0("DA", seq_len(n()))
+      else if (mod == "Persons with Disabilities")
+        paste0("PWD", seq_len(n()))
+      else if (mod == "OOS Youth")
+        paste0("YTH", seq_len(n()))
       else
         extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
@@ -857,7 +861,8 @@ server <- function(input, output, session) {
         df <- items_pop |>
           filter(section == pop_section_map[["Persons with Disabilities"]],
                  competency_domain == domain) |>
-          prep_pop_df(band_by = "skill_area")
+          prep_pop_df(band_by = "skill_area") |>
+          mutate(number = paste0("PWD", seq_len(n())))
         render_module_dt(df, key = paste0("PWD::", domain), page_len = 50)
       }, server = FALSE)
     })
@@ -943,6 +948,7 @@ server <- function(input, output, session) {
     pwd_df <- items_pop |>
       filter(id %in% inc_ids, section == pop_section_map[["Persons with Disabilities"]])
     if (nrow(pwd_df) > 0) {
+      pwd_df$num_override <- paste0("PWD", seq_len(nrow(pwd_df)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Persons with Disabilities"),
         lapply(intersect(pwd_domains, unique(pwd_df$competency_domain)), function(dom) {
@@ -955,11 +961,13 @@ server <- function(input, output, session) {
     # OOS Youth: module heading then flat list of questions
     oos_df <- items_pop |>
       filter(id %in% inc_ids, section == pop_section_map[["OOS Youth"]])
-    if (nrow(oos_df) > 0)
+    if (nrow(oos_df) > 0) {
+      oos_df$num_override <- paste0("YTH", seq_len(nrow(oos_df)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Out-of-school / Job-seeking Youth"),
         q_rows(oos_df)
       )
+    }
 
     # Device modules (always last): Access = flat list; Use = domain → questions
     d_df <- items_all |> filter(id %in% inc_ids, section != "1 Foundational Skills")
