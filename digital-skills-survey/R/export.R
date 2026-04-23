@@ -40,7 +40,7 @@ parse_choices <- function(opts, qid) {
 export_xlsform <- function(items_df, filepath) {
   types       <- mapply(detect_type, items_df$question, items_df$response_options)
   yn_flags    <- mapply(is_yes_no,   items_df$response_options)
-  list_names  <- ifelse(yn_flags, "yes_no", items_df$id)
+  list_names  <- ifelse(yn_flags, "yesno", items_df$id)
 
   survey_df <- data.frame(
     type      = ifelse(types %in% c("select_one", "select_multiple"),
@@ -53,7 +53,7 @@ export_xlsform <- function(items_df, filepath) {
   )
 
   # One shared yes_no list; individual lists only for non-yes/no questions
-  yes_no_rows  <- data.frame(list_name = "yes_no", name = c("1", "2"),
+  yes_no_rows  <- data.frame(list_name = "yesno", name = c("1", "2"),
                               label = c("Yes", "No"), stringsAsFactors = FALSE)
   choices_list <- mapply(function(opts, qid, yn) if (yn) NULL else parse_choices(opts, qid),
                          items_df$response_options, items_df$id, yn_flags,
