@@ -99,7 +99,7 @@ seq_prefixes <- c(
 )
 
 # Column used to compute row-banding. Default is competency_domain.
-band_cols <- c(
+band_cols <- list(
   "Device Access" = "skill_area",
   "OOS Youth"     = "skill_area"
 )
