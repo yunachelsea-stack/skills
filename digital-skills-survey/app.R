@@ -744,7 +744,10 @@ server <- function(input, output, session) {
     }
     domains <- unique(df$competency_domain)
     df |> mutate(
-      number = extract_num(id),
+      number = if (mod == "Device Use")
+        paste0("DU", seq_len(n()))
+      else
+        extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band       = ifelse(match(competency_domain, domains) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -890,7 +893,7 @@ server <- function(input, output, session) {
     q_rows <- function(df) {
       lapply(seq_len(nrow(df)), function(i) {
         row <- df[i, ]
-        num <- extract_num(row$id)
+        num <- if (!is.null(row$num_override)) row$num_override else extract_num(row$id)
         opts_html <- if (!is.na(row$response_options) &&
                          trimws(row$response_options) != "") {
           opts <- trimws(strsplit(row$response_options, ";")[[1]])
@@ -961,6 +964,7 @@ server <- function(input, output, session) {
     for (mod in intersect(device_mods, unique(d_df$module))) {
       mdf <- d_df[d_df$module == mod, ]
       is_access <- unique(mdf$section) == "2 Device Access"
+      if (!is_access) mdf$num_override <- paste0("DU", seq_len(nrow(mdf)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
         if (is_access)
