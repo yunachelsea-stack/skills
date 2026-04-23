@@ -68,7 +68,13 @@ module_checkbox_group <- function(input_id, mods, selected, req_mods = required_
   )
 }
 
-tab_out_id <- function(m) paste0("dt_", gsub("[^A-Za-z0-9]", "_", m))
+tab_out_id     <- function(m) paste0("dt_",      gsub("[^A-Za-z0-9]", "_", m))
+chw_tab_out_id <- function(d) paste0("dt_CHW__", gsub("[^A-Za-z0-9]", "_", d))
+
+chw_domains <- items_pop |>
+  filter(section == pop_section_map[["Community Health Workers"]]) |>
+  pull(competency_domain) |>
+  unique()
 
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
@@ -702,7 +708,16 @@ server <- function(input, output, session) {
       return(p("Select at least one competency area from the sidebar.",
                style = "color:#888; padding:20px;"))
     tabs <- lapply(mods, function(m) {
-      tabPanel(title = m, value = m, br(), DTOutput(tab_out_id(m)))
+      if (m == "Community Health Workers") {
+        domain_tabs <- lapply(chw_domains, function(d) {
+          tabPanel(title = d, value = d, br(), DTOutput(chw_tab_out_id(d)))
+        })
+        tabPanel(title = m, value = m, br(),
+          do.call(tabsetPanel, c(list(id = "chw_domain_tabs", type = "tabs"), domain_tabs))
+        )
+      } else {
+        tabPanel(title = m, value = m, br(), DTOutput(tab_out_id(m)))
+      }
     })
     do.call(tabsetPanel, c(list(id = "module_tabs", type = "tabs"), tabs))
   })
@@ -733,6 +748,44 @@ server <- function(input, output, session) {
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
               list(visible   = FALSE, targets = c(5, 6))
+            )
+          )
+        ) |>
+          formatStyle("band", target = "row",
+            backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
+          formatStyle("Core", target = "row",
+            fontWeight = styleEqual(TRUE, "600"))
+      }, server = FALSE)
+    })
+  }
+
+  for (d in chw_domains) {
+    local({
+      domain <- d
+      output[[chw_tab_out_id(domain)]] <- renderDT({
+        df <- module_tbl("Community Health Workers") |>
+          filter(competency_domain == domain)
+        skills <- unique(df$skill_area)
+        df <- df |> mutate(
+          band = ifelse(match(skill_area, skills) %% 2 == 1, "odd", "even")
+        )
+        display <- df |> select(
+          ` `      = check_html,
+          `No.`    = number,
+          `Skill`  = skill_area,
+          Question = question_html,
+          Core     = recommended_core,
+          band     = band
+        )
+        datatable(
+          display,
+          escape = FALSE, rownames = FALSE, selection = "none",
+          class  = "hover row-border",
+          options = list(
+            pageLength = 50, dom = "tip",
+            columnDefs = list(
+              list(orderable = FALSE, targets = 0),
+              list(visible   = FALSE, targets = c(4, 5))
             )
           )
         ) |>
