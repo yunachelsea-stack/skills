@@ -111,6 +111,12 @@ tab_cols <- list(
     `Topic`    = "skill_area",
     `Question` = "question_html"
   ),
+  `Device Use` = c(
+    ` `          = "check_html",
+    `No.`        = "number",
+    `Use Case`   = "competency_domain",
+    `Question`   = "question_html"
+  ),
   `PWD::Accessibility settings` = c(
     ` `        = "check_html",
     `No.`      = "number",
@@ -748,6 +754,8 @@ server <- function(input, output, session) {
     } else {
       df <- items_all |> filter(module == mod)
     }
+    if (mod == "Device Use")
+      df <- df |> mutate(competency_domain = sub("^Device Use\\s*-\\s*", "", competency_domain))
     domains <- unique(df$competency_domain)
     df |> mutate(
       number = if (mod == "Device Use")
@@ -984,6 +992,8 @@ server <- function(input, output, session) {
         paste0("DA", seq_len(nrow(mdf)))
       else
         paste0("DU", seq_len(nrow(mdf)))
+      if (!is_access)
+        mdf$competency_domain <- sub("^Device Use\\s*-\\s*", "", mdf$competency_domain)
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
         if (is_access)
