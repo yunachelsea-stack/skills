@@ -18,11 +18,11 @@ items_pop <- read_csv("data/items_population_specific.csv", show_col_types = FAL
   )
 
 foundational_mods <- items_all |>
-  filter(section == "1.4.1 Foundational") |>
+  filter(section == "1 Foundational Skills") |>
   pull(module) |> unique()
 
 device_mods <- items_all |>
-  filter(section != "1.4.1 Foundational") |>
+  filter(section != "1 Foundational Skills") |>
   pull(module) |> unique()
 
 pop_section_map <- c(
@@ -911,7 +911,7 @@ server <- function(input, output, session) {
     sections <- list()
 
     # Foundational modules: module → domain → questions
-    f_df <- items_all |> filter(id %in% inc_ids, section == "1.4.1 Foundational")
+    f_df <- items_all |> filter(id %in% inc_ids, section == "1 Foundational Skills")
     for (mod in intersect(foundational_mods, unique(f_df$module))) {
       mdf <- f_df[f_df$module == mod, ]
       sections[[length(sections)+1]] <- tagList(
@@ -951,7 +951,7 @@ server <- function(input, output, session) {
       sections[[length(sections)+1]] <- q_rows(oos_df)
 
     # Device modules (always last): module → domain → questions
-    d_df <- items_all |> filter(id %in% inc_ids, section != "1.4.1 Foundational")
+    d_df <- items_all |> filter(id %in% inc_ids, section != "1 Foundational Skills")
     for (mod in intersect(device_mods, unique(d_df$module))) {
       mdf <- d_df[d_df$module == mod, ]
       sections[[length(sections)+1]] <- tagList(
