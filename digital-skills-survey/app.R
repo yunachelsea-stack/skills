@@ -867,82 +867,115 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$btn_preview, {
-    items <- all_tbl_data() |> filter(included)
-    if (nrow(items) == 0) {
+    inc_ids <- all_tbl_data() |> filter(included) |> pull(id)
+    n_total <- length(inc_ids)
+    if (n_total == 0) {
       showModal(modalDialog(
-        title = "Preview Survey",
-        "No questions selected.",
+        title = "Preview Survey", "No questions selected.",
         easyClose = TRUE, footer = modalButton("Close")
       ))
       return()
     }
 
-    build_preview_html <- function(df) {
-      modules <- unique(df$module)
-      tagList(lapply(modules, function(mod) {
-        mod_df <- df[df$module == mod, ]
-        domains <- unique(mod_df$competency_domain)
-        tagList(
-          tags$h3(style = "font-size:1.15em; font-weight:700; color:#003366;
-                           border-bottom:2px solid #003366; padding-bottom:6px;
-                           margin-top:28px; margin-bottom:12px;", mod),
-          lapply(domains, function(dom) {
-            dom_df <- mod_df[mod_df$competency_domain == dom, ]
-            skills  <- unique(dom_df$skill_area)
-            tagList(
-              tags$h4(style = "font-size:1em; font-weight:600; color:#333;
-                               margin-top:16px; margin-bottom:4px;", dom),
-              lapply(skills, function(sk) {
-                sk_df <- dom_df[dom_df$skill_area == sk, ]
-                tagList(
-                  tags$p(style = "font-size:0.8em; color:#999; font-style:italic;
-                                  margin:6px 0 4px 0; text-transform:uppercase;
-                                  letter-spacing:0.04em;", sk),
-                  lapply(seq_len(nrow(sk_df)), function(i) {
-                    row <- sk_df[i, ]
-                    num <- sub("_.*$", "", row$id)
-                    opts_html <- if (!is.na(row$response_options) &&
-                                     trimws(row$response_options) != "") {
-                      opts <- trimws(strsplit(row$response_options, ";")[[1]])
-                      tags$p(style = "color:#888; font-style:italic; font-size:0.88em;
-                                      margin:2px 0 0 18px; line-height:1.6;",
-                             paste(opts, collapse = "  ·  "))
-                    }
-                    tags$div(style = "margin:6px 0 6px 0;",
-                      tags$p(style = "margin:0; line-height:1.6;",
-                        tags$span(style = "font-weight:600; margin-right:6px; color:#555;",
-                                  paste0(num, ".")),
-                        row$question
-                      ),
-                      opts_html
-                    )
-                  })
-                )
-              })
-            )
-          })
+    h3_style <- "font-size:1.1em; font-weight:700; color:#003366;
+                 border-bottom:2px solid #003366; padding-bottom:5px;
+                 margin-top:28px; margin-bottom:10px;"
+    h4_style <- "font-size:0.97em; font-weight:600; color:#333;
+                 margin-top:14px; margin-bottom:4px;"
+
+    q_rows <- function(df) {
+      lapply(seq_len(nrow(df)), function(i) {
+        row <- df[i, ]
+        num <- if (grepl("^[A-Z]+_[A-Z0-9]+_", row$id))
+          gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", row$id)
+        else
+          sub("_.*$", "", row$id)
+        opts_html <- if (!is.na(row$response_options) &&
+                         trimws(row$response_options) != "") {
+          opts <- trimws(strsplit(row$response_options, ";")[[1]])
+          tags$p(style = "color:#888; font-style:italic; font-size:0.87em;
+                          margin:2px 0 8px 18px; line-height:1.6;",
+                 paste(opts, collapse = "  ·  "))
+        }
+        tags$div(style = "margin:5px 0;",
+          tags$p(style = "margin:0; line-height:1.6;",
+            tags$span(style = "font-weight:600; color:#555; margin-right:5px;",
+                      paste0(num, ".")),
+            row$question
+          ),
+          opts_html
         )
-      }))
+      })
+    }
+
+    sections <- list()
+
+    # Foundational modules: module → domain → questions
+    f_df <- items_all |> filter(id %in% inc_ids, section == "1.4.1 Foundational")
+    for (mod in intersect(foundational_mods, unique(f_df$module))) {
+      mdf <- f_df[f_df$module == mod, ]
+      sections[[length(sections)+1]] <- tagList(
+        tags$h3(style = h3_style, mod),
+        lapply(unique(mdf$competency_domain), function(dom)
+          tagList(tags$h4(style = h4_style, dom),
+                  q_rows(mdf[mdf$competency_domain == dom, ])))
+      )
+    }
+
+    # CHW: original domain (module col in items_pop) → questions
+    chw_df <- items_pop |>
+      filter(id %in% inc_ids, section == pop_section_map[["Community Health Workers"]])
+    for (dom in intersect(chw_domains, unique(chw_df$module))) {
+      ddf <- chw_df[chw_df$module == dom, ]
+      sections[[length(sections)+1]] <- tagList(
+        tags$h3(style = h3_style, dom),
+        q_rows(ddf)
+      )
+    }
+
+    # PWD: competency_domain (Setting / Software) → questions
+    pwd_df <- items_pop |>
+      filter(id %in% inc_ids, section == pop_section_map[["Persons with Disabilities"]])
+    for (dom in intersect(pwd_domains, unique(pwd_df$competency_domain))) {
+      ddf <- pwd_df[pwd_df$competency_domain == dom, ]
+      sections[[length(sections)+1]] <- tagList(
+        tags$h3(style = h3_style, dom),
+        q_rows(ddf)
+      )
+    }
+
+    # OOS Youth: no grouping, flat list
+    oos_df <- items_pop |>
+      filter(id %in% inc_ids, section == pop_section_map[["OOS Youth"]])
+    if (nrow(oos_df) > 0)
+      sections[[length(sections)+1]] <- q_rows(oos_df)
+
+    # Device modules (always last): module → domain → questions
+    d_df <- items_all |> filter(id %in% inc_ids, section != "1.4.1 Foundational")
+    for (mod in intersect(device_mods, unique(d_df$module))) {
+      mdf <- d_df[d_df$module == mod, ]
+      sections[[length(sections)+1]] <- tagList(
+        tags$h3(style = h3_style, mod),
+        lapply(unique(mdf$competency_domain), function(dom)
+          tagList(tags$h4(style = h4_style, dom),
+                  q_rows(mdf[mdf$competency_domain == dom, ])))
+      )
     }
 
     showModal(modalDialog(
-      title = tags$span(
-        style = "font-weight:700;",
-        paste0("Survey Preview  ·  ", nrow(items), " questions")
-      ),
-      size       = "l",
-      easyClose  = TRUE,
-      footer     = tagList(
+      title     = tags$span(style = "font-weight:700;",
+                            paste0("Survey Preview  ·  ", n_total, " questions")),
+      size      = "l",
+      easyClose = TRUE,
+      footer    = tagList(
         modalButton("Close"),
-        downloadButton("dl_word_preview",   "Export Word (.docx)",
+        downloadButton("dl_word_preview",    "Export Word (.docx)",
                        style = "margin-left:8px;"),
         downloadButton("dl_xlsform_preview", "Export XLSForm (.xlsx)",
                        style = "margin-left:4px;")
       ),
-      tags$div(
-        style = "max-height:70vh; overflow-y:auto; padding:0 8px;",
-        build_preview_html(items)
-      )
+      tags$div(style = "max-height:70vh; overflow-y:auto; padding:0 8px;",
+               tagList(sections))
     ))
   })
 
