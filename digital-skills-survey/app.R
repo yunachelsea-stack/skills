@@ -34,6 +34,39 @@ pop_mods <- names(pop_section_map)
 
 all_mods <- c(foundational_mods, device_mods, pop_mods)
 
+required_mods <- items_all |>
+  group_by(module) |>
+  summarise(has_core = any(recommended_core, na.rm = TRUE)) |>
+  filter(has_core) |>
+  pull(module)
+
+module_checkbox_group <- function(input_id, mods, selected, req_mods = required_mods) {
+  item_tags <- lapply(mods, function(m) {
+    is_req <- m %in% req_mods
+    inp <- if (is_req) {
+      tags$input(type = "checkbox", name = input_id, value = m,
+                 checked = "checked", disabled = "disabled")
+    } else if (m %in% selected) {
+      tags$input(type = "checkbox", name = input_id, value = m, checked = "checked")
+    } else {
+      tags$input(type = "checkbox", name = input_id, value = m)
+    }
+    tags$div(class = "checkbox",
+      tags$label(
+        style = if (is_req) "opacity:0.55; cursor:default;" else "",
+        inp,
+        tags$span(style = "margin-left:4px;", m,
+          if (is_req) tags$small(" · required",
+            style = "color:#aaa; font-style:italic; margin-left:3px;")
+        )
+      )
+    )
+  })
+  tags$div(id = input_id, class = "shiny-input-checkboxgroup shiny-input-container",
+    tags$div(class = "shiny-options-group", item_tags)
+  )
+}
+
 tab_out_id <- function(m) paste0("dt_", gsub("[^A-Za-z0-9]", "_", m))
 
 # ── UI ───────────────────────────────────────────────────────────────────────
@@ -539,26 +572,19 @@ ui <- navbarPage(
                style = "margin-bottom:4px;"),
         tags$div(
           style = "border-left:3px solid #e67e22; padding-left:10px;",
-          checkboxGroupInput(
-            "sel_foundational", label = NULL,
-            choices = foundational_mods, selected = foundational_mods
-          )
+          module_checkbox_group("sel_foundational", foundational_mods,
+                               selected = foundational_mods)
         ),
         tags$hr(),
         tags$p(tags$strong("Population-specific Digital Skills"),
                style = "margin-bottom:4px;"),
         tags$div(
           style = "border-left:3px solid #27ae60; padding-left:10px;",
-          checkboxGroupInput(
-            "sel_pop", label = NULL,
-            choices = pop_mods, selected = NULL
-          )
+          module_checkbox_group("sel_pop", pop_mods, selected = NULL,
+                               req_mods = character(0))
         ),
         tags$hr(),
-        checkboxGroupInput(
-          "sel_device", label = NULL,
-          choices = device_mods, selected = device_mods
-        ),
+        module_checkbox_group("sel_device", device_mods, selected = device_mods),
         tags$hr(),
         tags$strong(textOutput("count_label"))
       ),
