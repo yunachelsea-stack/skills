@@ -9,6 +9,13 @@ detect_type <- function(question, response_options) {
   "select_one"
 }
 
+is_yes_no <- function(opts) {
+  if (is.na(opts) || trimws(opts) == "") return(FALSE)
+  parts  <- trimws(strsplit(opts, ";")[[1]])
+  labels <- trimws(sub("^[0-9]+\\.", "", parts))
+  length(labels) == 2 && tolower(labels[1]) == "yes" && tolower(labels[2]) == "no"
+}
+
 parse_choices <- function(opts, qid) {
   if (is.na(opts) || trimws(opts) == "") return(NULL)
   parts <- trimws(strsplit(opts, ";")[[1]])
@@ -31,22 +38,29 @@ parse_choices <- function(opts, qid) {
 }
 
 export_xlsform <- function(items_df, filepath) {
-  types <- mapply(detect_type, items_df$question, items_df$response_options)
+  types       <- mapply(detect_type, items_df$question, items_df$response_options)
+  yn_flags    <- mapply(is_yes_no,   items_df$response_options)
+  list_names  <- ifelse(yn_flags, "yes_no", items_df$id)
+
   survey_df <- data.frame(
     type      = ifelse(types %in% c("select_one", "select_multiple"),
-                       paste(types, items_df$id), types),
+                       paste(types, list_names), types),
     name      = items_df$id,
     label     = items_df$question,
     relevance = ifelse(is.na(items_df$relevance), "", items_df$relevance),
     required  = "",
     stringsAsFactors = FALSE
   )
-  choices_list <- mapply(parse_choices, items_df$response_options, items_df$id,
+
+  # One shared yes_no list; individual lists only for non-yes/no questions
+  yes_no_rows  <- data.frame(list_name = "yes_no", name = c("1", "2"),
+                              label = c("Yes", "No"), stringsAsFactors = FALSE)
+  choices_list <- mapply(function(opts, qid, yn) if (yn) NULL else parse_choices(opts, qid),
+                         items_df$response_options, items_df$id, yn_flags,
                          SIMPLIFY = FALSE)
-  choices_rows <- do.call(rbind, Filter(Negate(is.null), choices_list))
-  if (is.null(choices_rows))
-    choices_rows <- data.frame(list_name = character(), name = character(),
-                               label = character())
+  other_rows   <- do.call(rbind, Filter(Negate(is.null), choices_list))
+  choices_rows <- if (is.null(other_rows)) yes_no_rows else rbind(yes_no_rows, other_rows)
+
   wb <- createWorkbook()
   addWorksheet(wb, "survey")
   addWorksheet(wb, "choices")
