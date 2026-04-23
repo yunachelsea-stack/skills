@@ -315,7 +315,7 @@ ui <- navbarPage(
                      box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:16px;
                      border-left:4px solid #003366;",
             tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
-                    "The framework includes"),
+                    "Survey questions cover:"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.75;",
               tags$li("Foundational digital skills and foundational AI skills"),
               tags$li("Population-specific digital skills (community health workers as an example
