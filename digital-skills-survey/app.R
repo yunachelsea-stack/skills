@@ -738,15 +738,17 @@ server <- function(input, output, session) {
       mod <- m
       output[[tab_out_id(mod)]] <- renderDT({
         df <- module_tbl(mod)
-        display <- df |> select(
-          ` `          = check_html,
-          `No.`        = number,
-          `Competency` = competency_domain,
-          `Skill`      = skill_area,
-          Question     = question_html,
-          Core         = recommended_core,
-          band         = band
-        )
+        drop_comp <- mod == "OOS Youth"
+        display <- if (drop_comp) {
+          df |> select(` ` = check_html, `No.` = number,
+                       `Skill` = skill_area, Question = question_html,
+                       Core = recommended_core, band = band)
+        } else {
+          df |> select(` ` = check_html, `No.` = number,
+                       `Competency` = competency_domain, `Skill` = skill_area,
+                       Question = question_html, Core = recommended_core, band = band)
+        }
+        hidden_cols <- if (drop_comp) c(4, 5) else c(5, 6)
         datatable(
           display,
           escape    = FALSE,
@@ -758,7 +760,7 @@ server <- function(input, output, session) {
             dom        = "tip",
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(5, 6))
+              list(visible   = FALSE, targets = hidden_cols)
             )
           )
         ) |>
