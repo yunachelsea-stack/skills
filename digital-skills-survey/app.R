@@ -53,11 +53,12 @@ module_checkbox_group <- function(input_id, mods, selected, req_mods = required_
     }
     tags$div(class = "checkbox",
       tags$label(
-        style = if (is_req) "opacity:0.55; cursor:default;" else "",
+        style = if (is_req) "cursor:default;" else "",
         inp,
-        tags$span(style = "margin-left:4px;", m,
-          if (is_req) tags$small(" · required",
-            style = "color:#aaa; font-style:italic; margin-left:3px;")
+        tags$span(style = "margin-left:4px;", m),
+        if (is_req) tags$div(
+          tags$small("Some questions in this module are required",
+            style = "color:#aaa; font-style:italic; margin-left:20px; display:block;")
         )
       )
     )
