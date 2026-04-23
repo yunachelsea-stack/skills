@@ -73,7 +73,7 @@ chw_tab_out_id <- function(d) paste0("dt_CHW__", gsub("[^A-Za-z0-9]", "_", d))
 
 chw_domains <- items_pop |>
   filter(section == pop_section_map[["Community Health Workers"]]) |>
-  pull(competency_domain) |>
+  pull(module) |>
   unique()
 
 # ── UI ───────────────────────────────────────────────────────────────────────
@@ -763,19 +763,36 @@ server <- function(input, output, session) {
     local({
       domain <- d
       output[[chw_tab_out_id(domain)]] <- renderDT({
-        df <- module_tbl("Community Health Workers") |>
-          filter(competency_domain == domain)
-        skills <- unique(df$skill_area)
+        df <- items_pop |>
+          filter(section == pop_section_map[["Community Health Workers"]],
+                 module == domain)
+        comps <- unique(df$competency_domain)
         df <- df |> mutate(
-          band = ifelse(match(skill_area, skills) %% 2 == 1, "odd", "even")
+          number    = gsub("^[^_]+_([A-Z0-9]+)_.*$", "\\1", id),
+          included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
+          band      = ifelse(match(competency_domain, comps) %% 2 == 1, "odd", "even"),
+          question_html = ifelse(
+            !is.na(response_options) & trimws(response_options) != "",
+            paste0(question, "<br><small style='color:#999;font-style:italic;'>",
+                   gsub(";", " &nbsp;&middot;&nbsp;", response_options), "</small>"),
+            question
+          ),
+          check_html = mapply(function(i, core, inc_val) {
+            if (isTRUE(core))
+              '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
+            else
+              sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
+                      i, if (inc_val) " checked" else "")
+          }, id, recommended_core, included, SIMPLIFY = TRUE)
         )
         display <- df |> select(
-          ` `      = check_html,
-          `No.`    = number,
-          `Skill`  = skill_area,
-          Question = question_html,
-          Core     = recommended_core,
-          band     = band
+          ` `          = check_html,
+          `No.`        = number,
+          `Competency` = competency_domain,
+          `Skill`      = skill_area,
+          Question     = question_html,
+          Core         = recommended_core,
+          band         = band
         )
         datatable(
           display,
@@ -785,7 +802,7 @@ server <- function(input, output, session) {
             pageLength = 50, dom = "tip",
             columnDefs = list(
               list(orderable = FALSE, targets = 0),
-              list(visible   = FALSE, targets = c(4, 5))
+              list(visible   = FALSE, targets = c(5, 6))
             )
           )
         ) |>
