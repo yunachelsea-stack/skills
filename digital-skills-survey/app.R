@@ -946,11 +946,14 @@ server <- function(input, output, session) {
       )
     }
 
-    # OOS Youth: no grouping, flat list
+    # OOS Youth: module heading then flat list of questions
     oos_df <- items_pop |>
       filter(id %in% inc_ids, section == pop_section_map[["OOS Youth"]])
     if (nrow(oos_df) > 0)
-      sections[[length(sections)+1]] <- q_rows(oos_df)
+      sections[[length(sections)+1]] <- tagList(
+        tags$h3(style = h3_style, "Out-of-school / Job-seeking Youth"),
+        q_rows(oos_df)
+      )
 
     # Device modules (always last): Access = flat list; Use = domain → questions
     d_df <- items_all |> filter(id %in% inc_ids, section != "1 Foundational Skills")
