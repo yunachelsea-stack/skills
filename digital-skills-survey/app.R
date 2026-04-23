@@ -153,6 +153,294 @@ ui <- navbarPage(
       )
     ),
 
+    # Measurement framework
+    div(class = "lp-section",
+      tags$h2("The measurement framework"),
+      tags$br(),
+
+      # Two columns: what it includes + what it's built on
+      fluidRow(
+        column(4,
+          div(style = "background:#fff; border-radius:10px; padding:24px 22px;
+                       box-shadow:0 2px 10px rgba(0,0,0,0.07); height:100%;
+                       border-left:4px solid #003366;",
+            tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
+                    "The framework includes"),
+            tags$ol(style = "padding-left:18px; color:#444; line-height:1.75;",
+              tags$li("Foundational digital skills and foundational AI skills"),
+              tags$li("Population-specific digital skills (community health workers as an example
+                       of last-mile service providers, persons with disabilities, and
+                       out-of-school / job-seeking youth)"),
+              tags$li("Device access and device use")
+            )
+          )
+        ),
+        column(8,
+          div(style = "background:#fff; border-radius:10px; padding:24px 22px;
+                       box-shadow:0 2px 10px rgba(0,0,0,0.07); height:100%;
+                       border-left:4px solid #0a5fa8;",
+            tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
+                    "Built on several frameworks"),
+            tags$ol(style = "padding-left:18px; color:#444; line-height:1.7;",
+              tags$li(
+                tags$strong("DigComp Framework"),
+                " developed by the Joint Research Centre (JRC) of the European Commission,
+                 defines 21 competences organised across five key areas:",
+                tags$ul(style = "margin-top:8px; margin-bottom:8px;",
+                  tags$li(tags$strong("Information and data literacy: "),
+                    "The ability to identify, locate, evaluate, and effectively manage
+                     digital information and data."),
+                  tags$li(tags$strong("Communication and collaboration: "),
+                    "The capacity to interact, share, and work together through digital
+                     technologies in safe, inclusive, and responsible ways."),
+                  tags$li(tags$strong("Digital content creation: "),
+                    "The ability to develop, edit, and share digital content in multiple
+                     formats (such as text, images, video, or code), while respecting
+                     copyright and licensing rules."),
+                  tags$li(tags$strong("Safety: "),
+                    "The competence to protect devices, personal data, health, well-being,
+                     and the environment when using digital technologies."),
+                  tags$li(tags$strong("Problem solving: "),
+                    "The ability to identify digital needs, address technical challenges,
+                     and innovate by adapting and applying digital technologies.")
+                )
+              ),
+              tags$li(
+                "An additional competency area, ",
+                tags$strong("Devices and software operations"),
+                ", was adapted from the ",
+                tags$em("Digital Literacy Global Framework"),
+                " developed for the UNESCO Institute for Statistics."
+              ),
+              tags$li(
+                "AI and digital skills: This toolkit focuses narrowly on ",
+                tags$strong("foundational AI skills"),
+                ". Measures on AI use are integrated within each competency area."
+              )
+            )
+          )
+        )
+      ),
+
+      tags$br(), tags$br(),
+
+      # Framework table
+      tags$h3(style = "font-size:1.05em; font-weight:600; color:#444; margin-bottom:16px;",
+              "Illustrative digital skills linked to competences"),
+
+      tags$style(HTML("
+        .fw-table { width:100%; border-collapse:collapse; font-size:0.88em; }
+        .fw-table th {
+          background:#003366; color:#fff; padding:10px 14px;
+          text-align:left; font-weight:600;
+        }
+        .fw-table td { padding:9px 14px; vertical-align:top; border-bottom:1px solid #e8ecef; }
+        .fw-table tr:last-child td { border-bottom:none; }
+        .fw-table .fw-area {
+          font-weight:600; color:#fff; writing-mode:horizontal-tb;
+          background:#0a5fa8; text-align:center;
+        }
+        .fw-table tr.fw-row-idl td { background:#f7f9fb; }
+        .fw-table tr.fw-row-cc  td { background:#fff; }
+        .fw-table tr.fw-row-dcc td { background:#f7f9fb; }
+        .fw-table tr.fw-row-saf td { background:#fff; }
+        .fw-table tr.fw-row-ps  td { background:#f7f9fb; }
+        .fw-table tr.fw-row-dso td { background:#fff; }
+        .fw-table tr.fw-row-car td { background:#f7f9fb; }
+        .fw-table .fw-area-cell {
+          background:#003366; color:#fff; font-weight:600;
+          font-size:0.92em; vertical-align:middle; text-align:center;
+          padding:10px 12px;
+        }
+        .fw-skill-list { margin:0; padding-left:16px; }
+        .fw-skill-list li { margin-bottom:2px; }
+      ")),
+
+      tags$table(class = "fw-table",
+        tags$thead(
+          tags$tr(
+            tags$th(style="width:14%", "Competency area"),
+            tags$th(style="width:26%", "Competence"),
+            tags$th("Illustrative digital skills")
+          )
+        ),
+        tags$tbody(
+          # Information and data literacy
+          tags$tr(class="fw-row-idl",
+            tags$td(class="fw-area-cell", rowspan="3", "Information and data literacy"),
+            tags$td("1.1 Browsing, searching and filtering data, information, and digital content"),
+            tags$td(tags$ul(class="fw-skill-list", tags$li("Using search engines")))
+          ),
+          tags$tr(class="fw-row-idl",
+            tags$td("1.2 Evaluating data, information, and digital content"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Fact-checking websites"), tags$li("Comparing with multiple sources")))
+          ),
+          tags$tr(class="fw-row-idl",
+            tags$td("1.3 Managing data, information, and digital content"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using spreadsheets/databases"),
+              tags$li("Organising files in cloud storage"),
+              tags$li("Creating folder hierarchies")))
+          ),
+          # Communication and collaboration
+          tags$tr(class="fw-row-cc",
+            tags$td(class="fw-area-cell", rowspan="4", "Communication and collaboration"),
+            tags$td("2.1 Interacting through digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using email, instant messaging, video conferencing tools (Zoom, Teams)"),
+              tags$li("Commenting on shared documents"),
+              tags$li("Participating in forums")))
+          ),
+          tags$tr(class="fw-row-cc",
+            tags$td("2.2 Sharing through digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Sharing files via Google Drive/Dropbox"),
+              tags$li("Posting on social media responsibly"),
+              tags$li("Using collaborative project tools (Trello, Slack)")))
+          ),
+          tags$tr(class="fw-row-cc",
+            tags$td("2.3 Engaging in citizenship through digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Participating in online petitions"),
+              tags$li("Joining e-government services"),
+              tags$li("Contributing to digital communities, voicing opinions via social media"),
+              tags$li("Practicing netiquette")))
+          ),
+          tags$tr(class="fw-row-cc",
+            tags$td("2.4 Collaborating through digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Co-editing documents in Google Docs"),
+              tags$li("Using shared calendars")))
+          ),
+          # Digital content creation
+          tags$tr(class="fw-row-dcc",
+            tags$td(class="fw-area-cell", rowspan="4", "Digital content creation"),
+            tags$td("3.1 Developing digital content"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Creating presentations (PowerPoint)"),
+              tags$li("Posting on social media"),
+              tags$li("Writing blogs"),
+              tags$li("Editing videos, photos")))
+          ),
+          tags$tr(class="fw-row-dcc",
+            tags$td("3.2 Integrating and re-elaborating digital content"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Embedding charts into reports"),
+              tags$li("Curating content into newsletters")))
+          ),
+          tags$tr(class="fw-row-dcc",
+            tags$td("3.3 Copyright and licenses"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Applying Creative Commons licenses"),
+              tags$li("Citing digital sources properly"),
+              tags$li("Checking license types")))
+          ),
+          tags$tr(class="fw-row-dcc",
+            tags$td("3.4 Programming"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Writing scripts in Python/JavaScript"),
+              tags$li("Building simple apps/websites"),
+              tags$li("Automating tasks with code")))
+          ),
+          # Safety
+          tags$tr(class="fw-row-saf",
+            tags$td(class="fw-area-cell", rowspan="4", "Safety"),
+            tags$td("4.1 Protecting devices"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Installing antivirus software"),
+              tags$li("Updating operating systems"),
+              tags$li("Configuring firewalls"),
+              tags$li("Using secure passwords")))
+          ),
+          tags$tr(class="fw-row-saf",
+            tags$td("4.2 Protecting personal data and privacy"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Setting social media privacy settings"),
+              tags$li("Enabling two-factor authentication"),
+              tags$li("Managing cookies and permissions")))
+          ),
+          tags$tr(class="fw-row-saf",
+            tags$td("4.3 Protecting health and well-being, including reducing digital harms"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Adjusting screen brightness"),
+              tags$li("Using blue-light filters"),
+              tags$li("Managing screen time")))
+          ),
+          tags$tr(class="fw-row-saf",
+            tags$td("4.4 Protecting the environment"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Recycling e-waste"),
+              tags$li("Reducing printing"),
+              tags$li("Using energy-saving modes on devices")))
+          ),
+          # Problem solving
+          tags$tr(class="fw-row-ps",
+            tags$td(class="fw-area-cell", rowspan="4", "Problem solving"),
+            tags$td("5.1 Solving technical problems"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Troubleshooting Wi-Fi issues"),
+              tags$li("Reinstalling software"),
+              tags$li("Clearing cache")))
+          ),
+          tags$tr(class="fw-row-ps",
+            tags$td("5.2 Identifying needs and technological responses"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Selecting the right app for project management"),
+              tags$li("Choosing appropriate data visualisation tools"),
+              tags$li("Evaluating software alternatives")))
+          ),
+          tags$tr(class="fw-row-ps",
+            tags$td("5.3 Creatively using digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using AI tools for idea generation"),
+              tags$li("Creating infographics"),
+              tags$li("Designing interactive learning modules")))
+          ),
+          tags$tr(class="fw-row-ps",
+            tags$td("5.4 Identifying digital competence gaps"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using self-assessment tools"),
+              tags$li("Tracking skill progress"),
+              tags$li("Identifying training needs")))
+          ),
+          # Device and software operations
+          tags$tr(class="fw-row-dso",
+            tags$td(class="fw-area-cell", rowspan="2", "Device and software operations"),
+            tags$td("6.1 Physical operations of digital devices"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Setting up a printer"),
+              tags$li("Troubleshooting hardware"),
+              tags$li("Managing Wi-Fi routers")))
+          ),
+          tags$tr(class="fw-row-dso",
+            tags$td("6.2 Software operations in digital devices"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Installing/uninstalling programs"),
+              tags$li("Updating applications"),
+              tags$li("Configuring settings"),
+              tags$li("Managing cloud apps")))
+          ),
+          # Career specific competencies
+          tags$tr(class="fw-row-car",
+            tags$td(class="fw-area-cell", rowspan="2", "Career specific competencies"),
+            tags$td("7.1 Operating specialised digital technologies"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using industry-specific software"),
+              tags$li("Using point-of-sale systems"),
+              tags$li("Using point of care devices")))
+          ),
+          tags$tr(class="fw-row-car",
+            tags$td("7.2 Interpreting and manipulating data, information and digital content"),
+            tags$td(tags$ul(class="fw-skill-list",
+              tags$li("Using Excel for data analysis"),
+              tags$li("Creating dashboards (Tableau, Power BI)"),
+              tags$li("Running statistical tests")))
+          )
+        )
+      )
+    ),
+
     # Feature cards
     div(class = "lp-section",
       tags$h2("What you’ll find on this platform"),
