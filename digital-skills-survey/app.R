@@ -135,7 +135,7 @@ render_module_dt <- function(df, key, page_len = 25) {
     )
   ) |>
     formatStyle("band", target = "row",
-      backgroundColor = styleEqual(c("odd", "even"), c("#f2f2f2", "#ffffff"))) |>
+      backgroundColor = styleEqual(c("odd", "even"), c("#ffffff", "#f2f2f2"))) |>
     formatStyle("Core", target = "row",
       fontWeight = styleEqual(TRUE, "600"))
 }
