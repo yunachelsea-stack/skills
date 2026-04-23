@@ -112,20 +112,6 @@ ui <- navbarPage(
       )
     ),
 
-    # Why this matters
-    div(class = "lp-section",
-      tags$h2("Why this matters"),
-      tags$p(style = "max-width:820px; line-height:1.7; color:#444; margin-bottom:16px;",
-        "Millions of people—especially women and underserved groups—remain excluded
-         from the digital world, not just because of access, but because of gaps in skills
-         and confidence. Without reliable data on digital skills, it’s difficult to
-         design effective programs, target investments, or track progress."
-      ),
-      tags$p(style = "max-width:820px; line-height:1.7; color:#444; font-weight:500;",
-        "This platform helps you generate the data needed to close those gaps."
-      )
-    ),
-
     # What you can do here
     div(class = "lp-section", style = "background:#f7f9fb; max-width:100%; padding: 48px 40px;",
       div(style = "max-width:1100px; margin:0 auto;",
