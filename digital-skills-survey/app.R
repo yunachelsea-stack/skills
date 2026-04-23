@@ -8,7 +8,8 @@ source("R/export.R")
 items_all <- read_csv("data/items.csv", show_col_types = FALSE) |>
   mutate(
     recommended_core   = as.logical(recommended_core),
-    cognitively_tested = as.logical(cognitively_tested)
+    cognitively_tested = as.logical(cognitively_tested),
+    competency_domain  = sub("^Device Use\\s*-\\s*", "", competency_domain)
   )
 
 items_pop <- read_csv("data/items_population_specific.csv", show_col_types = FALSE) |>
@@ -88,6 +89,14 @@ extract_num <- function(id) {
          gsub("^[^_]+_([^_]+)_.*$", "\\1", id),
          sub("_.*$", "", id))
 }
+
+# Modules that use sequential numbering instead of ID-derived numbers.
+seq_prefixes <- c(
+  "Device Access"             = "DA",
+  "Device Use"                = "DU",
+  "Persons with Disabilities" = "PWD",
+  "OOS Youth"                 = "YTH"
+)
 
 # Column config: names = display labels, values = source column names.
 # Add an entry here to change what any tab shows — no touching render code.
@@ -754,18 +763,10 @@ server <- function(input, output, session) {
     } else {
       df <- items_all |> filter(module == mod)
     }
-    if (mod == "Device Use")
-      df <- df |> mutate(competency_domain = sub("^Device Use\\s*-\\s*", "", competency_domain))
     domains <- unique(df$competency_domain)
     df |> mutate(
-      number = if (mod == "Device Use")
-        paste0("DU", seq_len(n()))
-      else if (mod == "Device Access")
-        paste0("DA", seq_len(n()))
-      else if (mod == "Persons with Disabilities")
-        paste0("PWD", seq_len(n()))
-      else if (mod == "OOS Youth")
-        paste0("YTH", seq_len(n()))
+      number = if (mod %in% names(seq_prefixes))
+        paste0(seq_prefixes[[mod]], seq_len(n()))
       else
         extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
@@ -992,8 +993,6 @@ server <- function(input, output, session) {
         paste0("DA", seq_len(nrow(mdf)))
       else
         paste0("DU", seq_len(nrow(mdf)))
-      if (!is_access)
-        mdf$competency_domain <- sub("^Device Use\\s*-\\s*", "", mdf$competency_domain)
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
         if (is_access)
