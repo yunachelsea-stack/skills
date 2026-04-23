@@ -746,6 +746,8 @@ server <- function(input, output, session) {
     df |> mutate(
       number = if (mod == "Device Use")
         paste0("DU", seq_len(n()))
+      else if (mod == "Device Access")
+        paste0("DA", seq_len(n()))
       else
         extract_num(id),
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
@@ -964,7 +966,10 @@ server <- function(input, output, session) {
     for (mod in intersect(device_mods, unique(d_df$module))) {
       mdf <- d_df[d_df$module == mod, ]
       is_access <- unique(mdf$section) == "2 Device Access"
-      if (!is_access) mdf$num_override <- paste0("DU", seq_len(nrow(mdf)))
+      mdf$num_override <- if (is_access)
+        paste0("DA", seq_len(nrow(mdf)))
+      else
+        paste0("DU", seq_len(nrow(mdf)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
         if (is_access)
