@@ -933,14 +933,16 @@ server <- function(input, output, session) {
       )
     }
 
-    # PWD: competency_domain (Setting / Software) → questions
+    # PWD: module heading → competency_domain (Setting / Software) → questions
     pwd_df <- items_pop |>
       filter(id %in% inc_ids, section == pop_section_map[["Persons with Disabilities"]])
-    for (dom in intersect(pwd_domains, unique(pwd_df$competency_domain))) {
-      ddf <- pwd_df[pwd_df$competency_domain == dom, ]
+    if (nrow(pwd_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
-        tags$h3(style = h3_style, dom),
-        q_rows(ddf)
+        tags$h3(style = h3_style, "Persons with Disabilities"),
+        lapply(intersect(pwd_domains, unique(pwd_df$competency_domain)), function(dom) {
+          ddf <- pwd_df[pwd_df$competency_domain == dom, ]
+          tagList(tags$h4(style = h4_style, dom), q_rows(ddf))
+        })
       )
     }
 
