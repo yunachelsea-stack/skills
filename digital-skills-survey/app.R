@@ -248,7 +248,7 @@ ui <- navbarPage(
         .fw-table tr.fw-row-dso td { background:#fff; }
         .fw-table tr.fw-row-car td { background:#f7f9fb; }
         .fw-table .fw-area-cell {
-          background:#003366; color:#fff; font-weight:600;
+          background:#003366 !important; color:#fff !important; font-weight:600;
           font-size:0.92em; vertical-align:middle; text-align:center;
           padding:10px 12px;
         }
