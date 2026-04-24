@@ -103,11 +103,12 @@ export_view_xlsx <- function(items_df, filepath) {
     sheet_name <- substr(gsub("[\\[\\]\\*\\?:/\\\\]", "", mod), 1, 31)
     addWorksheet(wb, sheet_name)
 
+    opts <- mod_df$response_options
+    opts <- ifelse(mapply(is_yes_no, opts), sub("2\\. No", "0. No", opts), opts)
     view_df <- data.frame(
       `No.`              = mod_df$number,
       `Question`         = mod_df$question,
-      `Response Options` = ifelse(is.na(mod_df$response_options), "",
-                                  gsub(";\\s*", "\n", mod_df$response_options)),
+      `Response Options` = ifelse(is.na(opts), "", gsub(";\\s*", "\n", opts)),
       check.names = FALSE, stringsAsFactors = FALSE
     )
 
