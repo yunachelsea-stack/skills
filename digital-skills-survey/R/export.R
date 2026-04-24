@@ -95,11 +95,8 @@ export_view_xlsx <- function(items_df, filepath) {
   wb <- createWorkbook()
 
   header_style <- createStyle(fontColour = "#ffffff", fgFill = "#003366",
-                               textDecoration = "bold", halign = "left",
-                               wrapText = TRUE)
+                               halign = "left", wrapText = TRUE)
   wrap_style   <- createStyle(wrapText = TRUE, valign = "top")
-  bold_style   <- createStyle(textDecoration = "bold", wrapText = TRUE,
-                               valign = "top")
 
   for (mod in unique(items_df$module)) {
     mod_df     <- items_df[items_df$module == mod, ]
@@ -118,12 +115,6 @@ export_view_xlsx <- function(items_df, filepath) {
     addStyle(wb, sheet_name, header_style, rows = 1, cols = 1:3, gridExpand = TRUE)
     addStyle(wb, sheet_name, wrap_style,   rows = seq_len(nrow(view_df)) + 1,
              cols = 1:3, gridExpand = TRUE)
-
-    # Bold core questions
-    core_rows <- which(mod_df$recommended_core) + 1
-    if (length(core_rows))
-      addStyle(wb, sheet_name, bold_style, rows = core_rows, cols = 1:3,
-               gridExpand = TRUE)
 
     setColWidths(wb, sheet_name, cols = 1, widths = 8)
     setColWidths(wb, sheet_name, cols = 2, widths = 60)
