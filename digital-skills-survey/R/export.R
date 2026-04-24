@@ -22,6 +22,20 @@ strip_id <- function(ids) {
   make.unique(sub("^([A-Z][A-Z0-9a-z]*_)+", "", ids), sep = "_")
 }
 
+# Translate relevance expressions to ODK syntax:
+#   original IDs → ${stripped_id}, == → =
+translate_relevance <- function(rel_vec, id_map) {
+  sapply(rel_vec, function(rel) {
+    if (is.na(rel) || trimws(rel) == "") return("")
+    result <- rel
+    for (orig in names(id_map)[order(-nchar(names(id_map)))]) {
+      result <- gsub(paste0("(?<![A-Za-z0-9_])", orig, "(?![A-Za-z0-9_])"),
+                     paste0("${", id_map[[orig]], "}"), result, perl = TRUE)
+    }
+    gsub("==", "=", result, fixed = TRUE)
+  }, USE.NAMES = FALSE)
+}
+
 parse_choices <- function(opts, qid) {
   if (is.na(opts) || trimws(opts) == "") return(NULL)
   parts <- trimws(strsplit(opts, ";")[[1]])
@@ -47,6 +61,7 @@ export_xlsform <- function(items_df, filepath) {
   types        <- mapply(detect_type, items_df$question, items_df$response_options)
   yn_flags     <- mapply(is_yes_no,   items_df$response_options)
   stripped_ids <- strip_id(items_df$id)
+  id_map       <- setNames(stripped_ids, items_df$id)
   list_names   <- ifelse(yn_flags, "yesno", stripped_ids)
 
   survey_df <- data.frame(
@@ -54,8 +69,7 @@ export_xlsform <- function(items_df, filepath) {
                        paste(types, list_names), types),
     name      = stripped_ids,
     label     = items_df$question,
-    relevance = ifelse(is.na(items_df$relevance), "", items_df$relevance),
-    required  = "",
+    relevance = translate_relevance(items_df$relevance, id_map),
     stringsAsFactors = FALSE
   )
 
