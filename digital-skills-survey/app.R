@@ -715,10 +715,22 @@ ui <- navbarPage(
         uiOutput("module_tabs_ui"),
         br(),
         tags$div(
-          style = "display:flex; gap:10px;",
-          downloadButton("dl_xlsform", "Export XLSForm (.xlsx)"),
-          downloadButton("dl_view",   "Export for Review (.xlsx)"),
-          downloadButton("dl_word",   "Export Survey (.docx)")
+          style = "display:flex; flex-direction:column; gap:12px;",
+          tags$div(
+            downloadButton("dl_word",    "Export MS Word (.docx)"),
+            tags$span("Printable version in MS Word format",
+                      style = "margin-left:10px; color:#555;")
+          ),
+          tags$div(
+            downloadButton("dl_view",    "Export MS Excel"),
+            tags$span("Printable version in MS Excel format",
+                      style = "margin-left:10px; color:#555;")
+          ),
+          tags$div(
+            downloadButton("dl_xlsform", "Export Programming Sheet"),
+            tags$span("In format easily adaptable for SurveyCTO",
+                      style = "margin-left:10px; color:#555;")
+          )
         )
       )
     )
