@@ -16,6 +16,12 @@ is_yes_no <- function(opts) {
   length(labels) == 2 && tolower(labels[1]) == "yes" && tolower(labels[2]) == "no"
 }
 
+# Strip leading code segments (e.g. IDL1_, DU_HEA1_, CHW_IDL1_) from IDs.
+# make.unique() resolves any remaining duplicates by appending _1, _2, etc.
+strip_id <- function(ids) {
+  make.unique(sub("^([A-Z][A-Z0-9a-z]*_)+", "", ids), sep = "_")
+}
+
 parse_choices <- function(opts, qid) {
   if (is.na(opts) || trimws(opts) == "") return(NULL)
   parts <- trimws(strsplit(opts, ";")[[1]])
@@ -45,7 +51,7 @@ export_xlsform <- function(items_df, filepath) {
   survey_df <- data.frame(
     type      = ifelse(types %in% c("select_one", "select_multiple"),
                        paste(types, list_names), types),
-    name      = items_df$id,
+    name      = strip_id(items_df$id),
     label     = items_df$question,
     relevance = ifelse(is.na(items_df$relevance), "", items_df$relevance),
     required  = "",
