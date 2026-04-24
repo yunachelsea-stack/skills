@@ -1031,7 +1031,7 @@ server <- function(input, output, session) {
   })
 
   output$dl_xlsform <- downloadHandler(
-    filename    = "digital_skills_survey.xlsx",
+    filename    = "digital_skills_survey_programming.xlsx",
     contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     content     = function(file) {
       export_xlsform(all_tbl_data() |> filter(included), file)
@@ -1039,7 +1039,7 @@ server <- function(input, output, session) {
   )
 
   output$dl_view <- downloadHandler(
-    filename    = "digital_skills_survey_review.xlsx",
+    filename    = "digital_skills_survey.xlsx",
     contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     content     = function(file) {
       export_view_xlsx(all_tbl_data() |> filter(included), file)
