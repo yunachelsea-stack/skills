@@ -44,14 +44,15 @@ parse_choices <- function(opts, qid) {
 }
 
 export_xlsform <- function(items_df, filepath) {
-  types       <- mapply(detect_type, items_df$question, items_df$response_options)
-  yn_flags    <- mapply(is_yes_no,   items_df$response_options)
-  list_names  <- ifelse(yn_flags, "yesno", items_df$id)
+  types        <- mapply(detect_type, items_df$question, items_df$response_options)
+  yn_flags     <- mapply(is_yes_no,   items_df$response_options)
+  stripped_ids <- strip_id(items_df$id)
+  list_names   <- ifelse(yn_flags, "yesno", stripped_ids)
 
   survey_df <- data.frame(
     type      = ifelse(types %in% c("select_one", "select_multiple"),
                        paste(types, list_names), types),
-    name      = strip_id(items_df$id),
+    name      = stripped_ids,
     label     = items_df$question,
     relevance = ifelse(is.na(items_df$relevance), "", items_df$relevance),
     required  = "",
@@ -62,7 +63,7 @@ export_xlsform <- function(items_df, filepath) {
   yes_no_rows  <- data.frame(list_name = "yesno", name = c("1", "2"),
                               label = c("Yes", "No"), stringsAsFactors = FALSE)
   choices_list <- mapply(function(opts, qid, yn) if (yn) NULL else parse_choices(opts, qid),
-                         items_df$response_options, items_df$id, yn_flags,
+                         items_df$response_options, stripped_ids, yn_flags,
                          SIMPLIFY = FALSE)
   other_rows   <- do.call(rbind, Filter(Negate(is.null), choices_list))
   choices_rows <- if (is.null(other_rows)) yes_no_rows else rbind(yes_no_rows, other_rows)
