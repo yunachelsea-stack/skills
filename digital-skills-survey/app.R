@@ -717,6 +717,7 @@ ui <- navbarPage(
         tags$div(
           style = "display:flex; gap:10px;",
           downloadButton("dl_xlsform", "Export XLSForm (.xlsx)"),
+          downloadButton("dl_view",   "Export for Review (.xlsx)"),
           downloadButton("dl_word",   "Export Survey (.docx)")
         )
       )
@@ -1022,6 +1023,14 @@ server <- function(input, output, session) {
     contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     content     = function(file) {
       export_xlsform(all_tbl_data() |> filter(included), file)
+    }
+  )
+
+  output$dl_view <- downloadHandler(
+    filename    = "digital_skills_survey_review.xlsx",
+    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    content     = function(file) {
+      export_view_xlsx(all_tbl_data() |> filter(included), file)
     }
   )
 

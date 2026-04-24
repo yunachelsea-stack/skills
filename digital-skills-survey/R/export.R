@@ -90,6 +90,49 @@ export_xlsform <- function(items_df, filepath) {
   saveWorkbook(wb, filepath, overwrite = TRUE)
 }
 
+# ── View Excel export (human-readable, one sheet per module) ─────────────
+export_view_xlsx <- function(items_df, filepath) {
+  wb <- createWorkbook()
+
+  header_style <- createStyle(fontColour = "#ffffff", fgFill = "#003366",
+                               textDecoration = "bold", halign = "left",
+                               wrapText = TRUE)
+  wrap_style   <- createStyle(wrapText = TRUE, valign = "top")
+  bold_style   <- createStyle(textDecoration = "bold", wrapText = TRUE,
+                               valign = "top")
+
+  for (mod in unique(items_df$module)) {
+    mod_df     <- items_df[items_df$module == mod, ]
+    sheet_name <- substr(gsub("[\\[\\]\\*\\?:/\\\\]", "", mod), 1, 31)
+    addWorksheet(wb, sheet_name)
+
+    view_df <- data.frame(
+      `No.`              = mod_df$number,
+      `Question`         = mod_df$question,
+      `Response Options` = ifelse(is.na(mod_df$response_options), "",
+                                  gsub(";\\s*", "\n", mod_df$response_options)),
+      check.names = FALSE, stringsAsFactors = FALSE
+    )
+
+    writeData(wb, sheet_name, view_df)
+    addStyle(wb, sheet_name, header_style, rows = 1, cols = 1:3, gridExpand = TRUE)
+    addStyle(wb, sheet_name, wrap_style,   rows = seq_len(nrow(view_df)) + 1,
+             cols = 1:3, gridExpand = TRUE)
+
+    # Bold core questions
+    core_rows <- which(mod_df$recommended_core) + 1
+    if (length(core_rows))
+      addStyle(wb, sheet_name, bold_style, rows = core_rows, cols = 1:3,
+               gridExpand = TRUE)
+
+    setColWidths(wb, sheet_name, cols = 1, widths = 8)
+    setColWidths(wb, sheet_name, cols = 2, widths = 60)
+    setColWidths(wb, sheet_name, cols = 3, widths = 40)
+  }
+
+  saveWorkbook(wb, filepath, overwrite = TRUE)
+}
+
 # ── Word survey export ────────────────────────────────────────────────────
 export_word <- function(items_df, filepath) {
   tmp <- tempfile(fileext = ".docx")
