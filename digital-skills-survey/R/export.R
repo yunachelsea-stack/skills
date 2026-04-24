@@ -74,7 +74,7 @@ export_xlsform <- function(items_df, filepath) {
   )
 
   # One shared yes_no list; individual lists only for non-yes/no questions
-  yes_no_rows  <- data.frame(list_name = "yesno", name = c("1", "2"),
+  yes_no_rows  <- data.frame(list_name = "yesno", name = c("1", "0"),
                               label = c("Yes", "No"), stringsAsFactors = FALSE)
   choices_list <- mapply(function(opts, qid, yn) if (yn) NULL else parse_choices(opts, qid),
                          items_df$response_options, stripped_ids, yn_flags,
