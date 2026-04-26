@@ -667,33 +667,16 @@ ui <- navbarPage(
       });
     "
     ))),
-    tags$style(HTML("
-      .section-dimmed { opacity: 0.35; pointer-events: none; transition: opacity 0.2s; }
-      #chw-excl-note { display:none; color:#e67e22; font-size:0.8em;
-                       font-style:italic; margin-top:4px; }
-    ")),
-    tags$script(HTML("
-      $(document).on('shiny:inputchanged', function(e) {
-        if (e.name === 'sel_pop') {
-          var chw = Array.isArray(e.value) &&
-                    e.value.indexOf('Community Health Workers') >= 0;
-          $('#foundational-section').toggleClass('section-dimmed', chw);
-          $('#chw-excl-note').toggle(chw);
-        }
-      });
-    ")),
     sidebarLayout(
       sidebarPanel(width = 3,
-        tags$div(id = "foundational-section",
+        tags$div(
           tags$p(tags$strong("Foundational Digital Skills"),
                  style = "margin-bottom:4px;"),
           tags$div(
             style = "border-left:3px solid #e67e22; padding-left:10px;",
             module_checkbox_group("sel_foundational", foundational_mods,
                                  selected = foundational_mods)
-          ),
-          tags$p(id = "chw-excl-note",
-                 "Not included — CHW module selected")
+          )
         ),
         tags$hr(),
         tags$p(tags$strong("Population-specific Digital Skills"),
