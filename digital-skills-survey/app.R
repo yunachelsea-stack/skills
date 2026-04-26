@@ -851,11 +851,14 @@ server <- function(input, output, session) {
     local({
       domain <- d
       output[[chw_tab_out_id(domain)]] <- renderDT({
-        df <- items_pop |>
-          filter(section == pop_section_map[["Community Health Workers"]],
-                 module == domain) |>
-          prep_pop_df(band_by = "competency_domain")
-        render_module_dt(df, key = "default", page_len = 50)
+        all_chw <- items_pop |>
+          filter(section == pop_section_map[["Community Health Workers"]]) |>
+          mutate(chw_num = paste0("CHW", seq_len(n())))
+        df <- all_chw |>
+          filter(module == domain) |>
+          prep_pop_df(band_by = "competency_domain") |>
+          mutate(number = chw_num)
+        render_module_dt(df, key = paste0("CHW::", domain), page_len = 50)
       }, server = FALSE)
     })
   }
@@ -941,7 +944,9 @@ server <- function(input, output, session) {
 
     # CHW: wrapper heading + domain sub-headings → questions
     chw_df <- items_pop |>
-      filter(id %in% inc_ids, section == pop_section_map[["Community Health Workers"]])
+      filter(section == pop_section_map[["Community Health Workers"]]) |>
+      mutate(num_override = paste0("CHW", seq_len(n()))) |>
+      filter(id %in% inc_ids)
     if (nrow(chw_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Community Health Workers"),
