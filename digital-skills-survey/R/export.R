@@ -132,7 +132,7 @@ export_word <- function(items_df, filepath) {
 
   doc <- read_docx()
   avail_styles <- styles_info(doc)$style_name
-  title_style  <- if ("Title" %in% avail_styles) "Title" else "heading 1"
+  title_style  <- if ("Title" %in% avail_styles) "Title" else "Normal"
   opt_style    <- if ("List Bullet" %in% avail_styles) "List Bullet" else "Normal"
 
   # Document title — not a heading, so Word won't number it
