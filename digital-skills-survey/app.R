@@ -1011,13 +1011,7 @@ server <- function(input, output, session) {
                             paste0("Survey Preview  ·  ", n_total, " questions")),
       size      = "l",
       easyClose = TRUE,
-      footer    = tagList(
-        modalButton("Close"),
-        downloadButton("dl_word_preview",    "Export Word (.docx)",
-                       style = "margin-left:8px;"),
-        downloadButton("dl_xlsform_preview", "Export XLSForm (.xlsx)",
-                       style = "margin-left:4px;")
-      ),
+      footer    = modalButton("Close"),
       tags$div(style = "max-height:70vh; overflow-y:auto; padding:0 8px;",
                tagList(sections))
     ))
@@ -1047,21 +1041,6 @@ server <- function(input, output, session) {
     }
   )
 
-  output$dl_word_preview <- downloadHandler(
-    filename    = "digital_skills_survey.docx",
-    contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    content     = function(file) {
-      export_word(all_tbl_data() |> filter(included), file)
-    }
-  )
-
-  output$dl_xlsform_preview <- downloadHandler(
-    filename    = "digital_skills_survey.xlsx",
-    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    content     = function(file) {
-      export_xlsform(all_tbl_data() |> filter(included), file)
-    }
-  )
 }
 
 shinyApp(ui, server)
