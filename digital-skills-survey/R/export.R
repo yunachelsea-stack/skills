@@ -157,7 +157,7 @@ export_word <- function(items_df, filepath) {
 
         for (i in seq_len(nrow(sk_df))) {
           row <- sk_df[i, ]
-          num <- sub("_.*$", "", row$id)
+          num <- row$number
 
           if (!is.na(row$relevance) && trimws(row$relevance) != "")
             doc <- body_add_par(doc,
