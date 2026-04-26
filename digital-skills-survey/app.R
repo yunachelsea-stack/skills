@@ -939,14 +939,16 @@ server <- function(input, output, session) {
       )
     }
 
-    # CHW: original domain (module col in items_pop) → questions
+    # CHW: wrapper heading + domain sub-headings → questions
     chw_df <- items_pop |>
       filter(id %in% inc_ids, section == pop_section_map[["Community Health Workers"]])
-    for (dom in intersect(chw_domains, unique(chw_df$module))) {
-      ddf <- chw_df[chw_df$module == dom, ]
+    if (nrow(chw_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
-        tags$h3(style = h3_style, dom),
-        q_rows(ddf)
+        tags$h3(style = h3_style, "Community Health Workers"),
+        lapply(intersect(chw_domains, unique(chw_df$module)), function(dom) {
+          ddf <- chw_df[chw_df$module == dom, ]
+          tagList(tags$h4(style = h4_style, dom), q_rows(ddf))
+        })
       )
     }
 
