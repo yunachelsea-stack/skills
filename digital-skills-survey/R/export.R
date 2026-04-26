@@ -132,11 +132,12 @@ export_word <- function(items_df, filepath) {
 
   doc <- read_docx()
   avail_styles <- styles_info(doc)$style_name
-  title_style  <- if ("Title" %in% avail_styles) "Title" else "Normal"
   opt_style    <- if ("List Bullet" %in% avail_styles) "List Bullet" else "Normal"
 
-  # Document title — not a heading, so Word won't number it
-  doc <- body_add_par(doc, "Digital Skills Survey", style = title_style)
+  doc <- body_add_fpar(doc,
+    fpar(ftext("Digital Skills Survey",
+               fp_text(bold = TRUE, font.size = 24, font.family = "Calibri")),
+         fp_p = fp_par(text.align = "left", padding.bottom = 12)))
 
   modules <- unique(items_df$module)
   for (mod in modules) {
