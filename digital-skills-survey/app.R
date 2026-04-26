@@ -92,10 +92,11 @@ extract_num <- function(id) {
 
 # Modules that use sequential numbering instead of ID-derived numbers.
 seq_prefixes <- c(
-  "Device Access"             = "DA",
-  "Device Use"                = "DU",
-  "Persons with Disabilities" = "PWD",
-  "OOS Youth"                 = "YTH"
+  "Device Access"              = "DA",
+  "Device Use"                 = "DU",
+  "Community Health Workers"   = "CHW",
+  "Persons with Disabilities"  = "PWD",
+  "OOS Youth"                  = "YTH"
 )
 
 # Column used to compute row-banding. Default is competency_domain.
