@@ -16,14 +16,8 @@ is_yes_no <- function(opts) {
   length(labels) == 2 && tolower(labels[1]) == "yes" && tolower(labels[2]) == "no"
 }
 
-# Strip leading code segments (e.g. IDL1_, DU_HEA1_, CHW_IDL1_) from IDs.
-# make.unique() resolves any remaining duplicates by appending _1, _2, etc.
-strip_id <- function(ids) {
-  make.unique(sub("^([A-Z][A-Z0-9a-z]*_)+", "", ids), sep = "_")
-}
-
 # Translate relevance expressions to ODK syntax:
-#   original IDs → ${stripped_id}, == → =
+#   display_ids → ${display_id}, == → =
 translate_relevance <- function(rel_vec, id_map) {
   sapply(rel_vec, function(rel) {
     if (is.na(rel) || trimws(rel) == "") return("")
@@ -58,16 +52,16 @@ parse_choices <- function(opts, qid) {
 }
 
 export_xlsform <- function(items_df, filepath) {
-  types        <- mapply(detect_type, items_df$question, items_df$response_options)
-  yn_flags     <- mapply(is_yes_no,   items_df$response_options)
-  stripped_ids <- strip_id(items_df$id)
-  id_map       <- setNames(stripped_ids, items_df$id)
-  list_names   <- ifelse(yn_flags, "yesno", stripped_ids)
+  types       <- mapply(detect_type, items_df$question, items_df$response_options)
+  yn_flags    <- mapply(is_yes_no,   items_df$response_options)
+  display_ids <- items_df$display_id
+  id_map      <- setNames(display_ids, display_ids)
+  list_names  <- ifelse(yn_flags, "yesno", display_ids)
 
   survey_df <- data.frame(
     type      = ifelse(types %in% c("select_one", "select_multiple"),
                        paste(types, list_names), types),
-    name      = stripped_ids,
+    name      = display_ids,
     label     = items_df$question,
     relevance = translate_relevance(items_df$relevance, id_map),
     stringsAsFactors = FALSE
@@ -77,7 +71,7 @@ export_xlsform <- function(items_df, filepath) {
   yes_no_rows  <- data.frame(list_name = "yesno", name = c("1", "0"),
                               label = c("Yes", "No"), stringsAsFactors = FALSE)
   choices_list <- mapply(function(opts, qid, yn) if (yn) NULL else parse_choices(opts, qid),
-                         items_df$response_options, stripped_ids, yn_flags,
+                         items_df$response_options, display_ids, yn_flags,
                          SIMPLIFY = FALSE)
   other_rows   <- do.call(rbind, Filter(Negate(is.null), choices_list))
   choices_rows <- if (is.null(other_rows)) yes_no_rows else rbind(yes_no_rows, other_rows)

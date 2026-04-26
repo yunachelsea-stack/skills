@@ -83,22 +83,6 @@ pwd_domains <- items_pop |>
 
 `%||%` <- function(a, b) if (!is.null(a)) a else b
 
-# ID formats: "IDL1_desc" → "IDL1"   "DU_HEA1_desc" → "HEA1"   "CHW_IDL1_desc" → "IDL1"
-extract_num <- function(id) {
-  ifelse(grepl("^[A-Z]+_", id),
-         gsub("^[^_]+_([^_]+)_.*$", "\\1", id),
-         sub("_.*$", "", id))
-}
-
-# Modules that use sequential numbering instead of ID-derived numbers.
-seq_prefixes <- c(
-  "Device Access"              = "DA",
-  "Device Use"                 = "DU",
-  "Community Health Workers"   = "CHW",
-  "Persons with Disabilities"  = "PWD",
-  "OOS Youth"                  = "YTH"
-)
-
 # Column used to compute row-banding. Default is competency_domain.
 band_cols <- list(
   "Device Access" = "skill_area",
@@ -756,10 +740,7 @@ server <- function(input, output, session) {
     band_col <- band_cols[[mod]] %||% "competency_domain"
     domains  <- unique(df[[band_col]])
     df |> mutate(
-      number = if (mod %in% names(seq_prefixes))
-        paste0(seq_prefixes[[mod]], seq_len(n()))
-      else
-        extract_num(id),
+      number = display_id,
       included   = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band       = ifelse(match(.data[[band_col]], domains) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -786,7 +767,7 @@ server <- function(input, output, session) {
   prep_pop_df <- function(df, band_by) {
     groups <- unique(df[[band_by]])
     df |> mutate(
-      number    = extract_num(id),
+      number    = display_id,
       included  = vapply(id, function(i) isTRUE(inc[[i]]), logical(1)),
       band      = ifelse(match(.data[[band_by]], groups) %% 2 == 1, "odd", "even"),
       question_html = ifelse(
@@ -851,13 +832,10 @@ server <- function(input, output, session) {
     local({
       domain <- d
       output[[chw_tab_out_id(domain)]] <- renderDT({
-        all_chw <- items_pop |>
-          filter(section == pop_section_map[["Community Health Workers"]]) |>
-          mutate(chw_num = paste0("CHW", seq_len(n())))
-        df <- all_chw |>
-          filter(module == domain) |>
-          prep_pop_df(band_by = "competency_domain") |>
-          mutate(number = chw_num)
+        df <- items_pop |>
+          filter(section == pop_section_map[["Community Health Workers"]],
+                 module == domain) |>
+          prep_pop_df(band_by = "competency_domain")
         render_module_dt(df, key = paste0("CHW::", domain), page_len = 50)
       }, server = FALSE)
     })
@@ -867,13 +845,10 @@ server <- function(input, output, session) {
     local({
       domain <- d
       output[[pwd_tab_out_id(domain)]] <- renderDT({
-        all_pwd <- items_pop |>
-          filter(section == pop_section_map[["Persons with Disabilities"]]) |>
-          mutate(pwd_num = paste0("PWD", seq_len(n())))
-        df <- all_pwd |>
-          filter(competency_domain == domain) |>
-          prep_pop_df(band_by = "skill_area") |>
-          mutate(number = pwd_num)
+        df <- items_pop |>
+          filter(section == pop_section_map[["Persons with Disabilities"]],
+                 competency_domain == domain) |>
+          prep_pop_df(band_by = "skill_area")
         render_module_dt(df, key = paste0("PWD::", domain), page_len = 50)
       }, server = FALSE)
     })
@@ -911,7 +886,7 @@ server <- function(input, output, session) {
     q_rows <- function(df) {
       lapply(seq_len(nrow(df)), function(i) {
         row <- df[i, ]
-        num <- if (!is.null(row$num_override)) row$num_override else extract_num(row$id)
+        num <- row$display_id
         opts_html <- if (!is.na(row$response_options) &&
                          trimws(row$response_options) != "") {
           opts <- trimws(strsplit(row$response_options, ";")[[1]])
@@ -946,9 +921,8 @@ server <- function(input, output, session) {
 
     # CHW: wrapper heading + domain sub-headings → questions
     chw_df <- items_pop |>
-      filter(section == pop_section_map[["Community Health Workers"]]) |>
-      mutate(num_override = paste0("CHW", seq_len(n()))) |>
-      filter(id %in% inc_ids)
+      filter(section == pop_section_map[["Community Health Workers"]],
+             id %in% inc_ids)
     if (nrow(chw_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Community Health Workers"),
@@ -961,9 +935,8 @@ server <- function(input, output, session) {
 
     # PWD: module heading → competency_domain (Setting / Software) → questions
     pwd_df <- items_pop |>
-      filter(section == pop_section_map[["Persons with Disabilities"]]) |>
-      mutate(num_override = paste0("PWD", seq_len(n()))) |>
-      filter(id %in% inc_ids)
+      filter(section == pop_section_map[["Persons with Disabilities"]],
+             id %in% inc_ids)
     if (nrow(pwd_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Persons with Disabilities"),
@@ -976,9 +949,8 @@ server <- function(input, output, session) {
 
     # OOS Youth: module heading then flat list of questions
     oos_df <- items_pop |>
-      filter(section == pop_section_map[["OOS Youth"]]) |>
-      mutate(num_override = paste0("YTH", seq_len(n()))) |>
-      filter(id %in% inc_ids)
+      filter(section == pop_section_map[["OOS Youth"]],
+             id %in% inc_ids)
     if (nrow(oos_df) > 0) {
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Out-of-school / Job-seeking Youth"),
@@ -991,10 +963,6 @@ server <- function(input, output, session) {
     for (mod in intersect(device_mods, unique(d_df$module))) {
       mdf <- d_df[d_df$module == mod, ]
       is_access <- unique(mdf$section) == "2 Device Access"
-      mdf$num_override <- if (is_access)
-        paste0("DA", seq_len(nrow(mdf)))
-      else
-        paste0("DU", seq_len(nrow(mdf)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, mod),
         if (is_access)
