@@ -867,11 +867,13 @@ server <- function(input, output, session) {
     local({
       domain <- d
       output[[pwd_tab_out_id(domain)]] <- renderDT({
-        df <- items_pop |>
-          filter(section == pop_section_map[["Persons with Disabilities"]],
-                 competency_domain == domain) |>
+        all_pwd <- items_pop |>
+          filter(section == pop_section_map[["Persons with Disabilities"]]) |>
+          mutate(pwd_num = paste0("PWD", seq_len(n())))
+        df <- all_pwd |>
+          filter(competency_domain == domain) |>
           prep_pop_df(band_by = "skill_area") |>
-          mutate(number = paste0("PWD", seq_len(n())))
+          mutate(number = pwd_num)
         render_module_dt(df, key = paste0("PWD::", domain), page_len = 50)
       }, server = FALSE)
     })
@@ -959,9 +961,10 @@ server <- function(input, output, session) {
 
     # PWD: module heading → competency_domain (Setting / Software) → questions
     pwd_df <- items_pop |>
-      filter(id %in% inc_ids, section == pop_section_map[["Persons with Disabilities"]])
+      filter(section == pop_section_map[["Persons with Disabilities"]]) |>
+      mutate(num_override = paste0("PWD", seq_len(n()))) |>
+      filter(id %in% inc_ids)
     if (nrow(pwd_df) > 0) {
-      pwd_df$num_override <- paste0("PWD", seq_len(nrow(pwd_df)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Persons with Disabilities"),
         lapply(intersect(pwd_domains, unique(pwd_df$competency_domain)), function(dom) {
@@ -973,9 +976,10 @@ server <- function(input, output, session) {
 
     # OOS Youth: module heading then flat list of questions
     oos_df <- items_pop |>
-      filter(id %in% inc_ids, section == pop_section_map[["OOS Youth"]])
+      filter(section == pop_section_map[["OOS Youth"]]) |>
+      mutate(num_override = paste0("YTH", seq_len(n()))) |>
+      filter(id %in% inc_ids)
     if (nrow(oos_df) > 0) {
-      oos_df$num_override <- paste0("YTH", seq_len(nrow(oos_df)))
       sections[[length(sections)+1]] <- tagList(
         tags$h3(style = h3_style, "Out-of-school / Job-seeking Youth"),
         q_rows(oos_df)
