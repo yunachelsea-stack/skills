@@ -758,9 +758,7 @@ server <- function(input, output, session) {
   })
 
   sel_modules <- reactive({
-    chw_active <- "Community Health Workers" %in% input$sel_pop
-    foundational <- if (chw_active) character(0) else input$sel_foundational
-    c(foundational, input$sel_pop, input$sel_device)
+    c(input$sel_foundational, input$sel_pop, input$sel_device)
   })
 
   module_tbl <- function(mod) {
