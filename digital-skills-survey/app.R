@@ -238,11 +238,53 @@ ui <- navbarPage(
         color: #0d3b5e !important;
         font-weight: 700;
       }
+
+      /* Hero decorative rings */
+      .lp-hero { position: relative; overflow: hidden; }
+      .lp-ring {
+        position: absolute; border-radius: 50%; pointer-events: none;
+        border: 2px solid rgba(255,255,255,0.09);
+      }
+      .lp-ring-amber { border-color: rgba(232,168,0,0.25); }
+
+      /* Card number — circular badge */
+      .lp-card-num {
+        width: 52px; height: 52px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 1.05em; font-weight: 700; margin-bottom: 14px;
+        border: 2px solid #8db4c8; color: #8db4c8;
+        font-family: 'Lora', Georgia, serif;
+      }
+      .lp-card.active .lp-card-num {
+        background: #e8a800; border-color: #e8a800; color: #0d3b5e;
+      }
+
+      /* Section divider strip */
+      .lp-divider {
+        background: #0d3b5e; color: white;
+        padding: 26px 40px; margin: 0 -15px;
+        display: flex; align-items: center; gap: 18px;
+      }
+      .lp-divider-bar {
+        width: 5px; height: 38px; background: #e8a800;
+        border-radius: 3px; flex-shrink: 0;
+      }
+      .lp-divider h2 {
+        color: white !important; margin: 0; font-size: 1.25em; font-weight: 600;
+        font-family: 'Lora', Georgia, serif;
+      }
+      .lp-divider p {
+        color: rgba(255,255,255,0.7); margin: 4px 0 0; font-size: 0.9em;
+      }
     ")),
 
     # Hero
     div(class = "lp-hero",
-      div(style = "max-width:860px;",
+      div(class = "lp-ring", style = "width:280px;height:280px;right:-50px;top:-110px;"),
+      div(class = "lp-ring", style = "width:460px;height:460px;right:-160px;top:-200px;"),
+      div(class = "lp-ring", style = "width:640px;height:640px;right:-280px;top:-300px;"),
+      div(class = "lp-ring lp-ring-amber", style = "width:160px;height:160px;right:55px;top:35px;"),
+      div(style = "max-width:860px; position:relative; z-index:1;",
         tags$h1("Measure digital skills.", tags$br(),
                 "Generate actionable data."),
         tags$p(class = "lp-lead",
@@ -260,7 +302,7 @@ ui <- navbarPage(
           " led by the ",
           tags$strong("University of Cape Town's School of Public Health"), "."
         )
-      )
+      ) # end z-index wrapper
     ),
 
     # What you can do here
@@ -588,11 +630,17 @@ ui <- navbarPage(
       )
     ),
 
+    # Section divider
+    div(class = "lp-divider",
+      div(class = "lp-divider-bar"),
+      div(
+        tags$h2("What you’ll find on this platform"),
+        tags$p("Six integrated resources supporting end-to-end digital skills measurement.")
+      )
+    ),
+
     # Feature cards
     div(class = "lp-section",
-      tags$h2("What you’ll find on this platform"),
-      tags$p(class = "lp-section-sub",
-             "Six integrated resources supporting end-to-end digital skills measurement."),
 
       fluidRow(
         column(4,
