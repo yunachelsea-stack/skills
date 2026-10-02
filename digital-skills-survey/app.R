@@ -378,7 +378,7 @@ ui <- navbarPage(
                          style = "color:#e8a800; font-size:0.85em;")
                 ),
                 tags$h4(style = "font-weight:600; color:#0d3b5e; margin:0;",
-                        "Access implementation guidance")
+                        "Access implementation guide")
               ),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Get practical resources on cognitive testing, sampling, survey implementation
