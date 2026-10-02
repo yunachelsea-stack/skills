@@ -759,53 +759,150 @@ ui <- navbarPage(
       });
     "
     ))),
+    tags$style(HTML("
+      /* ── Survey Builder page styles ── */
+      .sb-subheader {
+        background: #0d3b5e; color: white;
+        padding: 14px 24px; margin: -15px -15px 20px;
+        display: flex; align-items: center; justify-content: space-between;
+        border-bottom: 4px solid #e8a800;
+      }
+      .sb-subheader h3 {
+        margin: 0; font-size: 1.1em; font-weight: 600;
+        font-family: 'Lora', Georgia, serif; color: white !important;
+      }
+      .sb-subheader .sb-count {
+        font-size: 0.88em; color: rgba(255,255,255,0.8);
+        background: rgba(255,255,255,0.12);
+        padding: 3px 12px; border-radius: 20px;
+      }
+      .sb-sidebar {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        padding: 18px 16px 20px;
+        border-top: 4px solid #0d3b5e;
+      }
+      .sb-section-label {
+        display: flex; align-items: center; gap: 8px;
+        margin-bottom: 8px; margin-top: 4px;
+      }
+      .sb-section-label .sb-dot {
+        width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+      }
+      .sb-section-label span {
+        font-size: 0.78em; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.06em; color: #444;
+      }
+      .sb-export-card {
+        display: flex; align-items: center; gap: 16px;
+        background: #fff; border-radius: 8px;
+        border: 1px solid #e0e4e8; border-left: 4px solid #0d3b5e;
+        padding: 14px 18px; margin-bottom: 10px;
+        transition: box-shadow 0.15s;
+      }
+      .sb-export-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.09); }
+      .sb-export-card .sb-export-icon {
+        width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+        background: #0d3b5e; display: flex; align-items: center; justify-content: center;
+      }
+      .sb-export-card .sb-export-icon i { color: #e8a800; font-size: 0.9em; }
+      .sb-export-card .sb-export-text { flex: 1; }
+      .sb-export-card .sb-export-text p {
+        margin: 2px 0 0; font-size: 0.82em; color: #777; line-height: 1.3;
+      }
+      .sb-export-card .btn { white-space: nowrap; }
+    ")),
+
+    # ── Sub-header bar ──────────────────────────────────────────────────────
+    div(class = "sb-subheader",
+      tags$h3(
+        tags$i(class = "fa fa-sliders", style = "margin-right:8px; color:#e8a800;"),
+        "Survey Builder"
+      ),
+      div(class = "sb-count", textOutput("count_label", inline = TRUE))
+    ),
+
     sidebarLayout(
       sidebarPanel(width = 3,
-        tags$div(
-          tags$p(tags$strong("Foundational Digital Skills"),
-                 style = "margin-bottom:4px;"),
-          tags$div(
-            style = "border-left:3px solid #e8a800; padding-left:10px;",
-            module_checkbox_group("sel_foundational", foundational_mods,
-                                 selected = foundational_mods)
-          )
-        ),
-        tags$hr(),
-        tags$p(tags$strong("Population-specific Digital Skills"),
-               style = "margin-bottom:4px;"),
-        tags$div(
-          style = "border-left:3px solid #27ae60; padding-left:10px;",
+        div(class = "sb-sidebar",
+
+          # Foundational
+          div(class = "sb-section-label",
+            div(class = "sb-dot", style = "background:#e8a800;"),
+            tags$span("Foundational Digital Skills")
+          ),
+          module_checkbox_group("sel_foundational", foundational_mods,
+                               selected = foundational_mods),
+
+          tags$hr(style = "margin:14px 0;"),
+
+          # Population-specific
+          div(class = "sb-section-label",
+            div(class = "sb-dot", style = "background:#27ae60;"),
+            tags$span("Population-specific")
+          ),
           module_checkbox_group("sel_pop", pop_mods, selected = NULL,
-                               req_mods = character(0))
-        ),
-        tags$hr(),
-        module_checkbox_group("sel_device", device_mods, selected = device_mods),
-        tags$hr(),
-        tags$strong(textOutput("count_label")),
-        br(),
-        actionButton("btn_preview", "Preview Survey",
-                     icon = icon("eye"),
-                     style = "width:100%; margin-top:4px;")
+                               req_mods = character(0)),
+
+          tags$hr(style = "margin:14px 0;"),
+
+          # Device
+          div(class = "sb-section-label",
+            div(class = "sb-dot", style = "background:#1a6694;"),
+            tags$span("Device & Connectivity")
+          ),
+          module_checkbox_group("sel_device", device_mods, selected = device_mods),
+
+          tags$hr(style = "margin:14px 0;"),
+
+          actionButton("btn_preview", "Preview Survey",
+                       icon = icon("eye"),
+                       style = "width:100%; background:#0d3b5e; color:white;
+                                border:none; font-weight:600; padding:8px 0;")
+        )
       ),
+
       mainPanel(width = 9,
         uiOutput("module_tabs_ui"),
         br(),
-        tags$div(
-          style = "display:flex; flex-direction:column; gap:12px;",
-          tags$div(
-            downloadButton("dl_word",    "Export MS Word (.docx)"),
-            tags$span("Printable version in MS Word format",
-                      style = "margin-left:10px; color:#555;")
+
+        # ── Export cards ──────────────────────────────────────────────────
+        div(style = "margin-top:8px;",
+          tags$p(style = "font-weight:700; color:#0d3b5e; margin-bottom:12px;
+                          font-size:0.95em; text-transform:uppercase; letter-spacing:0.05em;",
+            tags$i(class = "fa fa-download", style = "margin-right:6px; color:#e8a800;"),
+            "Export your survey"
           ),
-          tags$div(
-            downloadButton("dl_view",    "Export MS Excel"),
-            tags$span("Printable version in MS Excel format",
-                      style = "margin-left:10px; color:#555;")
+
+          div(class = "sb-export-card",
+            div(class = "sb-export-icon",
+              tags$i(class = "fa fa-file-word-o")
+            ),
+            div(class = "sb-export-text",
+              downloadButton("dl_word", "MS Word (.docx)"),
+              tags$p("Printable survey format for field teams and stakeholders")
+            )
           ),
-          tags$div(
-            downloadButton("dl_xlsform", "Export Programming Sheet"),
-            tags$span("In format easily adaptable for SurveyCTO",
-                      style = "margin-left:10px; color:#555;")
+
+          div(class = "sb-export-card",
+            div(class = "sb-export-icon",
+              tags$i(class = "fa fa-file-excel-o")
+            ),
+            div(class = "sb-export-text",
+              downloadButton("dl_view", "MS Excel"),
+              tags$p("Printable survey format in spreadsheet form")
+            )
+          ),
+
+          div(class = "sb-export-card",
+            div(class = "sb-export-icon",
+              tags$i(class = "fa fa-code")
+            ),
+            div(class = "sb-export-text",
+              downloadButton("dl_xlsform", "Programming Sheet"),
+              tags$p("XLSForm-compatible format for SurveyCTO and ODK")
+            )
           )
         )
       )
