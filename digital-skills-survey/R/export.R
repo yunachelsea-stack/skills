@@ -94,7 +94,7 @@ export_xlsform <- function(items_df, filepath) {
 export_view_xlsx <- function(items_df, filepath) {
   wb <- createWorkbook()
 
-  header_style <- createStyle(fontColour = "#ffffff", fgFill = "#003366",
+  header_style <- createStyle(fontColour = "#ffffff", fgFill = "#0d3b5e",
                                halign = "left", wrapText = TRUE)
   wrap_style   <- createStyle(wrapText = TRUE, valign = "top")
 

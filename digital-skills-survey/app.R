@@ -180,16 +180,26 @@ ui <- navbarPage(
 
   # ── Landing page ──────────────────────────────────────────────────────────────
   tabPanel("Home",
+    tags$head(
+      tags$link(rel = "stylesheet",
+                href = "https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap")
+    ),
     tags$style(HTML("
+      body, .navbar { font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; }
+      h1, h2, h3, .lp-hero h1, .lp-section h2, .lp-section h3 {
+        font-family: 'Lora', Georgia, serif;
+      }
       .lp-hero {
-        background: linear-gradient(135deg, #003366 0%, #0a5fa8 100%);
+        background: linear-gradient(135deg, #0d3b5e 0%, #1a6694 100%);
         color: white;
         padding: 64px 40px 52px;
         margin: -15px -15px 0;
+        border-right: 6px solid #e8a800;
       }
       .lp-hero h1 {
         font-size: 2.2em; font-weight: 700;
         line-height: 1.25; margin-bottom: 16px;
+        font-family: 'Lora', Georgia, serif;
       }
       .lp-lead {
         font-size: 1.05em; opacity: 0.92;
@@ -202,7 +212,8 @@ ui <- navbarPage(
       }
       .lp-section h2 {
         font-size: 1.4em; font-weight: 600;
-        color: #222; margin-bottom: 6px;
+        color: #0d3b5e; margin-bottom: 6px;
+        font-family: 'Lora', Georgia, serif;
       }
       .lp-section-sub {
         color: #888; margin-bottom: 32px; font-size: 0.95em;
@@ -218,13 +229,13 @@ ui <- navbarPage(
         transition: box-shadow 0.2s;
       }
       .lp-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
-      .lp-card.active  { border-top-color: #e67e22; }
-      .lp-card.planned { border-top-color: #aabfcc; }
+      .lp-card.active  { border-top-color: #e8a800; }
+      .lp-card.planned { border-top-color: #8db4c8; }
       .lp-card-num {
         font-size: 1.6em; font-weight: 700;
-        color: #aabfcc; margin-bottom: 6px;
+        color: #8db4c8; margin-bottom: 6px;
       }
-      .lp-card.active .lp-card-num { color: #e67e22; }
+      .lp-card.active .lp-card-num { color: #e8a800; }
       .lp-card h4 {
         font-size: 1em; font-weight: 600;
         color: #222; margin-bottom: 8px;
@@ -235,8 +246,13 @@ ui <- navbarPage(
         padding: 2px 9px; border-radius: 10px; margin-bottom: 10px;
         text-transform: uppercase; letter-spacing: 0.04em;
       }
-      .lp-pill.active  { background: #fef0e0; color: #e67e22; }
+      .lp-pill.active  { background: #fef8e1; color: #b8860b; }
       .lp-pill.planned { background: #f0f4f6; color: #7a99aa; }
+      table.dataTable thead th {
+        background-color: #e8a800 !important;
+        color: #0d3b5e !important;
+        font-weight: 700;
+      }
     ")),
 
     # Hero
@@ -270,7 +286,7 @@ ui <- navbarPage(
         fluidRow(
           column(4,
             div(style = "padding-right:24px;",
-              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+              tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
                       "\U0001F4CB  Build your survey"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Choose from pre-validated modules covering different areas of digital skills.
@@ -281,7 +297,7 @@ ui <- navbarPage(
           ),
           column(4,
             div(style = "padding-right:24px;",
-              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+              tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
                       "\U0001F4E5  Export ready-to-use instruments"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Download your survey in formats ready for implementation by survey firms
@@ -291,7 +307,7 @@ ui <- navbarPage(
           ),
           column(4,
             div(
-              tags$h4(style = "font-weight:600; color:#003366; margin-bottom:8px;",
+              tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
                       "\U0001F4DA  Access implementation guidance"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Get practical resources on cognitive testing, sampling, survey implementation
@@ -312,8 +328,8 @@ ui <- navbarPage(
       div(
         div(style = "background:#fff; border-radius:10px; padding:24px 22px;
                      box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:16px;
-                     border-left:4px solid #003366;",
-            tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
+                     border-left:4px solid #0d3b5e;",
+            tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:14px;",
                     "Survey questions cover:"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.75;",
               tags$li("Foundational digital skills and foundational AI skills"),
@@ -325,8 +341,8 @@ ui <- navbarPage(
         ),
         div(style = "background:#fff; border-radius:10px; padding:24px 22px;
                      box-shadow:0 2px 10px rgba(0,0,0,0.07);
-                     border-left:4px solid #0a5fa8;",
-            tags$h4(style = "font-weight:600; color:#003366; margin-bottom:14px;",
+                     border-left:4px solid #1a6694;",
+            tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:14px;",
                     "Survey questions were adapted from several frameworks:"),
             tags$ol(style = "padding-left:18px; color:#444; line-height:1.7;",
               tags$li(
@@ -377,14 +393,14 @@ ui <- navbarPage(
       tags$style(HTML("
         .fw-table { width:100%; border-collapse:collapse; font-size:0.88em; }
         .fw-table th {
-          background:#003366; color:#fff; padding:10px 14px;
+          background:#0d3b5e; color:#fff; padding:10px 14px;
           text-align:left; font-weight:600;
         }
         .fw-table td { padding:9px 14px; vertical-align:top; border-bottom:1px solid #e8ecef; }
         .fw-table tr:last-child td { border-bottom:none; }
         .fw-table .fw-area {
           font-weight:600; color:#fff; writing-mode:horizontal-tb;
-          background:#0a5fa8; text-align:center;
+          background:#1a6694; text-align:center;
         }
         .fw-table tr.fw-row-idl td { background:#f7f9fb; }
         .fw-table tr.fw-row-cc  td { background:#fff; }
@@ -668,7 +684,7 @@ ui <- navbarPage(
     ))),
     tags$style(HTML("
       .section-dimmed { opacity: 0.35; pointer-events: none; transition: opacity 0.2s; }
-      #chw-excl-note { display:none; color:#e67e22; font-size:0.8em;
+      #chw-excl-note { display:none; color:#e8a800; font-size:0.8em;
                        font-style:italic; margin-top:4px; }
     ")),
     tags$script(HTML("
@@ -687,7 +703,7 @@ ui <- navbarPage(
           tags$p(tags$strong("Foundational Digital Skills"),
                  style = "margin-bottom:4px;"),
           tags$div(
-            style = "border-left:3px solid #e67e22; padding-left:10px;",
+            style = "border-left:3px solid #e8a800; padding-left:10px;",
             module_checkbox_group("sel_foundational", foundational_mods,
                                  selected = foundational_mods)
           ),
@@ -792,7 +808,7 @@ server <- function(input, output, session) {
         if (isTRUE(core)) {
           '<input type="checkbox" checked disabled
              title="Required core item"
-             style="accent-color:#e67e22;cursor:not-allowed;">'
+             style="accent-color:#e8a800;cursor:not-allowed;">'
         } else {
           sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
                   i, if (inc_val) " checked" else "")
@@ -815,7 +831,7 @@ server <- function(input, output, session) {
       ),
       check_html = mapply(function(i, core, inc_val) {
         if (isTRUE(core))
-          '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e67e22;cursor:not-allowed;">'
+          '<input type="checkbox" checked disabled title="Required core item" style="accent-color:#e8a800;cursor:not-allowed;">'
         else
           sprintf('<input type="checkbox" class="q-toggle" data-id="%s"%s>',
                   i, if (inc_val) " checked" else "")
@@ -915,8 +931,8 @@ server <- function(input, output, session) {
       return()
     }
 
-    h3_style <- "font-size:1.1em; font-weight:700; color:#003366;
-                 border-bottom:2px solid #003366; padding-bottom:5px;
+    h3_style <- "font-size:1.1em; font-weight:700; color:#0d3b5e;
+                 border-bottom:2px solid #0d3b5e; padding-bottom:5px;
                  margin-top:28px; margin-bottom:10px;"
     h4_style <- "font-size:0.97em; font-weight:600; color:#333;
                  margin-top:14px; margin-bottom:4px;"
