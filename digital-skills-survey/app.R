@@ -334,11 +334,11 @@ ui <- navbarPage(
           column(4,
             div(style = "padding-right:24px;",
               div(style = "display:flex; align-items:center; gap:14px; margin-bottom:10px;",
-                div(style = "width:46px; height:46px; border-radius:50%; flex-shrink:0;
+                div(style = "width:34px; height:34px; border-radius:50%; flex-shrink:0;
                              background:#0d3b5e; display:flex;
                              align-items:center; justify-content:center;",
                   tags$i(class = "fa fa-tasks",
-                         style = "color:#e8a800; font-size:1.15em;")
+                         style = "color:#e8a800; font-size:0.85em;")
                 ),
                 tags$h4(style = "font-weight:600; color:#0d3b5e; margin:0;",
                         "Build your survey")
@@ -353,11 +353,11 @@ ui <- navbarPage(
           column(4,
             div(style = "padding-right:24px;",
               div(style = "display:flex; align-items:center; gap:14px; margin-bottom:10px;",
-                div(style = "width:46px; height:46px; border-radius:50%; flex-shrink:0;
+                div(style = "width:34px; height:34px; border-radius:50%; flex-shrink:0;
                              background:#0d3b5e; display:flex;
                              align-items:center; justify-content:center;",
                   tags$i(class = "fa fa-download",
-                         style = "color:#e8a800; font-size:1.15em;")
+                         style = "color:#e8a800; font-size:0.85em;")
                 ),
                 tags$h4(style = "font-weight:600; color:#0d3b5e; margin:0;",
                         "Export ready-to-use instruments")
@@ -371,11 +371,11 @@ ui <- navbarPage(
           column(4,
             div(
               div(style = "display:flex; align-items:center; gap:14px; margin-bottom:10px;",
-                div(style = "width:46px; height:46px; border-radius:50%; flex-shrink:0;
+                div(style = "width:34px; height:34px; border-radius:50%; flex-shrink:0;
                              background:#0d3b5e; display:flex;
                              align-items:center; justify-content:center;",
                   tags$i(class = "fa fa-book-open",
-                         style = "color:#e8a800; font-size:1.15em;")
+                         style = "color:#e8a800; font-size:0.85em;")
                 ),
                 tags$h4(style = "font-weight:600; color:#0d3b5e; margin:0;",
                         "Access implementation guidance")
