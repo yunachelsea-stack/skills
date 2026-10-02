@@ -170,7 +170,8 @@ ui <- navbarPage(
                 href = "https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap")
     ),
     tags$style(HTML("
-      body, .navbar { font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; }
+      body { background-color: #e9e7e3 !important; font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; }
+      .navbar { font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; }
       h1, h2, h3, .lp-hero h1, .lp-section h2, .lp-section h3 {
         font-family: 'Lora', Georgia, serif;
       }
@@ -326,7 +327,7 @@ ui <- navbarPage(
     ),
 
     # What you can do here
-    div(class = "lp-section", style = "background:#f7f9fb; max-width:100%; padding: 48px 40px;",
+    div(class = "lp-section", style = "background:#ffffff; max-width:100%; padding: 48px 40px;",
       div(style = "max-width:1100px; margin:0 auto;",
         tags$h2("What you can do here"),
         tags$br(),
