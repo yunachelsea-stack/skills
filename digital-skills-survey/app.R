@@ -360,7 +360,7 @@ ui <- navbarPage(
                          style = "color:#e8a800; font-size:0.85em;")
                 ),
                 tags$h4(style = "font-weight:600; color:#0d3b5e; margin:0;",
-                        "Export ready-to-use instruments")
+                        "Export your instruments")
               ),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Download your survey in formats ready for implementation by survey firms
@@ -369,7 +369,7 @@ ui <- navbarPage(
             )
           ),
           column(4,
-            div(
+            div(style = "padding-right:24px;",
               div(style = "display:flex; align-items:center; gap:14px; margin-bottom:10px;",
                 div(style = "width:34px; height:34px; border-radius:50%; flex-shrink:0;
                              background:#0d3b5e; display:flex;
