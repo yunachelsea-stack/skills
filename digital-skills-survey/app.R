@@ -326,10 +326,15 @@ ui <- navbarPage(
     ),
 
     # What you can do here
-    div(class = "lp-section", style = "background:#f7f9fb; max-width:100%; padding: 48px 40px;",
-      div(style = "max-width:1100px; margin:0 auto;",
+    div(class = "lp-divider",
+      div(class = "lp-divider-bar"),
+      div(
         tags$h2("What you can do here"),
-        tags$br(),
+        tags$p("Three ways the toolkit supports your digital skills measurement work.")
+      )
+    ),
+    div(class = "lp-section", style = "background:#ffffff; max-width:100%; padding: 36px 40px;",
+      div(style = "max-width:1100px; margin:0 auto;",
         fluidRow(
           column(4,
             div(style = "padding-right:24px;",
