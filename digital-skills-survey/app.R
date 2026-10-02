@@ -333,8 +333,15 @@ ui <- navbarPage(
         fluidRow(
           column(4,
             div(style = "padding-right:24px;",
+              div(style = "width:52px; height:52px; border-radius:50%;
+                           background:#0d3b5e; display:flex;
+                           align-items:center; justify-content:center;
+                           margin-bottom:16px;",
+                tags$i(class = "fa fa-list-check",
+                       style = "color:#e8a800; font-size:1.25em;")
+              ),
               tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
-                      "\U0001F4CB  Build your survey"),
+                      "Build your survey"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Choose from pre-validated modules covering different areas of digital skills.
                  Required questions ensure consistency across projects and countries;
@@ -344,8 +351,15 @@ ui <- navbarPage(
           ),
           column(4,
             div(style = "padding-right:24px;",
+              div(style = "width:52px; height:52px; border-radius:50%;
+                           background:#0d3b5e; display:flex;
+                           align-items:center; justify-content:center;
+                           margin-bottom:16px;",
+                tags$i(class = "fa fa-download",
+                       style = "color:#e8a800; font-size:1.25em;")
+              ),
               tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
-                      "\U0001F4E5  Export ready-to-use instruments"),
+                      "Export ready-to-use instruments"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Download your survey in formats ready for implementation by survey firms
                  or data collection teams."
@@ -354,8 +368,15 @@ ui <- navbarPage(
           ),
           column(4,
             div(
+              div(style = "width:52px; height:52px; border-radius:50%;
+                           background:#0d3b5e; display:flex;
+                           align-items:center; justify-content:center;
+                           margin-bottom:16px;",
+                tags$i(class = "fa fa-book-open",
+                       style = "color:#e8a800; font-size:1.25em;")
+              ),
               tags$h4(style = "font-weight:600; color:#0d3b5e; margin-bottom:8px;",
-                      "\U0001F4DA  Access implementation guidance"),
+                      "Access implementation guidance"),
               tags$p(style = "color:#555; line-height:1.65;",
                 "Get practical resources on cognitive testing, sampling, survey implementation
                  and quality assurance, digital skills analysis."
