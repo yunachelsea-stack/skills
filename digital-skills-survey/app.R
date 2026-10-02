@@ -161,7 +161,7 @@ render_module_dt <- function(df, key, page_len = 25) {
 
 # ── UI ───────────────────────────────────────────────────────────────────────
 ui <- navbarPage(
-  title = "Digital Skills Measurement Toolkit",
+  title = "Digital Skills Toolkit",
 
   # ── Landing page ──────────────────────────────────────────────────────────────
   tabPanel("Home",
@@ -239,13 +239,28 @@ ui <- navbarPage(
         font-weight: 700;
       }
 
-      /* Hero decorative rings */
+      /* Hero decorative elements */
       .lp-hero { position: relative; overflow: hidden; }
       .lp-ring {
         position: absolute; border-radius: 50%; pointer-events: none;
         border: 2px solid rgba(255,255,255,0.09);
       }
       .lp-ring-amber { border-color: rgba(232,168,0,0.25); }
+      .lp-circle {
+        position: absolute; border-radius: 50%; pointer-events: none;
+      }
+      .lp-circle-amber { background: #e8a800; opacity: 0.18; }
+      .lp-circle-teal  { background: #0a9ba8; opacity: 0.20; }
+
+      /* Amber highlight span (matches cover title treatment) */
+      .lp-highlight {
+        color: #e8a800;
+        background: rgba(0,0,0,0.22);
+        padding: 2px 12px 4px;
+        border-radius: 2px;
+        display: inline-block;
+        line-height: 1.3;
+      }
 
       /* Card number — circular badge */
       .lp-card-num {
@@ -284,18 +299,23 @@ ui <- navbarPage(
       div(class = "lp-ring", style = "width:460px;height:460px;right:-160px;top:-200px;"),
       div(class = "lp-ring", style = "width:640px;height:640px;right:-280px;top:-300px;"),
       div(class = "lp-ring lp-ring-amber", style = "width:160px;height:160px;right:55px;top:35px;"),
+      div(class = "lp-circle lp-circle-amber",
+          style = "width:320px;height:320px;left:-120px;bottom:-140px;"),
+      div(class = "lp-circle lp-circle-teal",
+          style = "width:260px;height:260px;right:-80px;bottom:-100px;"),
       div(style = "max-width:860px; position:relative; z-index:1;",
-        tags$h1("Measure digital skills.", tags$br(),
-                "Generate actionable data."),
+        tags$h1(
+          "A Practitioner's Toolkit for", tags$br(),
+          tags$span(class = "lp-highlight", "Assessing Digital Skills"), tags$br(),
+          "in Low- and Middle-Income Countries"
+        ),
         tags$p(class = "lp-lead",
-          "Design and customize digital skills surveys in minutes using a validated,
-           modular toolkit. Select the questions you need, ensure comparability,
+          "Design and customize digital skills surveys using a validated, modular toolkit.
+           Select the questions you need, ensure comparability across projects and countries,
            and export ready-to-field instruments for your data collection teams."
         ),
         tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px;",
-          tags$em("Source: A Practitioner's Toolkit for Inclusive Digital Skills Measurement
-                   in Low- and Middle-Income Countries"),
-          ", developed by a consortium of partners from the ",
+          "Developed by a consortium of partners from the ",
           tags$strong("World Bank"),
           " and the ",
           tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
