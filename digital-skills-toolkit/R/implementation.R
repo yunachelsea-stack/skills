@@ -11,7 +11,7 @@ implementation_tab <- function() {
       div(class = "ca-header",
         tags$small("RESOURCE 04 · PHASE THREE: SURVEY IMPLEMENTATION"),
         tags$h2("Implementing the Digital Skills Measurement Survey"),
-        tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden."),, Chapter 8, sections 8.1–8.3, Boxes 8.1–8.2 and Table 8.1. This guidance does not automatically change Survey Builder questions.")
+        tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden.")
       ),
       section("Modality of Survey Implementation",
         tags$p("Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally."),

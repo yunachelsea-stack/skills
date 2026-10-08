@@ -9,7 +9,7 @@ analysis_tab <- function() {
       div(class = "ca-header",
         tags$small("RESOURCE 06 · PHASE FOUR: DATA ANALYTICS"),
         tags$h2("Methods for Analyzing Digital Skills"),
-        tags$p("Group skills by competency, construct scores, explore digital access and use, and relate skills to social and economic participation."),, Chapter 10, sections 10.1–10.4.")
+        tags$p("Group skills by competency, construct scores, explore digital access and use, and relate skills to social and economic participation.")
       ),
       section("Choose an approach that fits the study",
         tags$p("The report notes that digital skills measurement has not been standardized. It describes several approaches rather than prescribing one universal measure."),

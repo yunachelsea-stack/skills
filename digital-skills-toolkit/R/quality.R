@@ -8,7 +8,7 @@ quality_tab <- function() {
       div(class = "ca-header",
         tags$small("RESOURCE 05 · PHASE FOUR: DATA ANALYTICS"),
         tags$h2("Quality Assurance and Quality Control"),
-        tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems."),, Chapter 9, sections 9.1–9.2 and Box 9.1.")
+        tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems.")
       ),
       section("Defining Data Quality Assurance and Quality Control",
         tags$p("Quality assurance, quality control and quality improvement have distinct roles. The report recommends a multifaceted framework to protect data quality and integrity during implementation."),
