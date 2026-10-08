@@ -697,7 +697,6 @@ ui <- navbarPage(
       fluidRow(
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "01"),
             tags$h4("Survey Builder"),
             tags$p("Build a digital skills measurement survey including required and optional
@@ -706,7 +705,6 @@ ui <- navbarPage(
         ),
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "02"),
             tags$h4("Conceptual Adaptations"),
             tags$p("Refine your survey through stakeholder consultations,
@@ -716,7 +714,6 @@ ui <- navbarPage(
         ),
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "03"),
             tags$h4("Sampling Methods"),
             tags$p("Define your target population and plan sampling with a known
@@ -728,7 +725,6 @@ ui <- navbarPage(
       fluidRow(
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "04"),
             tags$h4("Survey Implementation"),
             tags$p("Choose survey modalities, interviewer support and skill
@@ -738,7 +734,6 @@ ui <- navbarPage(
         ),
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "05"),
             tags$h4("Data Quality Assurance"),
             tags$p("Plan safeguards, monitor errors and use targeted feedback
@@ -748,7 +743,6 @@ ui <- navbarPage(
         ),
         column(4,
           div(class = "lp-card active",
-            span(class = "lp-pill active", "Available"),
             div(class = "lp-card-num", "06"),
             tags$h4("Analyzing Digital Skills"),
             tags$p("Explore competency domains, digital skills scores,
