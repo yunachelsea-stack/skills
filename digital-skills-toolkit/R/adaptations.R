@@ -38,17 +38,15 @@ adaptations_tab <- function() {
         tags$small("RESOURCE 02 · SURVEY TOOL DEVELOPMENT"),
         tags$h2("Refining the Survey Tool"),
         tags$p("Adapt the survey to local languages, technologies and experiences while preserving the intended meaning of each question."),
-        tags$p(class = "ca-source",
-          "Source: Digital Skills Measurement Toolkit (2026), Chapter 6: Refining the Survey Tool, sections 6.1–6.3. This page summarizes the report; it does not automatically change Survey Builder questions.")
       ),
 
-      section("6.1 Finalize Digital Skills for Assessment",
+      section("Finalize Digital Skills for Assessment",
         tags$p("Consult government agencies, implementing partners, technical and sector experts, researchers, and representatives of the intended survey population. Confirm that the selected competencies match respondents' roles, locally used technologies and workflows, and the assessment objectives."),
         tags$p("Consider both current needs and emerging digital systems. Repeat consultations where consensus has not been reached, and periodically review the instrument as technologies evolve."),
         tags$p("Consultations should bookend the process: first to establish priorities and identify items needing refinement, then after cognitive interviews and pilot testing to review evidence, endorse the final instrument, and prioritize critical items if questionnaire length is a concern.")
       ),
 
-      section("6.2 Contextual Adaptations through Cognitive Interviews",
+      section("Contextual Adaptations through Cognitive Interviews",
         tags$p("Cognitive interviewing is a qualitative method used to debug survey questions — checking how respondents interpret items, retrieve memories, and map answers to options — so the final instrument actually measures what you intend, especially across language and cultural gaps."),
         tags$h4("How cognitive interviews fit into tool development"),
         div(class = "ca-flow",
@@ -82,7 +80,6 @@ adaptations_tab <- function() {
         numbered_step("3", "Select sample participants",
           tags$p("Recruit people with the same or a similar profile to the intended survey population. Include people with lower literacy or education, limited survey experience, and marginalized groups whose difficulties reveal inaccessible wording."),
           tags$p("The report describes two to three rounds with approximately 8–12 participants per round, revising and retesting after each round. Cover relevant experiences and oversample rare experiences where necessary."),
-          tags$p(class = "ca-source", "These are cognitive-interview guidelines, not sample-size guidance for the main survey.")
         ),
         numbered_step("4", "Collect data iteratively, debrief daily and analyse near real-time",
           tags$p("Typically, one researcher interviews while another takes detailed notes. Ask the original question, record the answer, then use scripted or emerging probes to explore confusing words, interpretation and response choices."),
@@ -146,10 +143,9 @@ adaptations_tab <- function() {
           "Have you ever used the internet? — followed by — When was the last time you used the internet?"
         ),
 
-        source_note("Table 6.1, citing Scott et al. (2026).")
       ),
 
-      section("6.3 Pilot Testing",
+      section("Pilot Testing",
         tags$p("Pilot testing evaluates the operational performance of the complete survey under field conditions. Where cognitive interviews ask “Are respondents understanding questions as intended?”, pilot testing asks “Can this survey be implemented smoothly?”"),
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
@@ -168,8 +164,7 @@ adaptations_tab <- function() {
             )
           )
         ),
-        tags$p("Pilot the refined instrument before full-scale implementation to test question sequence, survey length, skip patterns, programming logic, interviewer instructions, respondent burden and logistics."),
-        source_note("section 6.3 and Table 6.2.")
+        tags$p("Pilot the refined instrument before full-scale implementation to test question sequence, survey length, skip patterns, programming logic, interviewer instructions, respondent burden and logistics.")
       )
     )
   )

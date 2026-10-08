@@ -9,8 +9,6 @@ sampling_tab <- function() {
         tags$small("RESOURCE 03 · SAMPLING"),
         tags$h2("Determining the Sample Population"),
         tags$p("Define who the survey represents, choose how to reach them, and plan a sample suited to the assessment’s objectives and resources."),
-        tags$p(class = "ca-source",
-          "Adapted from the supplied Digital Skills Measurement Toolkit (2026), Chapter 7, sections 7.1–7.2, Boxes 7.1–7.3 and Table 7.1.")
       ),
       section("Plan the sample before fieldwork",
         tags$p("Sampling determines how individuals or households are selected to represent a larger population. A poorly designed sample can introduce bias, reduce precision and limit the conclusions that can be drawn."),
@@ -25,7 +23,7 @@ sampling_tab <- function() {
           tags$p("Chapter 7 explains what to consider and why. Design choices depend on survey objectives, available resources, the setting and the availability of population lists. This resource does not select participants or calculate a project-specific sample size.")
         )
       ),
-      section("7.1 Conceptual and Operational Definitions",
+      section("Conceptual and Operational Definitions",
         step("Target population: who should the findings describe?",
           tags$p("Specify the people for whom indicators will be measured. Program or policy eligibility criteria may define this group."),
           tags$p("Box 7.1 illustrates this with unemployed individuals ages 19–24 residing in a selected community. This is the report’s example, not a default age range for your survey.")
@@ -36,9 +34,8 @@ sampling_tab <- function() {
         step("Inclusion and exclusion criteria: who is eligible?",
           tags$p("Document who qualifies for the full interview and who does not. Use these criteria to build the screening instrument when eligibility is not already known, and include them in the survey manual.")
         ),
-        source_note("section 7.1 and Box 7.1.")
       ),
-      section("7.2 Survey Design Scenarios",
+      section("Survey Design Scenarios",
         tags$p("A sampling frame is a complete list of elements in the target population from which a sample can be drawn. Chapter 7 distinguishes two situations: a known frame, and an unknown frame that requires household screening."),
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
@@ -58,7 +55,6 @@ sampling_tab <- function() {
             )
           )
         ),
-        source_note("Table 7.1. Relative comparisons as described in the report.")
       ),
       section("Scenario 1: The sampling frame is known",
         tags$p("Possible sources include program participant databases, voter registries, census microdata or master sampling frames, and ministry or local-government administrative databases."),
@@ -84,7 +80,6 @@ sampling_tab <- function() {
         step("5. Contact and interview the selected sample",
           tags$p("Enumerators locate and interview the selected individuals directly from the sample list.")
         ),
-        source_note("section 7.2, Scenario 1.")
       ),
       section("Sample-size illustration from the report",
         tags$p("Box 7.2 illustrates a proportion-based calculation for youth completing an online job application, using an indicator of independently completing an online form."),
@@ -100,7 +95,6 @@ sampling_tab <- function() {
           tags$strong("Report result: 1,130 attempted interviews per stratum."),
           tags$p("This is the report’s worked illustration, not a recommended sample size for your assessment. Use assumptions justified by your own population and study design.")
         ),
-        source_note("Box 7.2.")
       ),
       section("Scenario 2: The sampling frame is unknown",
         tags$p("Where no list of eligible individuals exists, household-level screening identifies the target group. The report combines multistage cluster sampling, household listing, eligibility identification and final sample selection."),
@@ -123,13 +117,11 @@ sampling_tab <- function() {
           tags$p("Administer the screener to the household head or a senior member. Include household member counts, ages and genders, and employment status for the relevant age group."),
           tags$p("Use a roster grid and probe for temporary residents or migrants. Ensure screening questions match your defined eligibility criteria.")
         ),
-        source_note("section 7.2, Scenario 2: Multistage Surveys and Cluster Sampling with Screening.")
       ),
       section("Allow for eligibility, non-response and weighting",
         tags$p("When screening is required, distinguish the final sample of eligible individuals from the number of households that must be screened. Box 7.3 identifies eligibility rate, design effect and expected non-response as necessary planning inputs."),
         tags$p("Allocate clusters across the administrative divisions of interest. The report discusses proportional allocation and conditions for self-weighting; where the allocation or selection approach is not self-weighting, appropriate sample weights must be applied."),
         tags$p("Keep these choices tied to the population and subgroups that the survey is intended to represent, rather than treating the number of completed interviews alone as evidence of representativeness."),
-        source_note("section 7.2 and Box 7.3.")
       )
     )
   )

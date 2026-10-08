@@ -11,11 +11,9 @@ implementation_tab <- function() {
       div(class = "ca-header",
         tags$small("RESOURCE 04 · PHASE THREE: SURVEY IMPLEMENTATION"),
         tags$h2("Implementing the Digital Skills Measurement Survey"),
-        tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden."),
-        tags$p(class = "ca-source",
-          "Adapted from the supplied Digital Skills Measurement Toolkit (2026), Chapter 8, sections 8.1–8.3, Boxes 8.1–8.2 and Table 8.1. This guidance does not automatically change Survey Builder questions.")
+        tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden."),, Chapter 8, sections 8.1–8.3, Boxes 8.1–8.2 and Table 8.1. This guidance does not automatically change Survey Builder questions.")
       ),
-      section("8.1 Modality of Survey Implementation",
+      section("Modality of Survey Implementation",
         tags$p("Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally."),
         step("Self-reported vs. observed skills",
           tags$p("Self-reported questions ask whether respondents have ever performed a task. Observed assessments ask respondents to demonstrate a task during the interview."),
@@ -37,9 +35,8 @@ implementation_tab <- function() {
           tags$p("Digital tools such as computer-assisted personal interviewing (CAPI) require investment but can streamline data management, strengthen quality assurance and control, reduce errors, and shorten data entry and processing time. The report emphasizes their value for large-scale surveys."),
           tags$p("Select the modality in light of the setting, available resources and survey type.")
         ),
-        source_note("section 8.1 and Box 8.1.")
       ),
-      section("8.2 Facilitated vs. Self-Administered Surveys",
+      section("Facilitated vs. Self-Administered Surveys",
         step("Self-administered surveys: efficiency with access limitations",
           tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill."),
           tags$ul(
@@ -57,9 +54,8 @@ implementation_tab <- function() {
           tags$strong("Start with the population’s needs"),
           tags$p("Given digital-access and literacy barriers, the report often recommends facilitated surveys as a starting point. The administration method should fit the population being surveyed.")
         ),
-        source_note("section 8.2.")
       ),
-      section("8.3 Measurement Method (Observed vs. Reported)",
+      section("Measurement Method (Observed vs. Reported)",
         tags$p("Direct observation provides evidence of task performance, while self-reporting relies on what respondents recall and believe they can do. Observation is useful for validation but can be impractical in some survey contexts."),
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
@@ -81,12 +77,10 @@ implementation_tab <- function() {
             )
           )
         ),
-        source_note("Table 8.1, adapted. SMS = Short Message Service."),
         step("What the report’s Bihar study found",
           tags$p("The report cites Date et al. (2026): across 16 assessed digital skills, the mean difference between observed and reported estimates was about 2 percent among men and women."),
           tags$p("It also reports a maximum gap of 5 percent between independent and assisted performance across the skills evaluated, with minimal differences for most skills."),
           tags$p("These are findings from the study described in the report, not a guarantee that self-reports will match demonstrations in every population."),
-          source_note("sections 8.1 and 8.3, citing Date et al. (2026).")
         )
       ),
       section("Practical considerations before fieldwork",
@@ -97,7 +91,6 @@ implementation_tab <- function() {
           tags$li(tags$strong("Minimize respondent costs. "), "Avoid unintended expenses from mobile data, SMS or calls when designing observed tasks."),
           tags$li(tags$strong("Balance the trade-offs. "), "Consider safety, feasibility and data robustness together, without imposing unnecessary risks or burdens.")
         ),
-        source_note("section 8.3 and Box 8.2.")
       )
     )
   )

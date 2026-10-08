@@ -8,11 +8,9 @@ quality_tab <- function() {
       div(class = "ca-header",
         tags$small("RESOURCE 05 · PHASE FOUR: DATA ANALYTICS"),
         tags$h2("Quality Assurance and Quality Control"),
-        tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems."),
-        tags$p(class = "ca-source",
-          "Adapted from the supplied Digital Skills Measurement Toolkit (2026), Chapter 9, sections 9.1–9.2 and Box 9.1.")
+        tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems."),, Chapter 9, sections 9.1–9.2 and Box 9.1.")
       ),
-      section("9.1 Defining Data Quality Assurance and Quality Control",
+      section("Defining Data Quality Assurance and Quality Control",
         tags$p("Quality assurance, quality control and quality improvement have distinct roles. The report recommends a multifaceted framework to protect data quality and integrity during implementation."),
         step("Quality assurance: prevent and detect errors early",
           tags$p("Plan preventive processes that support adherence to survey protocols and early detection of errors.")
@@ -23,9 +21,8 @@ quality_tab <- function() {
         step("Quality improvement: strengthen the system",
           tags$p("Continuously improve quality assurance and quality control systems rather than treating quality as a one-time check.")
         ),
-        source_note("section 9.1 and Box 9.1.")
       ),
-      section("9.2 Quality Analytics and Quality Control Framework",
+      section("Quality Analytics and Quality Control Framework",
         tags$p("The framework combines an error-detection pipeline with targeted, timely feedback. Its purpose is to detect and resolve problems during data collection, not only after fieldwork ends."),
         div(class = "ca-note",
           tags$strong("Guidance, not an automated data checker"),
@@ -50,7 +47,6 @@ quality_tab <- function() {
           tags$p("The report describes weekly dashboards and detailed Excel error reports showing enumerator- and team-level performance. Weekly calls brought together data scientists, survey managers and supervisors to review cases, discuss recurring patterns and agree corrective actions."),
           tags$p("Supervisors then reviewed reports with enumerators and, where necessary, recontacted respondents to resolve inconsistencies.")
         ),
-        source_note("section 9.2, Quality Assurance, Quality Control and Feedback stages.")
       ),
       section("Three complementary layers of quality checks",
         step("I. Real-time quality assurance feedback",
@@ -72,19 +68,16 @@ quality_tab <- function() {
           tags$p("The study used “don’t know” patterns, missing values and suspiciously consistent answers as model inputs. The top 5 percent of interviews by anomaly score were targeted for review."),
           tags$p("This is the study’s review approach, not a universal threshold. An anomaly identifies a case for review; it does not by itself establish that data were fabricated.")
         ),
-        source_note("section 9.2, Components of a Quality Assurance Framework.")
       ),
       section("Evidence and adaptability",
         step("Experience from the Bihar population survey",
           tags$p("The report states that the framework improved error rates by over 85 percent during the Bihar population survey (Date et al. 2026). It builds on an earlier framework implemented in Kilkari, India (Shah et al. 2021)."),
           tags$p("This is a result reported for that study, not a promised improvement for every survey."),
-          source_note("section 9.2.")
         ),
         step("Adjust the depth of checks to the survey",
           tags$p("The framework is modular and scalable, from small pilots to national surveys. Adapt the depth of checks while retaining regular, rapid feedback."),
           tags$p("The Bihar survey did not use an SMS feedback system because of cost and complexity. The report notes that larger surveys might benefit from additional feedback layers."),
           tags$p("Depending on data security and storage feasibility, the report also discusses additional analyses of paradata, such as keystroke tracking, GPS locations and voice recordings, and integration of large language models. These are optional extensions, not features enabled in this toolkit."),
-          source_note("section 9.2, Adaptability for Other Surveys.")
         ),
         div(class = "ca-note",
           tags$strong("Keep the feedback loop active"),
