@@ -1,9 +1,7 @@
 sampling_tab <- function() {
-  section <- function(title, ...) tags$section(class = "ca-section", tags$h3(title), ...)
-  step <- function(title, ...) tags$details(class = "ca-step",
-    tags$summary(title), div(class = "ca-step-body", ...))
-  source_note <- function(reference) tags$p(class = "ca-source",
-    paste("Source: 2026-08-27_-_Digital_Skills_Measurement_Toolkit_FINAL_FOR_CIR_1791474596413.docx —", reference))
+  section     <- tab_section
+  step        <- tab_step
+  source_note <- tab_source_note
 
   tabPanel("Sampling Methods", value = "sampling",
     div(class = "ca-page",

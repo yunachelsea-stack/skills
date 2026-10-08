@@ -4,6 +4,7 @@ library(dplyr)
 library(readr)
 
 source("R/export.R")
+source("R/tab_helpers.R")
 source("R/adaptations.R")
 source("R/sampling.R")
 source("R/implementation.R")
@@ -168,6 +169,7 @@ render_module_dt <- function(df, key, page_len = 25) {
 ui <- navbarPage(
   title = "Digital Skills Toolkit",
   id = "main_nav",
+  header = tab_shared_css,
 
   # ── Landing page ──────────────────────────────────────────────────────────────
   tabPanel("Home",

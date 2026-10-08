@@ -1,10 +1,8 @@
 analysis_tab <- function() {
-  section <- function(title, ...) tags$section(class = "ca-section", tags$h3(title), ...)
-  step <- function(title, ...) tags$details(class = "ca-step",
-    tags$summary(title), div(class = "ca-step-body", ...))
-  source_note <- function(reference) tags$p(class = "ca-source",
-    paste("Source: 2026-08-27_-_Digital_Skills_Measurement_Toolkit_FINAL_FOR_CIR_1791474596413.docx —", reference))
-  row <- function(label, detail) tags$tr(tags$th(scope = "row", label), tags$td(detail))
+  section     <- tab_section
+  step        <- tab_step
+  source_note <- tab_source_note
+  trow        <- tab_trow
 
   tabPanel("Analyzing Digital Skills", value = "analysis",
     div(class = "ca-page",
@@ -108,14 +106,14 @@ analysis_tab <- function() {
             tags$caption("DAUI component maximum scores"),
             tags$thead(tags$tr(tags$th(scope = "col", "Component"), tags$th(scope = "col", "Maximum points"))),
             tags$tbody(
-              row("Digital competency", "14"),
-              row("Ownership and phone type", "6"),
-              row("Phone condition", "2"),
-              row("Access during the day", "3"),
-              row("Lock on phone", "1"),
-              row("Lock on banking app", "1"),
-              row("Decision-making over phone use", "1"),
-              row("Total shown in Table 10.3", "28")
+              trow("Digital competency", "14"),
+              trow("Ownership and phone type", "6"),
+              trow("Phone condition", "2"),
+              trow("Access during the day", "3"),
+              trow("Lock on phone", "1"),
+              trow("Lock on banking app", "1"),
+              trow("Decision-making over phone use", "1"),
+              trow("Total shown in Table 10.3", "28")
             )
           )
         ),
