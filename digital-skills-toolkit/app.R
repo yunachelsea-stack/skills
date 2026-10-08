@@ -222,6 +222,7 @@ ui <- navbarPage(
         transition: box-shadow 0.2s;
       }
       .lp-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+      .lp-card.active { cursor: pointer; }
       .lp-card.active  { border-top-color: #e8a800; }
       .lp-card.planned { border-top-color: #8db4c8; }
       .lp-card-num {
@@ -697,6 +698,7 @@ ui <- navbarPage(
       fluidRow(
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','Survey Builder',{priority:'event'})",
             div(class = "lp-card-num", "01"),
             tags$h4("Survey Builder"),
             tags$p("Build a digital skills measurement survey including required and optional
@@ -705,49 +707,49 @@ ui <- navbarPage(
         ),
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','adaptations',{priority:'event'})",
             div(class = "lp-card-num", "02"),
             tags$h4("Conceptual Adaptations"),
             tags$p("Refine your survey through stakeholder consultations,
-                    cognitive interviews and pilot testing."),
-            actionLink("open_adaptations", "Open Conceptual Adaptations")
+                    cognitive interviews and pilot testing.")
           )
         ),
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','sampling',{priority:'event'})",
             div(class = "lp-card-num", "03"),
             tags$h4("Sampling Methods"),
             tags$p("Define your target population and plan sampling with a known
-                    frame or household screening."),
-            actionLink("open_sampling", "Open Sampling Methods")
+                    frame or household screening.")
           )
         )
       ),
       fluidRow(
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','implementation',{priority:'event'})",
             div(class = "lp-card-num", "04"),
             tags$h4("Survey Implementation"),
             tags$p("Choose survey modalities, interviewer support and skill
-                    measurement methods while protecting respondents."),
-            actionLink("open_implementation", "Open Survey Implementation")
+                    measurement methods while protecting respondents.")
           )
         ),
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','quality',{priority:'event'})",
             div(class = "lp-card-num", "05"),
             tags$h4("Data Quality Assurance"),
             tags$p("Plan safeguards, monitor errors and use targeted feedback
-                    to improve data quality during fieldwork."),
-            actionLink("open_quality", "Open Data Quality Assurance")
+                    to improve data quality during fieldwork.")
           )
         ),
         column(4,
           div(class = "lp-card active",
+              onclick = "Shiny.setInputValue('card_click','analysis',{priority:'event'})",
             div(class = "lp-card-num", "06"),
             tags$h4("Analyzing Digital Skills"),
             tags$p("Explore competency domains, digital skills scores,
-                    the Digital Access and Use Index, and outcome analysis."),
-            actionLink("open_analysis", "Open Analyzing Digital Skills")
+                    the Digital Access and Use Index, and outcome analysis.")
           )
         )
       )
@@ -925,20 +927,8 @@ ui <- navbarPage(
 
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
-  observeEvent(input$open_adaptations, {
-    updateNavbarPage(session, "main_nav", selected = "adaptations")
-  })
-  observeEvent(input$open_sampling, {
-    updateNavbarPage(session, "main_nav", selected = "sampling")
-  })
-  observeEvent(input$open_implementation, {
-    updateNavbarPage(session, "main_nav", selected = "implementation")
-  })
-  observeEvent(input$open_quality, {
-    updateNavbarPage(session, "main_nav", selected = "quality")
-  })
-  observeEvent(input$open_analysis, {
-    updateNavbarPage(session, "main_nav", selected = "analysis")
+  observeEvent(input$card_click, {
+    updateNavbarPage(session, "main_nav", selected = input$card_click)
   })
 
   inc <- reactiveValues()
