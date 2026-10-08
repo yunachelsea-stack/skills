@@ -35,14 +35,7 @@ adaptations_tab <- function() {
   tabPanel("Conceptual Adaptations", value = "adaptations",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Refining the Survey Tool"),
-        tags$p("Adapt the survey to local languages, technologies and experiences while preserving the intended meaning of each question."),
-      ),
-
-      section("Finalize Digital Skills for Assessment",
-        tags$p("Consult government agencies, implementing partners, technical and sector experts, researchers, and representatives of the intended survey population. Confirm that the selected competencies match respondents' roles, locally used technologies and workflows, and the assessment objectives."),
-        tags$p("Consider both current needs and emerging digital systems. Repeat consultations where consensus has not been reached, and periodically review the instrument as technologies evolve."),
-        tags$p("Consultations should bookend the process: first to establish priorities and identify items needing refinement, then after cognitive interviews and pilot testing to review evidence, endorse the final instrument, and prioritize critical items if questionnaire length is a concern.")
+        tags$h2("Contextual Adaptations through Cognitive Interviews"),
       ),
 
       section("Contextual Adaptations through Cognitive Interviews",
