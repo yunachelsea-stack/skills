@@ -38,7 +38,7 @@ adaptations_tab <- function() {
         tags$h2("Contextual Adaptations through Cognitive Interviews"),
       ),
 
-      section("Contextual Adaptations through Cognitive Interviews",
+      section(NULL,
         tags$p("Cognitive interviewing is a qualitative method used to debug survey questions — checking how respondents interpret items, retrieve memories, and map answers to options — so the final instrument actually measures what you intend, especially across language and cultural gaps."),
         tags$h4("How cognitive interviews fit into tool development"),
         div(class = "ca-flow",

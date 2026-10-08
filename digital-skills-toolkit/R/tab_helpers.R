@@ -40,8 +40,12 @@ tab_shared_css <- tags$style(HTML("
   .ca-example-issue{font-size:13px;color:#607381;margin-bottom:10px}
 "))
 
-tab_section <- function(title, ...) {
-  tags$section(class = "ca-section", tags$h3(title), ...)
+tab_section <- function(title = NULL, ...) {
+  if (is.null(title)) {
+    tags$section(class = "ca-section", ...)
+  } else {
+    tags$section(class = "ca-section", tags$h3(title), ...)
+  }
 }
 
 tab_step <- function(title, ...) {
