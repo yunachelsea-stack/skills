@@ -6,7 +6,6 @@ sampling_tab <- function() {
   tabPanel("Sampling Methods", value = "sampling",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$small("RESOURCE 03 · SAMPLING"),
         tags$h2("Determining the Sample Population"),
         tags$p("Define who the survey represents, choose how to reach them, and plan a sample suited to the assessment’s objectives and resources."),
       ),

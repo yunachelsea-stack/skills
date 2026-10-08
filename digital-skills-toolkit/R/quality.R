@@ -6,7 +6,6 @@ quality_tab <- function() {
   tabPanel("Data Quality Assurance", value = "quality",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$small("RESOURCE 05 · PHASE FOUR: DATA ANALYTICS"),
         tags$h2("Quality Assurance and Quality Control"),
         tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems.")
       ),

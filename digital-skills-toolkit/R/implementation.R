@@ -9,7 +9,6 @@ implementation_tab <- function() {
   tabPanel("Survey Implementation", value = "implementation",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$small("RESOURCE 04 · PHASE THREE: SURVEY IMPLEMENTATION"),
         tags$h2("Implementing the Digital Skills Measurement Survey"),
         tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden.")
       ),

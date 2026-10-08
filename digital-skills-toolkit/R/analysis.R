@@ -7,7 +7,6 @@ analysis_tab <- function() {
   tabPanel("Analyzing Digital Skills", value = "analysis",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$small("RESOURCE 06 · PHASE FOUR: DATA ANALYTICS"),
         tags$h2("Methods for Analyzing Digital Skills"),
         tags$p("Group skills by competency, construct scores, explore digital access and use, and relate skills to social and economic participation.")
       ),

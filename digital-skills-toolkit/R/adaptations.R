@@ -35,7 +35,6 @@ adaptations_tab <- function() {
   tabPanel("Conceptual Adaptations", value = "adaptations",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$small("RESOURCE 02 · SURVEY TOOL DEVELOPMENT"),
         tags$h2("Refining the Survey Tool"),
         tags$p("Adapt the survey to local languages, technologies and experiences while preserving the intended meaning of each question."),
       ),
