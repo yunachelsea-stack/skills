@@ -80,7 +80,7 @@ implementation_tab <- function() {
         step("What the report’s Bihar study found",
           tags$p("The report cites Date et al. (2026): across 16 assessed digital skills, the mean difference between observed and reported estimates was about 2 percent among men and women."),
           tags$p("It also reports a maximum gap of 5 percent between independent and assisted performance across the skills evaluated, with minimal differences for most skills."),
-          tags$p("These are findings from the study described in the report, not a guarantee that self-reports will match demonstrations in every population."),
+          tags$p("These are findings from the study described in the report, not a guarantee that self-reports will match demonstrations in every population.")
         )
       ),
       section("Practical considerations before fieldwork",
@@ -90,7 +90,7 @@ implementation_tab <- function() {
           tags$li(tags$strong("Protect privacy. "), "Train researchers to handle sensitive content that may appear during demonstrations, such as text messages or photos."),
           tags$li(tags$strong("Minimize respondent costs. "), "Avoid unintended expenses from mobile data, SMS or calls when designing observed tasks."),
           tags$li(tags$strong("Balance the trade-offs. "), "Consider safety, feasibility and data robustness together, without imposing unnecessary risks or burdens.")
-        ),
+        )
       )
     )
   )

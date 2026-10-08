@@ -117,13 +117,13 @@ analysis_tab <- function() {
         step("Interpret subgroup differences and access constraints",
           tags$p("The report illustrates comparisons between men and women, separates the use component from access, and restricts comparisons to smartphone users to explore usage patterns within the same phone-access group."),
           tags$p("Table 10.4 reports a competency mean of 7.4 and median of 8.0 for men, compared with a mean of 3.7 and median of 2.0 for women in the Bihar study, on the 14-skill measure."),
-          tags$p("These are study-specific findings. No distributions or charts are reconstructed here from unavailable underlying respondent data."),
+          tags$p("These are study-specific findings. No distributions or charts are reconstructed here from unavailable underlying respondent data.")
         )
       ),
       section("Outcome Analysis",
         tags$p("Use digital skills scores as predictors or stratifiers to examine links with social and economic participation."),
         tags$p("The report’s High Impact Use Case examples include health, economic activity, online learning, eGovernance and agriculture. Compare participation across skill levels to examine the real-world relevance of skills."),
-        tags$p("In regression analysis, an index can be included as a categorical covariate, or the raw score can be included as a continuous covariate. Such comparisons describe relationships; they do not by themselves establish a causal effect."),
+        tags$p("In regression analysis, an index can be included as a categorical covariate, or the raw score can be included as a continuous covariate. Such comparisons describe relationships; they do not by themselves establish a causal effect.")
       )
     )
   )

@@ -121,7 +121,7 @@ sampling_tab <- function() {
       section("Allow for eligibility, non-response and weighting",
         tags$p("When screening is required, distinguish the final sample of eligible individuals from the number of households that must be screened. Box 7.3 identifies eligibility rate, design effect and expected non-response as necessary planning inputs."),
         tags$p("Allocate clusters across the administrative divisions of interest. The report discusses proportional allocation and conditions for self-weighting; where the allocation or selection approach is not self-weighting, appropriate sample weights must be applied."),
-        tags$p("Keep these choices tied to the population and subgroups that the survey is intended to represent, rather than treating the number of completed interviews alone as evidence of representativeness."),
+        tags$p("Keep these choices tied to the population and subgroups that the survey is intended to represent, rather than treating the number of completed interviews alone as evidence of representativeness.")
       )
     )
   )
