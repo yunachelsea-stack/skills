@@ -75,25 +75,7 @@ sampling_tab <- function() {
       ),
 
       section("Two Sampling Scenarios",
-        tags$p("Sampling design depends on whether a list of your target population already exists. The table below compares both scenarios; the following sections walk through each in detail."),
-        div(style = "overflow-x:auto;",
-          tags$table(class = "table table-striped",
-            tags$caption("Comparison of sampling-frame scenarios"),
-            tags$thead(tags$tr(
-              tags$th(scope = "col", ""),
-              tags$th(scope = "col", "Scenario 1: Known frame"),
-              tags$th(scope = "col", "Scenario 2: Unknown frame")
-            )),
-            tags$tbody(
-              tags$tr(tags$th(scope = "row", "Sampling efficiency"), tags$td("High"), tags$td("Medium to low")),
-              tags$tr(tags$th(scope = "row", "Field effort"), tags$td("Low"), tags$td("High — screening required")),
-              tags$tr(tags$th(scope = "row", "Eligibility"), tags$td("Predetermined"), tags$td("Established in the field")),
-              tags$tr(tags$th(scope = "row", "Ethical complexity"), tags$td("Lower"), tags$td("Higher — potential intrusion")),
-              tags$tr(tags$th(scope = "row", "Typical use"), tags$td("Program evaluations"), tags$td("Community prevalence studies")),
-              tags$tr(tags$th(scope = "row", "Timeline"), tags$td("Shorter"), tags$td("Longer"))
-            )
-          )
-        )
+        tags$p("Sampling design depends on whether a list of your target population already exists. The two sections below walk through each scenario in detail.")
       ),
 
       section("Scenario 1: Sampling Frame is Known",
