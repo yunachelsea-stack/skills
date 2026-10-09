@@ -129,7 +129,7 @@ sampling_tab <- function() {
           tags$p("A design effect is applied only if cluster sampling is used. When individuals are
                   selected directly from a list, no design effect is needed. Adjust for expected
                   non-response by dividing the required number of completed interviews by the
-                  response rate."),
+                  response rate. See Box 7.2 in the full report for the step-by-step formula."),
           eg(tags$p(style = "margin:0;",
             "With an expected response rate of 85 percent, 1,177 participants need to be selected
              to achieve 1,000 completed interviews."))
@@ -179,7 +179,8 @@ sampling_tab <- function() {
         numbered_step("3", "Calculate the number of clusters to visit",
           tags$p("Not every household will contain an eligible person, so calculate the number of
                   households to screen first, then divide by the number of households per cluster.
-                  A general rule of thumb is 20 to 40 households per cluster."),
+                  A general rule of thumb is 20 to 40 households per cluster. See Box 7.3 in the
+                  full report for the formula."),
           eg(tags$p(style = "margin:0;",
             "If 20 percent of households contain an eligible youth and 90 percent of those complete
              the interview, 5,556 households need to be screened. With 30 households per cluster,
