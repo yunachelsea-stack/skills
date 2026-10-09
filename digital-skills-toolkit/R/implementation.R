@@ -8,7 +8,7 @@ implementation_tab <- function() {
   tabPanel("Survey Implementation", value = "implementation",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Key Choices in Survey Implementation")
+        tags$h2("Implementing the Digital Skills Measurement Survey")
       ),
 
       section(NULL,
