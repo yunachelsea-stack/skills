@@ -16,7 +16,7 @@ quality_tab <- function() {
           tags$li(tags$strong("Quality control"), " focuses on monitoring outputs from those processes and verifying that they meet the established standards."),
           tags$li(tags$strong("Quality improvement"), " is a proactive effort to continuously strengthen quality assurance and quality control systems.")
         ),
-        tags$p("To ensure data quality and integrity during implementation, a multifaceted quality assurance and quality control (QA/QC) framework should be established. This framework was designed and tested during the data collection phase of a population survey in Bihar, India, building on an earlier framework implemented in the Kilkari evaluation in India. The system ensured that errors were detected early and resolved during data collection. Its value comes from a robust error detection pipeline combined with targeted, real-time feedback.")
+        tags$p("To ensure data quality and integrity during implementation, a multifaceted quality assurance and quality control (QA/QC) framework should be established. Its value comes from a robust error detection pipeline combined with targeted, real-time feedback.")
       ),
 
       section("1. Building Checks into the Survey Tool",
