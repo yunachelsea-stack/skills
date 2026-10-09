@@ -126,15 +126,13 @@ sampling_tab <- function() {
         ),
 
         numbered_step("4", "Calculate the sample size",
-          tags$p("Calculate the sample size following Box 7.2. A design effect is applied only if
-                  cluster sampling is used. When individuals are selected directly from a list, no
-                  design effect is needed. Adjust for expected non-response by dividing the required
-                  number of completed interviews by the response rate."),
-          eg(
-            tags$p(style = "margin:0;", "With an expected response rate of 85 percent:"),
-            tags$p(style = "margin:6px 0 0; font-family:monospace;",
-              "1,000 ÷ 0.85 = 1,176.5 → 1,177 participants selected")
-          )
+          tags$p("A design effect is applied only if cluster sampling is used. When individuals are
+                  selected directly from a list, no design effect is needed. Adjust for expected
+                  non-response by dividing the required number of completed interviews by the
+                  response rate."),
+          eg(tags$p(style = "margin:0;",
+            "With an expected response rate of 85 percent, 1,177 participants need to be selected
+             to achieve 1,000 completed interviews."))
         ),
 
         numbered_step("5", "Contact and interview sample members",
@@ -151,8 +149,8 @@ sampling_tab <- function() {
                 of the target group. This involves multistage cluster sampling, household listing,
                 eligibility screening, and final sample selection."),
         tags$p("A screening tool is used to gather basic eligibility information. Sample size estimation
-                must account for eligibility and response rates (see Box 7.3). The design effect must
-                account for clustering, since people living near each other tend to give similar answers."),
+                must account for eligibility and response rates. The design effect must account for
+                clustering, since people living near each other tend to give similar answers."),
         tags$p("Sampling without a frame happens in two parts: planning decisions made before fieldwork,
                 followed by selection in the field in three stages — clusters, then households,
                 then individuals."),
@@ -179,19 +177,13 @@ sampling_tab <- function() {
         ),
 
         numbered_step("3", "Calculate the number of clusters to visit",
-          tags$p("First, calculate the number of households to screen using Box 7.3, since not every
-                  household will contain an eligible person. Then divide the number of households to
-                  screen by the number of households to visit per cluster. A general rule of thumb
-                  is 20 to 40 households per cluster."),
-          eg(
-            tags$p(style = "margin:0;",
-              "If 20 percent of households contain an eligible youth and 90 percent of those
-               complete the interview:"),
-            tags$p(style = "margin:6px 0 0; font-family:monospace;",
-              "Households to screen = 1,000 ÷ (0.20 × 0.90) = 5,556"),
-            tags$p(style = "margin:4px 0 0; font-family:monospace;",
-              "With 30 households per cluster: 5,556 ÷ 30 = 186 clusters")
-          )
+          tags$p("Not every household will contain an eligible person, so calculate the number of
+                  households to screen first, then divide by the number of households per cluster.
+                  A general rule of thumb is 20 to 40 households per cluster."),
+          eg(tags$p(style = "margin:0;",
+            "If 20 percent of households contain an eligible youth and 90 percent of those complete
+             the interview, 5,556 households need to be screened. With 30 households per cluster,
+             186 clusters are needed."))
         ),
 
         numbered_step("4", "Determine appropriate sample weights",
