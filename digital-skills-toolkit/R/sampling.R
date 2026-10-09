@@ -127,20 +127,20 @@ sampling_tab <- function() {
         when_to_use("community prevalence studies where no list of eligible individuals exists — household-level screening is used to identify and reach the target group."),
         tags$p("This approach combines multistage cluster sampling, household listing, eligibility screening, and final sample selection."),
 
-        step("Stage 1: Select clusters (PSUs)",
+        numbered_step("1", "Select clusters (PSUs)",
           tags$p("Define the administrative divisions for which results should be representative. Identify primary sampling units (PSUs) — villages, urban blocks, wards or enumeration areas — from government or national statistical agency records (e.g., DHS or MICS enumeration areas)."),
           tags$p("Select PSUs using simple random sampling or probability proportional to size (PPS), which weights selection by population density and can produce a self-weighting sample under constant cluster sizes."),
           tags$p("A general rule of thumb is to visit 20–40 households per cluster; rare target populations may require larger clusters. Divide the total required sample by the cluster size to determine the number of clusters to visit.")
         ),
-        step("Stage 2: List and randomly select households",
+        numbered_step("2", "List and randomly select households",
           tags$p("Map and list all households in each selected PSU. Randomly select the planned number from those lists."),
           tags$p("Collect household information needed to assess all eligibility criteria — such as household size, member ages and employment status.")
         ),
-        step("Stage 3: Identify and select eligible individuals",
+        numbered_step("3", "Identify and select eligible individuals",
           tags$p("Flag households with eligible members. Depending on the design, interview all eligible members or randomly select one using a random number generator or lottery based on roster line numbers — not simply the easiest person to reach."),
           tags$p("Selecting all eligible members may be inefficient when their responses would be identical.")
         ),
-        step("Household screening questionnaire",
+        numbered_step("4", "Administer the household screening questionnaire",
           tags$p("Administer a short screener to the household head or a senior member. Key elements to collect:"),
           tags$ul(
             tags$li("Number of household members"),
