@@ -1,65 +1,60 @@
 analysis_tab <- function() {
-  section     <- tab_section
-  step        <- tab_step
-  source_note <- tab_source_note
-  trow        <- tab_trow
+  section  <- tab_section
+  step     <- tab_step
+  trow     <- tab_trow
+  sub_head <- function(title) {
+    tags$p(style = "font-weight:700; color:#0d3b5e; margin:20px 0 6px;", title)
+  }
 
   tabPanel("Analyzing Digital Skills", value = "analysis",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Methods for Analyzing Digital Skills"),
-        tags$p("Group skills by competency, construct scores, explore digital access and use, and relate skills to social and economic participation.")
+        tags$h2("Methods for Analyzing Digital Skills")
       ),
-      section("Choose an approach that fits the study",
-        tags$p("The report notes that digital skills measurement has not been standardized. It describes several approaches rather than prescribing one universal measure."),
-        div(class = "ca-note",
-          tags$strong("Analytical guidance, not a scoring engine"),
-          tags$p("This tab summarizes the report. It does not analyze respondent data, calculate scores or change Survey Builder selections. Study findings below are attributed examples, not results from your survey.")
-        )
+
+      section(NULL,
+        tags$p("Digital skills measurement has not been standardized. The report describes several approaches rather than prescribing one universal measure.")
       ),
+
       section("Competency-Based Analyses",
         tags$p("Group individual skills into broader domains to compare strengths and gaps within and across areas of competence. Alignment with international frameworks can support comparability."),
-        step("Organize skills into competence domains",
-          tags$ul(
-            tags$li("Communication and collaboration."),
-            tags$li("Information and data literacy."),
-            tags$li("Safety and privacy."),
-            tags$li("Digital content creation."),
-            tags$li("Problem-solving or technical use.")
-          ),
-          tags$p("The report also describes more intuitive “functional domains” tailored to study objectives, the skills measured and stakeholder needs.")
+        sub_head("Organize skills into competence domains"),
+        tags$ul(
+          tags$li("Communication and collaboration."),
+          tags$li("Information and data literacy."),
+          tags$li("Safety and privacy."),
+          tags$li("Digital content creation."),
+          tags$li("Problem-solving or technical use.")
         ),
-        step("Maintain coverage when shortening the questionnaire",
-          tags$p("The report recommends covering at least one or two skills per domain, even when using a reduced set of questions, so assessments span the range of competencies."),
-          tags$p("Within-domain basic and comprehensive competence can distinguish having performed one skill from having performed multiple skills. The specific definitions used in section 10.2 are summarized below.")
-        ),
+        tags$p("The report also describes more intuitive functional domains tailored to study objectives, the skills measured, and stakeholder needs."),
+        sub_head("Maintain coverage when shortening the questionnaire"),
+        tags$p("The report recommends covering at least one or two skills per domain, even when using a reduced set of questions, so assessments span the range of competencies."),
+        tags$p("Within-domain basic and comprehensive competence can distinguish having performed one skill from having performed multiple skills. The specific definitions used in section 10.2 are summarized below.")
       ),
+
       section("Digital Skills Score or Index",
-        step("Simple additive scoring",
-          tags$p("Assign one point for each skill ever performed and sum the points into a raw total. This is transparent and straightforward, although a longer list of skills increases questionnaire length.")
+        sub_head("Simple additive scoring"),
+        tags$p("Assign one point for each skill ever performed and sum the points into a raw total. This is transparent and straightforward, although a longer list of skills increases questionnaire length."),
+        sub_head("Domain-based scoring"),
+        tags$p("Assess competence within each area, then aggregate across areas. The report gives these definitions:"),
+        tags$ul(
+          tags$li(tags$strong("Basic competence in an area: "), "Proficiency in at least one item in that area."),
+          tags$li(tags$strong("Overall basic competence: "), "Basic competence in all areas."),
+          tags$li(tags$strong("Comprehensive competence in an area: "), "Proficiency in more than one item in that area."),
+          tags$li(tags$strong("Overall comprehensive competence: "), "Comprehensive competence in more than two areas.")
         ),
-        step("Domain-based scoring",
-          tags$p("Assess competence within each area, then aggregate across areas. The report gives these definitions:"),
-          tags$ul(
-            tags$li(tags$strong("Basic competence in an area: "), "Proficiency in at least one item in that area."),
-            tags$li(tags$strong("Overall basic competence: "), "Basic competence in all areas."),
-            tags$li(tags$strong("Comprehensive competence in an area: "), "Proficiency in more than one item in that area."),
-            tags$li(tags$strong("Overall comprehensive competence: "), "Comprehensive competence in more than two areas.")
-          )
-        ),
-        step("Reduced-item scoring",
-          tags$p("A shorter set of questions can be used to create a score, provided it includes skills from all domains. Section 10.3 describes the report’s proposed minimum digital competency set.")
-        ),
+        sub_head("Reduced-item scoring"),
+        tags$p("A shorter set of questions can be used to create a score, provided it includes skills from all domains. Section 10.3 describes the report's proposed minimum digital competency set.")
       ),
+
       section("Digital Access and Use Index (DAUI)",
         tags$p("DAUI is a composite measure of access to and use of mobile phone and internet technologies in low-resource settings. It extends beyond device ownership to consider access quality, skills, agency, safety and the real-life relevance of digital activities."),
         tags$p("The accompanying questions were developed following cognitive testing in India, Kenya and Nigeria."),
-        step("Broader components of digital access and use",
-          tags$p("Table 10.1 describes the broader measurement framework; the scoring subset in Tables 10.2–10.3 does not score every component separately."),
-          tags$ul(
-            tags$li(tags$strong("Access: "), "Connectivity (network, SIM cards and electricity); physical access (ownership, sharing, phone type, condition and timing); and affordability."),
-            tags$li(tags$strong("Use: "), "Digital competency; safety and security; social norms and attitudes; and digital agency, including decision-making, permissions and restrictions.")
-          ),
+        sub_head("Broader components of digital access and use"),
+        tags$p("Table 10.1 describes the broader measurement framework; the scoring subset in Tables 10.2–10.3 does not score every component separately."),
+        tags$ul(
+          tags$li(tags$strong("Access: "), "Connectivity (network, SIM cards and electricity); physical access (ownership, sharing, phone type, condition and timing); and affordability."),
+          tags$li(tags$strong("Use: "), "Digital competency; safety and security; social norms and attitudes; and digital agency, including decision-making, permissions and restrictions.")
         ),
         step("Physical access, safety and agency scoring",
           tags$p(tags$strong("Physical access: "), "The report gives the formula (A × B) + C + D."),
@@ -71,7 +66,7 @@ analysis_tab <- function() {
           ),
           tags$p(tags$strong("Safety and security: "), "One point for a lock on the phone and one for a lock on a banking app."),
           tags$p(tags$strong("Digital agency: "), "One point if the respondent alone decides who can use the phone and when."),
-          tags$p("These are summaries of the report’s scoring categories, not a complete implementation specification for missing responses or every possible combination of answers."),
+          tags$p("These are summaries of the report's scoring categories, not a complete implementation specification for missing responses or every possible combination of answers.")
         ),
         step("The 14 digital competency skills",
           tags$p("Table 10.2 uses 19 questions to cover 14 skills. Where questions are paired, a positive response to either counts for the single skill, rather than two separate points."),
@@ -91,7 +86,7 @@ analysis_tab <- function() {
             tags$li("Accessed a bank account using a mobile phone."),
             tags$li("Blocked a phone number.")
           ),
-          tags$p("The report describes competency as x out of 14 skills, with up to 14 points contributing to the composite index. The IVR item is recorded as task completion."),
+          tags$p("The report describes competency as x out of 14 skills, with up to 14 points contributing to the composite index. The IVR item is recorded as task completion.")
         ),
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
@@ -113,16 +108,14 @@ analysis_tab <- function() {
           tags$strong("Source inconsistency: confirm category limits before scoring"),
           tags$p("The narrative lists No Access (0), Low (1–10), Medium (11–20) and High (21–29), but Table 10.3 totals 28 possible points. Both are reported here as written; this toolkit does not resolve the discrepancy or apply these categories automatically.")
         ),
-        step("Interpret subgroup differences and access constraints",
-          tags$p("The report illustrates comparisons between men and women, separates the use component from access, and restricts comparisons to smartphone users to explore usage patterns within the same phone-access group."),
-          tags$p("Table 10.4 reports a competency mean of 7.4 and median of 8.0 for men, compared with a mean of 3.7 and median of 2.0 for women in the Bihar study, on the 14-skill measure."),
-          tags$p("These are study-specific findings. No distributions or charts are reconstructed here from unavailable underlying respondent data.")
-        )
+        sub_head("Interpret subgroup differences and access constraints"),
+        tags$p("Use subgroup comparisons to examine how digital access and skills vary across groups—for example, by gender, age, or geographic area. Separating the use component from access, or restricting comparisons to smartphone users, can reveal patterns within the same access group.")
       ),
+
       section("Outcome Analysis",
         tags$p("Use digital skills scores as predictors or stratifiers to examine links with social and economic participation."),
-        tags$p("The report’s High Impact Use Case examples include health, economic activity, online learning, eGovernance and agriculture. Compare participation across skill levels to examine the real-world relevance of skills."),
-        tags$p("In regression analysis, an index can be included as a categorical covariate, or the raw score can be included as a continuous covariate. Such comparisons describe relationships; they do not by themselves establish a causal effect.")
+        tags$p("High-impact use cases include health, economic activity, online learning, e-governance and agriculture. Compare participation across skill levels to examine the real-world relevance of skills."),
+        tags$p("In regression analysis, an index can be included as a categorical covariate, or the raw score can be included as a continuous covariate. Such comparisons describe associations; they do not by themselves establish a causal effect.")
       )
     )
   )
