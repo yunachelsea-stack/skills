@@ -84,8 +84,6 @@ adaptations_tab <- function() {
       ),
 
       section("What to look for — and how wording can change",
-        tags$p("The seven components below come from Table 6.1. Each shows an original question, the problem cognitive interviews revealed, and the revised wording. Test adaptations locally rather than treating these as universally suitable replacements."),
-
         qa_pair(
           "Word choice",
           "Some respondents did not recognize WhatsApp or YouTube use as internet use; “any location and any device” distracted respondents away from the core question.",
