@@ -43,7 +43,6 @@ implementation_tab <- function() {
 
       section("2. Measuring Skills: Reported vs. Observed",
         tags$p("Self-reported questions ask whether respondents have ever performed a task. Observed assessments ask them to demonstrate it during the interview. Direct observation provides evidence of task performance, while self-reporting relies on what respondents recall and believe they can do. Observation is generally regarded as the stronger form of validation, but it can be impractical in many survey contexts."),
-        tags$p("In a population survey in Bihar, India, observed and self-reported estimates for 16 digital skills differed by about 2 percentage points on average, among both men and women. This suggests self-reports may be sufficient where time or logistics prevent demonstrations. However, a small average difference does not mean every respondent reported accurately, because over-reporting and under-reporting can offset each other. Where possible, a subsample with observed tasks can help check how well self-reports perform in a new context."),
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
             tags$caption("Observed and self-reported digital skills: trade-offs"),
@@ -62,15 +61,6 @@ implementation_tab <- function() {
             )
           )
         ),
-        step("Practical considerations before fieldwork",
-          tags$ol(
-            tags$li(tags$strong("Choose the right method. "), "Not all skills can be observed. Select observation or self-reporting based on feasibility, study objectives, and resource constraints."),
-            tags$li(tags$strong("Use familiar devices. "), "Assess skills on the device the respondent regularly uses, whether personally owned, shared, or employer-provided, to reflect real-world ability. Plan in advance for respondents who share a phone or do not have it with them during the interview."),
-            tags$li(tags$strong("Protect privacy. "), "Train researchers to handle sensitive content that may appear during demonstrations, such as text messages or photos."),
-            tags$li(tags$strong("Minimize respondent costs. "), "Avoid unintended expenses from mobile data, SMS, or calls when designing observed tasks."),
-            tags$li(tags$strong("Balance the trade-offs. "), "Consider safety, feasibility, and data robustness together, without imposing unnecessary risks or burdens.")
-          )
-        )
       ),
 
       section("3. Framing Skill Items",
