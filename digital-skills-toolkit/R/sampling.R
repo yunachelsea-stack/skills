@@ -30,21 +30,7 @@ sampling_tab <- function() {
       ),
 
       section(NULL,
-        tags$p("Sampling determines how individuals or households are selected to represent a larger population. A well-designed sample ensures findings are unbiased and generalizable. Four decisions shape every sampling plan:"),
-        div(class = "ca-flow",
-          div(class = "ca-flow-step", "Define population"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Find or build frame"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Choose method"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Calculate size"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Field")
-        ),
-        tags$p(style = "font-size:0.88em; color:#607381;",
-          "This tab explains what to consider and why. Design choices depend on survey objectives,
-           available resources, the setting, and the availability of population lists.")
+        tags$p("Sampling determines how individuals or households are selected to represent a larger population. A well-designed sample ensures findings are unbiased and generalizable. This tab explains what to consider and why — design choices depend on survey objectives, available resources, the setting, and the availability of population lists.")
       ),
 
       section("Key Definitions",
