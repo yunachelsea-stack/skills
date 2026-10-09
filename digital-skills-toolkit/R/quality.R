@@ -1,51 +1,40 @@
 quality_tab <- function() {
-  section     <- tab_section
-  step        <- tab_step
-  source_note <- tab_source_note
+  section  <- tab_section
+  step     <- tab_step
+  sub_head <- function(title) {
+    tags$p(style = "font-weight:700; color:#0d3b5e; margin:20px 0 6px;", title)
+  }
 
   tabPanel("Data Quality Assurance", value = "quality",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Quality Assurance and Quality Control"),
-        tags$p("Plan safeguards, detect errors during data collection, and provide timely feedback so field teams can resolve problems.")
+        tags$h2("Quality Assurance and Quality Control")
       ),
       section("Defining Data Quality Assurance and Quality Control",
         tags$p("Quality assurance, quality control and quality improvement have distinct roles. The report recommends a multifaceted framework to protect data quality and integrity during implementation."),
-        step("Quality assurance: prevent and detect errors early",
-          tags$p("Plan preventive processes that support adherence to survey protocols and early detection of errors.")
-        ),
-        step("Quality control: check the outputs",
-          tags$p("Monitor the outputs of those processes and verify that they meet established standards.")
-        ),
-        step("Quality improvement: strengthen the system",
-          tags$p("Continuously improve quality assurance and quality control systems rather than treating quality as a one-time check.")
-        ),
+        sub_head("Quality assurance: prevent and detect errors early"),
+        tags$p("Plan preventive processes that support adherence to survey protocols and early detection of errors."),
+        sub_head("Quality control: check the outputs"),
+        tags$p("Monitor the outputs of those processes and verify that they meet established standards."),
+        sub_head("Quality improvement: strengthen the system"),
+        tags$p("Continuously improve quality assurance and quality control systems rather than treating quality as a one-time check.")
       ),
       section("Quality Analytics and Quality Control Framework",
         tags$p("The framework combines an error-detection pipeline with targeted, timely feedback. Its purpose is to detect and resolve problems during data collection, not only after fieldwork ends."),
-        div(class = "ca-note",
-          tags$strong("Guidance, not an automated data checker"),
-          tags$p("This tab explains the report’s framework. It does not analyze uploaded responses, run machine learning, generate error reports or modify the survey automatically.")
-        ),
-        step("Quality assurance · Step 1: Build safeguards into the CAPI tool",
-          tags$p("During tool development, review questions for potential errors and design safeguards to prevent or capture them early. Decide the core components of the quality framework at this stage."),
-          tags$p("CAPI means computer-assisted personal interviewing.")
-        ),
-        step("Quality assurance · Step 2: Define error flags and algorithm protocols",
-          tags$p("After identifying error opportunities and building internal safeguards, define rules for detecting other errors as data are processed, either during collection or afterward."),
-          tags$p("Where anomaly detection is used, establish its protocols alongside the rule-based checks. The three layers described below complement one another.")
-        ),
-        step("Quality control · Step 3: Run checks regularly",
-          tags$p("Continuously monitor collected data against the safeguards and error rules. Track errors and performance in real time, or as rapidly as possible, so problems are identified early.")
-        ),
-        step("Quality control · Step 4: Generate actionable error reports",
-          tags$p("Turn identified errors and outliers into an error sheet or dashboard that supports feedback and correction, rather than simply listing problems.")
-        ),
-        step("Feedback · Step 5: Share findings and take corrective action",
-          tags$p("Provide frequent feedback through meetings, messages or retraining. Address errors by correcting or recollecting problematic data."),
-          tags$p("The report describes weekly dashboards and detailed Excel error reports showing enumerator- and team-level performance. Weekly calls brought together data scientists, survey managers and supervisors to review cases, discuss recurring patterns and agree corrective actions."),
-          tags$p("Supervisors then reviewed reports with enumerators and, where necessary, recontacted respondents to resolve inconsistencies.")
-        ),
+        sub_head("Step 1: Build safeguards into the CAPI tool"),
+        tags$p("During tool development, review questions for potential errors and design safeguards to prevent or capture them early. Decide the core components of the quality framework at this stage."),
+        tags$p("CAPI means computer-assisted personal interviewing."),
+        sub_head("Step 2: Define error flags and algorithm protocols"),
+        tags$p("After identifying error opportunities and building internal safeguards, define rules for detecting other errors as data are processed, either during collection or afterward."),
+        tags$p("Where anomaly detection is used, establish its protocols alongside the rule-based checks. The three layers described below complement one another."),
+        sub_head("Step 3: Run checks regularly"),
+        tags$p("Continuously monitor collected data against the safeguards and error rules. Track errors and performance in real time, or as rapidly as possible, so problems are identified early."),
+        sub_head("Step 4: Generate actionable error reports"),
+        tags$p("Turn identified errors and outliers into an error sheet or dashboard that supports feedback and correction, rather than simply listing problems."),
+        sub_head("Step 5: Share findings and take corrective action"),
+        tags$p("Provide frequent feedback through meetings, messages or retraining. Address errors by correcting or recollecting problematic data."),
+        tags$p("The report describes weekly dashboards and detailed Excel error reports showing enumerator- and team-level performance. Weekly calls brought together data scientists, survey managers and supervisors to review cases, discuss recurring patterns and agree corrective actions."),
+        tags$p("Supervisors then reviewed reports with enumerators and, where necessary, recontacted respondents to resolve inconsistencies.")
       ),
       section("Three complementary layers of quality checks",
         step("I. Real-time quality assurance feedback",
@@ -66,18 +55,16 @@ quality_tab <- function() {
           tags$p("An unsupervised method such as Isolation Forest can identify unusual combinations of errors that simpler rules may miss."),
           tags$p("The study used “don’t know” patterns, missing values and suspiciously consistent answers as model inputs. The top 5 percent of interviews by anomaly score were targeted for review."),
           tags$p("This is the study’s review approach, not a universal threshold. An anomaly identifies a case for review; it does not by itself establish that data were fabricated.")
-        ),
+        )
       ),
       section("Evidence and adaptability",
-        step("Experience from the Bihar population survey",
-          tags$p("The report states that the framework improved error rates by over 85 percent during the Bihar population survey (Date et al. 2026). It builds on an earlier framework implemented in Kilkari, India (Shah et al. 2021)."),
-          tags$p("This is a result reported for that study, not a promised improvement for every survey."),
-        ),
-        step("Adjust the depth of checks to the survey",
-          tags$p("The framework is modular and scalable, from small pilots to national surveys. Adapt the depth of checks while retaining regular, rapid feedback."),
-          tags$p("The Bihar survey did not use an SMS feedback system because of cost and complexity. The report notes that larger surveys might benefit from additional feedback layers."),
-          tags$p("Depending on data security and storage feasibility, the report also discusses additional analyses of paradata, such as keystroke tracking, GPS locations and voice recordings, and integration of large language models. These are optional extensions, not features enabled in this toolkit."),
-        ),
+        sub_head("Experience from the Bihar population survey"),
+        tags$p("The report states that the framework improved error rates by over 85 percent during the Bihar population survey (Date et al. 2026). It builds on an earlier framework implemented in Kilkari, India (Shah et al. 2021)."),
+        tags$p("This is a result reported for that study, not a promised improvement for every survey."),
+        sub_head("Adjust the depth of checks to the survey"),
+        tags$p("The framework is modular and scalable, from small pilots to national surveys. Adapt the depth of checks while retaining regular, rapid feedback."),
+        tags$p("The Bihar survey did not use an SMS feedback system because of cost and complexity. The report notes that larger surveys might benefit from additional feedback layers."),
+        tags$p("Depending on data security and storage feasibility, the report also discusses additional analyses of paradata, such as keystroke tracking, GPS locations and voice recordings, and integration of large language models. These are optional extensions, not features enabled in this toolkit."),
         div(class = "ca-note",
           tags$strong("Keep the feedback loop active"),
           tags$p("Detect problems early, turn findings into actionable reports, review them with field teams, and resolve or recollect problematic data. Timely, targeted feedback is central to the report’s approach.")
