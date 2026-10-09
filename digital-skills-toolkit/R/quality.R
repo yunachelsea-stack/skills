@@ -37,23 +37,23 @@ quality_tab <- function() {
         ),
         tags$p("Rules should be updated iteratively during data collection as new error patterns emerge."),
         sub_head("Layer 3: Anomaly detection"),
-        tags$p("A machine learning algorithm designed for identifying anomalies, such as Isolation Forest, is used to identify interviews that show unusual combinations of errors. In Bihar, “don’t know” patterns, missing values, and suspiciously consistent answers were used as inputs to the model, and the top 5 percent of interviews by anomaly score were targeted for review. Flagged interviews are not necessarily errors; they indicate where closer review is needed.")
+        tags$p("A machine learning algorithm designed for identifying anomalies, such as Isolation Forest, is used to identify interviews that show unusual combinations of errors. Inputs to the model can include “don’t know” patterns, missing values, and suspiciously consistent answers; the top 5 percent of interviews by anomaly score are typically targeted for review. Flagged interviews are not necessarily errors; they indicate where closer review is needed.")
       ),
 
       section("3. Turning Flags into Action",
         tags$p("Feedback is the key part of the framework. Data should be monitored in real time, or as rapidly as possible, so errors are caught early. Once errors and outliers are identified, the information should be processed into an actionable format, such as an error sheet or dashboard, and shared with the field team for corrective action. Quick, real-time, and targeted feedback is a key factor of effective quality control."),
-        tags$p("In Bihar, a structured system of reporting and feedback was established so that flagged issues translated into meaningful improvements:"),
+        tags$p("A structured system of reporting and feedback should be established so that flagged issues translate into meaningful improvements:"),
         tags$ul(
           tags$li("Weekly dashboards and detailed Excel error reports gave supervisors a clear view of enumerator- and team-level performance."),
           tags$li("Weekly calls with data scientists, survey managers, and supervisors were used to review flagged cases, discuss recurring patterns, and decide on corrective actions."),
           tags$li("In the field, supervisors reviewed error reports with enumerators, addressed issues, and, where necessary, recontacted respondents to resolve inconsistencies.")
         ),
-        tags$p("Error rates fell substantially over the course of data collection.")
+        tags$p("Consistent application of this approach can substantially reduce error rates over the course of data collection.")
       ),
 
       section("4. Adapting the Framework",
         tags$p("The framework is modular and scalable by design. It can be implemented in both small pilots and national surveys by adjusting the depth of checks. Real-time and rule-based checks require few resources. Anomaly detection requires modest computing power but does need staff with data analysis skills."),
-        tags$p("Regular and quick feedback is what makes the system most effective. Larger surveys may benefit from additional feedback layers, such as SMS feedback to enumerators, which the Bihar survey did not implement due to complexity and cost. Depending on data security and storage feasibility, further layers can be added, such as analysis of paradata (keystroke tracking, GPS location), voice recordings, and integration of large language models.")
+        tags$p("Regular and quick feedback is what makes the system most effective. Larger surveys may benefit from additional feedback layers, such as SMS feedback to enumerators, which may not be feasible in all contexts due to complexity and cost. Depending on data security and storage feasibility, further layers can be added, such as analysis of paradata (keystroke tracking, GPS location), voice recordings, and integration of large language models.")
       )
     )
   )
