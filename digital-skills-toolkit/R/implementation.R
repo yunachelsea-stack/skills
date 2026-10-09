@@ -53,7 +53,7 @@ implementation_tab <- function() {
         step("Facilitated surveys: interviewer support",
           tags$p("An interviewer supports the respondent through the survey. This can reduce errors caused by misunderstanding, misinterpretation or low confidence in navigating the questionnaire independently."),
           tags$p("Facilitated surveys typically achieve higher response rates and allow assessment of a broader and deeper range of skills, but require trained interviewers and additional time and resources.")
-        ),
+        )
       ),
       section("Measurement Method (Observed vs. Reported)",
         tags$p("Direct observation provides evidence of task performance, while self-reporting relies on what respondents recall and believe they can do. Observation is useful for validation but can be impractical in some survey contexts."),
@@ -76,7 +76,7 @@ implementation_tab <- function() {
               comparison_row("Best use", "When precision is critical and resources allow", "When scale, efficiency and feasibility are priorities")
             )
           )
-        ),
+        )
       ),
       section("Practical considerations before fieldwork",
         tags$ol(
