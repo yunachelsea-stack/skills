@@ -11,31 +11,31 @@ implementation_tab <- function() {
       div(class = "ca-header",
         tags$h2("Implementing the Digital Skills Measurement Survey")
       ),
-      section(“Modality of Survey Implementation”,
-        tags$p(“Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally.”),
-        div(style = “border:1px solid #dce3e8; border-radius:4px; background:#fff;”,
-          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
-            tags$p(style = “margin:0;”,
-              tags$strong(“Self-reported vs. observed skills: “),
-              “Self-reported questions ask whether respondents have ever performed a task; observed assessments ask them to demonstrate it during the interview. Self-reports are quicker and may be sufficient when logistics prevent demonstrations. Observation provides stronger validation but requires more time and resources.”
+      section("Modality of Survey Implementation",
+        tags$p("Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally."),
+        div(style = "border:1px solid #dce3e8; border-radius:4px; background:#fff;",
+          div(style = "padding:14px 18px; border-bottom:1px solid #dce3e8;",
+            tags$p(style = "margin:0;",
+              tags$strong("Self-reported vs. observed skills: "),
+              "Self-reported questions ask whether respondents have ever performed a task; observed assessments ask them to demonstrate it during the interview. Self-reports are quicker and may be sufficient when logistics prevent demonstrations. Observation provides stronger validation but requires more time and resources."
             )
           ),
-          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
-            tags$p(style = “margin:0;”,
-              tags$strong(“Assisted vs. self-performed skills: “),
-              “Record whether help was needed the last time the respondent carried out a task. This adds detail about actual ability, including for more advanced activities such as creating a social media account or making calls through an app.”
+          div(style = "padding:14px 18px; border-bottom:1px solid #dce3e8;",
+            tags$p(style = "margin:0;",
+              tags$strong("Assisted vs. self-performed skills: "),
+              "Record whether help was needed the last time the respondent carried out a task. This adds detail about actual ability, including for more advanced activities such as creating a social media account or making calls through an app."
             )
           ),
-          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
-            tags$p(style = “margin:0;”,
-              tags$strong(“Recency vs. frequency: “),
-              “Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often and can provide richer insights, but is more prone to recall error. The report recommends collecting “ever performed” skill items, supplemented with recency or frequency questions where relevant.”
+          div(style = "padding:14px 18px; border-bottom:1px solid #dce3e8;",
+            tags$p(style = "margin:0;",
+              tags$strong("Recency vs. frequency: "),
+              "Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often and can provide richer insights, but is more prone to recall error. The report recommends collecting \u201cever performed\u201d skill items, supplemented with recency or frequency questions where relevant."
             )
           ),
-          div(style = “padding:14px 18px;”,
-            tags$p(style = “margin:0;”,
-              tags$strong(“Paper vs. digital data collection: “),
-              “Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time. Select the modality in light of the setting, available resources and survey type.”
+          div(style = "padding:14px 18px;",
+            tags$p(style = "margin:0;",
+              tags$strong("Paper vs. digital data collection: "),
+              "Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time. Select the modality in light of the setting, available resources and survey type."
             )
           )
         )
