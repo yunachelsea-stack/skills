@@ -23,20 +23,12 @@ implementation_tab <- function() {
         sub_head("Phone surveys"),
         tags$p("Phone surveys are faster and less costly than in-person interviews, and still allow an interviewer to clarify questions. However, they reach only people who can be contacted by phone. They also leave out people without their own phone or with limited access to one, which are the groups digital inclusion surveys most need to capture. Observed skills assessments are also difficult to conduct by phone."),
         sub_head("Self-administered surveys"),
-        tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill."),
-        tags$ul(
-          tags$li("Limited device access and low literacy can prevent participation or completion."),
-          tags$li("Complex constructs may be difficult to measure without interviewer support."),
-          tags$li("Online surveys may have lower response rates."),
-          tags$li("It can be difficult to verify who completed the questionnaire.")
-        ),
+        tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill. Limited device access and low literacy can prevent participation or completion. Complex constructs may be difficult to measure without interviewer support. Online surveys may have lower response rates, and it can be difficult to verify who completed the questionnaire."),
         div(class = "ca-note",
           tags$strong("A note on selection bias"),
-          tags$p("Phone and online modes reach only people who already have some digital access and ability. When the survey's purpose is to measure that access and ability, these modes will tend to overstate digital skills in the wider population. Results from such surveys should be interpreted as describing connected respondents, not the population as a whole.")
-        ),
-        tags$p(
-          tags$strong("Paper vs. digital data collection."),
-          " Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time."
+          tags$p("Phone and online modes reach only people who already have some digital access and ability. When the survey's purpose is to measure that access and ability, these modes will tend to overstate digital skills in the wider population. Results from such surveys should be interpreted as describing connected respondents, not the population as a whole."),
+          tags$strong("Paper vs. digital data collection"),
+          tags$p("Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time.")
         )
       ),
 
