@@ -9,31 +9,36 @@ implementation_tab <- function() {
   tabPanel("Survey Implementation", value = "implementation",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Implementing the Digital Skills Measurement Survey"),
-        tags$p("Choose how to administer the survey and measure skills while balancing accuracy, feasibility and respondent burden.")
+        tags$h2("Implementing the Digital Skills Measurement Survey")
       ),
-      section("Modality of Survey Implementation",
-        tags$p("Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally."),
-        step("Self-reported vs. observed skills",
-          tags$p("Self-reported questions ask whether respondents have ever performed a task. Observed assessments ask respondents to demonstrate a task during the interview."),
-          tags$p("Self-reports are quicker and may be sufficient when time or logistics prevent demonstrations. Observation provides stronger validation but requires more time. Consider the measurement trade-offs in section 8.3 below.")
-        ),
-        step("Assisted vs. self-performed skills",
-          tags$p("Record whether help was needed the last time the respondent carried out a task. Reporting that a task was completed does not necessarily mean it was completed independently."),
-          tags$p("This distinction adds detail about actual ability, including for more advanced activities such as creating a social media account or making calls through an app.")
-        ),
-        step("Recency vs. frequency",
-          tags$p("Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often it is performed and can provide richer insights, but is more prone to recall error."),
-          div(class = "ca-note",
-            tags$strong("The report’s recommendation"),
-            tags$p("Collect “ever performed” skill items, supplemented with recency or frequency questions where relevant.")
+      section(“Modality of Survey Implementation”,
+        tags$p(“Implementation involves several separate choices: how skills are measured, whether assistance is recorded, which time frame questions capture, and whether responses are collected on paper or digitally.”),
+        div(style = “border:1px solid #dce3e8; border-radius:4px; background:#fff;”,
+          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
+            tags$p(style = “margin:0;”,
+              tags$strong(“Self-reported vs. observed skills: “),
+              “Self-reported questions ask whether respondents have ever performed a task; observed assessments ask them to demonstrate it during the interview. Self-reports are quicker and may be sufficient when logistics prevent demonstrations. Observation provides stronger validation but requires more time and resources.”
+            )
+          ),
+          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
+            tags$p(style = “margin:0;”,
+              tags$strong(“Assisted vs. self-performed skills: “),
+              “Record whether help was needed the last time the respondent carried out a task. This adds detail about actual ability, including for more advanced activities such as creating a social media account or making calls through an app.”
+            )
+          ),
+          div(style = “padding:14px 18px; border-bottom:1px solid #dce3e8;”,
+            tags$p(style = “margin:0;”,
+              tags$strong(“Recency vs. frequency: “),
+              “Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often and can provide richer insights, but is more prone to recall error. The report recommends collecting “ever performed” skill items, supplemented with recency or frequency questions where relevant.”
+            )
+          ),
+          div(style = “padding:14px 18px;”,
+            tags$p(style = “margin:0;”,
+              tags$strong(“Paper vs. digital data collection: “),
+              “Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time. Select the modality in light of the setting, available resources and survey type.”
+            )
           )
-        ),
-        step("Paper vs. digital data collection",
-          tags$p("Paper remains a practical option in some low-resource settings because of its familiarity, relative ease and cost."),
-          tags$p("Digital tools such as computer-assisted personal interviewing (CAPI) require investment but can streamline data management, strengthen quality assurance and control, reduce errors, and shorten data entry and processing time. The report emphasizes their value for large-scale surveys."),
-          tags$p("Select the modality in light of the setting, available resources and survey type.")
-        ),
+        )
       ),
       section("Facilitated vs. Self-Administered Surveys",
         step("Self-administered surveys: efficiency with access limitations",
@@ -48,10 +53,6 @@ implementation_tab <- function() {
         step("Facilitated surveys: interviewer support",
           tags$p("An interviewer supports the respondent through the survey. This can reduce errors caused by misunderstanding, misinterpretation or low confidence in navigating the questionnaire independently."),
           tags$p("Facilitated surveys typically achieve higher response rates and allow assessment of a broader and deeper range of skills, but require trained interviewers and additional time and resources.")
-        ),
-        div(class = "ca-note",
-          tags$strong("Start with the population’s needs"),
-          tags$p("Given digital-access and literacy barriers, the report often recommends facilitated surveys as a starting point. The administration method should fit the population being surveyed.")
         ),
       ),
       section("Measurement Method (Observed vs. Reported)",
@@ -76,11 +77,6 @@ implementation_tab <- function() {
             )
           )
         ),
-        step("What the report’s Bihar study found",
-          tags$p("The report cites Date et al. (2026): across 16 assessed digital skills, the mean difference between observed and reported estimates was about 2 percent among men and women."),
-          tags$p("It also reports a maximum gap of 5 percent between independent and assisted performance across the skills evaluated, with minimal differences for most skills."),
-          tags$p("These are findings from the study described in the report, not a guarantee that self-reports will match demonstrations in every population.")
-        )
       ),
       section("Practical considerations before fieldwork",
         tags$ol(
