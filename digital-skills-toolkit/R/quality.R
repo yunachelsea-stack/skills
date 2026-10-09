@@ -1,6 +1,5 @@
 quality_tab <- function() {
   section  <- tab_section
-  step     <- tab_step
   sub_head <- function(title) {
     tags$p(style = "font-weight:700; color:#0d3b5e; margin:20px 0 6px;", title)
   }
@@ -10,65 +9,51 @@ quality_tab <- function() {
       div(class = "ca-header",
         tags$h2("Quality Assurance and Quality Control")
       ),
-      section("Defining Data Quality Assurance and Quality Control",
-        tags$p("Quality assurance, quality control and quality improvement have distinct roles. The report recommends a multifaceted framework to protect data quality and integrity during implementation."),
-        sub_head("Quality assurance: prevent and detect errors early"),
-        tags$p("Plan preventive processes that support adherence to survey protocols and early detection of errors."),
-        sub_head("Quality control: check the outputs"),
-        tags$p("Monitor the outputs of those processes and verify that they meet established standards."),
-        sub_head("Quality improvement: strengthen the system"),
-        tags$p("Continuously improve quality assurance and quality control systems rather than treating quality as a one-time check.")
-      ),
-      section("Quality Analytics and Quality Control Framework",
-        tags$p("The framework combines an error-detection pipeline with targeted, timely feedback. Its purpose is to detect and resolve problems during data collection, not only after fieldwork ends."),
-        sub_head("Step 1: Build safeguards into the CAPI tool"),
-        tags$p("During tool development, review questions for potential errors and design safeguards to prevent or capture them early. Decide the core components of the quality framework at this stage."),
-        tags$p("CAPI means computer-assisted personal interviewing."),
-        sub_head("Step 2: Define error flags and algorithm protocols"),
-        tags$p("After identifying error opportunities and building internal safeguards, define rules for detecting other errors as data are processed, either during collection or afterward."),
-        tags$p("Where anomaly detection is used, establish its protocols alongside the rule-based checks. The three layers described below complement one another."),
-        sub_head("Step 3: Run checks regularly"),
-        tags$p("Continuously monitor collected data against the safeguards and error rules. Track errors and performance in real time, or as rapidly as possible, so problems are identified early."),
-        sub_head("Step 4: Generate actionable error reports"),
-        tags$p("Turn identified errors and outliers into an error sheet or dashboard that supports feedback and correction, rather than simply listing problems."),
-        sub_head("Step 5: Share findings and take corrective action"),
-        tags$p("Provide frequent feedback through meetings, messages or retraining. Address errors by correcting or recollecting problematic data."),
-        tags$p("The report describes weekly dashboards and detailed Excel error reports showing enumerator- and team-level performance. Weekly calls brought together data scientists, survey managers and supervisors to review cases, discuss recurring patterns and agree corrective actions."),
-        tags$p("Supervisors then reviewed reports with enumerators and, where necessary, recontacted respondents to resolve inconsistencies.")
-      ),
-      section("Three complementary layers of quality checks",
-        step("I. Real-time quality assurance feedback",
-          tags$p("Embed logical skips and range checks in the CAPI tool to identify inconsistencies and data-entry errors during the interview. Apply validation selectively, preserving flexibility for complex questions and balancing error prevention with detection of interviewer attentiveness."),
-          tags$p("Complement automated checks with supervisor spot checks, partial interview observations and re-interviews of a subsample. The report describes a typical re-interview subsample of 5–10 percent; this is guidance from the report, not an automatic setting.")
+
+      section(NULL,
+        tags$ul(
+          tags$li(tags$strong("Quality assurance"), " is about planning preventive processes that ensure adherence to protocols and early detection of errors."),
+          tags$li(tags$strong("Quality control"), " focuses on monitoring outputs from those processes and verifying that they meet the established standards."),
+          tags$li(tags$strong("Quality improvement"), " is a proactive effort to continuously strengthen quality assurance and quality control systems.")
         ),
-        step("II. Rule-based error flags",
-          tags$p("Use binary flags for key error types:"),
-          tags$ul(
-            tags$li("Logical inconsistencies, such as contradictory responses."),
-            tags$li("Range violations, such as impossible ages or durations."),
-            tags$li("Interview duration thresholds that identify potentially rushed interviews."),
-            tags$li("Duplicate or missing identifiers.")
-          ),
-          tags$p("The study updated rules iteratively as new error patterns emerged and generated weekly error reports to track issues and support corrective action.")
-        ),
-        step("III. Anomaly detection",
-          tags$p("An unsupervised method such as Isolation Forest can identify unusual combinations of errors that simpler rules may miss."),
-          tags$p("The study used “don’t know” patterns, missing values and suspiciously consistent answers as model inputs. The top 5 percent of interviews by anomaly score were targeted for review."),
-          tags$p("This is the study’s review approach, not a universal threshold. An anomaly identifies a case for review; it does not by itself establish that data were fabricated.")
-        )
+        tags$p("To ensure data quality and integrity during implementation, a multifaceted quality assurance and quality control (QA/QC) framework should be established. This framework was designed and tested during the data collection phase of a population survey in Bihar, India, building on an earlier framework implemented in the Kilkari evaluation in India. The system ensured that errors were detected early and resolved during data collection. Its value comes from a robust error detection pipeline combined with targeted, real-time feedback.")
       ),
-      section("Evidence and adaptability",
-        sub_head("Experience from the Bihar population survey"),
-        tags$p("The report states that the framework improved error rates by over 85 percent during the Bihar population survey (Date et al. 2026). It builds on an earlier framework implemented in Kilkari, India (Shah et al. 2021)."),
-        tags$p("This is a result reported for that study, not a promised improvement for every survey."),
-        sub_head("Adjust the depth of checks to the survey"),
-        tags$p("The framework is modular and scalable, from small pilots to national surveys. Adapt the depth of checks while retaining regular, rapid feedback."),
-        tags$p("The Bihar survey did not use an SMS feedback system because of cost and complexity. The report notes that larger surveys might benefit from additional feedback layers."),
-        tags$p("Depending on data security and storage feasibility, the report also discusses additional analyses of paradata, such as keystroke tracking, GPS locations and voice recordings, and integration of large language models. These are optional extensions, not features enabled in this toolkit."),
-        div(class = "ca-note",
-          tags$strong("Keep the feedback loop active"),
-          tags$p("Detect problems early, turn findings into actionable reports, review them with field teams, and resolve or recollect problematic data. Timely, targeted feedback is central to the report’s approach.")
-        )
+
+      section("1. Building Checks into the Survey Tool",
+        tags$p("During tool development, survey questions should be assessed for potential opportunities for error, and appropriate safeguards should be designed to prevent or capture errors early. Once these safeguards are built into the survey tool itself, the next step is to define the rules for identifying other errors as data are processed, either in real time during data collection or after.")
+      ),
+
+      section("2. Three Layers of Checks",
+        tags$p("The framework uses three layers. Real-time checks prevent errors at the point of data entry, rule-based flags catch clear errors, and machine learning–based anomaly detection identifies subtle patterns suggestive of poor-quality or fabricated data. This layered structure ensures that both obvious and hidden issues are addressed."),
+        sub_head("Layer 1: Real-time checks during data collection"),
+        tags$p("Embed logical skips and range checks in the computer-assisted personal interviewing (CAPI) tool to catch inconsistencies and data entry errors in real time, while allowing flexibility for complex questions. Validation rules should be used selectively, since too many can slow interviews. These checks are complemented by supervisor spot checks, partial interview observations, and re-interviews of a subsample, typically 5–10 percent."),
+        sub_head("Layer 2: Rule-based error flags"),
+        tags$p("These are binary “flags” for key error types, including:"),
+        tags$ul(
+          tags$li("Logical inconsistencies (for example, contradictory responses)"),
+          tags$li("Range violations (for example, impossible ages or durations)"),
+          tags$li("Interview duration thresholds (flagging rushed interviews)"),
+          tags$li("Duplicate or missing identifiers")
+        ),
+        tags$p("Rules should be updated iteratively during data collection as new error patterns emerge."),
+        sub_head("Layer 3: Anomaly detection"),
+        tags$p("A machine learning algorithm designed for identifying anomalies, such as Isolation Forest, is used to identify interviews that show unusual combinations of errors. In Bihar, “don’t know” patterns, missing values, and suspiciously consistent answers were used as inputs to the model, and the top 5 percent of interviews by anomaly score were targeted for review. Flagged interviews are not necessarily errors; they indicate where closer review is needed.")
+      ),
+
+      section("3. Turning Flags into Action",
+        tags$p("Feedback is the key part of the framework. Data should be monitored in real time, or as rapidly as possible, so errors are caught early. Once errors and outliers are identified, the information should be processed into an actionable format, such as an error sheet or dashboard, and shared with the field team for corrective action. Quick, real-time, and targeted feedback is a key factor of effective quality control."),
+        tags$p("In Bihar, a structured system of reporting and feedback was established so that flagged issues translated into meaningful improvements:"),
+        tags$ul(
+          tags$li("Weekly dashboards and detailed Excel error reports gave supervisors a clear view of enumerator- and team-level performance."),
+          tags$li("Weekly calls with data scientists, survey managers, and supervisors were used to review flagged cases, discuss recurring patterns, and decide on corrective actions."),
+          tags$li("In the field, supervisors reviewed error reports with enumerators, addressed issues, and, where necessary, recontacted respondents to resolve inconsistencies.")
+        ),
+        tags$p("Error rates fell substantially over the course of data collection.")
+      ),
+
+      section("4. Adapting the Framework",
+        tags$p("The framework is modular and scalable by design. It can be implemented in both small pilots and national surveys by adjusting the depth of checks. Real-time and rule-based checks require few resources. Anomaly detection requires modest computing power but does need staff with data analysis skills."),
+        tags$p("Regular and quick feedback is what makes the system most effective. Larger surveys may benefit from additional feedback layers, such as SMS feedback to enumerators, which the Bihar survey did not implement due to complexity and cost. Depending on data security and storage feasibility, further layers can be added, such as analysis of paradata (keystroke tracking, GPS location), voice recordings, and integration of large language models.")
       )
     )
   )
