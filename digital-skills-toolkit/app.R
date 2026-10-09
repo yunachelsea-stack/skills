@@ -319,17 +319,29 @@ ui <- navbarPage(
           "in Low- and Middle-Income Countries"
         ),
         tags$p(class = "lp-lead",
-          "Design and customize digital skills surveys using a validated, modular toolkit.
-           Select the questions you need, ensure comparability across projects and countries,
-           and export ready-to-field instruments for your data collection teams."
+          "A validated toolkit for measuring digital access, use, and skills in
+           low- and middle-income countries. Developed to address the lack of
+           standardized measurement tools for LMIC contexts, it covers the full
+           survey lifecycle — from question selection and cognitive adaptation to
+           sampling, implementation, quality assurance, and data analysis.
+           Survey questions were developed and cognitively tested with approximately
+           300 participants across India, Kenya, and Nigeria."
         ),
-        tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px;",
+        tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px; margin-bottom:20px;",
           "Developed by a consortium of partners from the ",
           tags$strong("World Bank"),
           " and the ",
           tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
           " led by the ",
           tags$strong("University of Cape Town's School of Public Health"), "."
+        ),
+        # Update href below with the actual report URL when available
+        tags$a(href = "#", target = "_blank",
+          style = "display:inline-block; background:#e8a800; color:#0d3b5e;
+                   font-weight:700; padding:9px 22px; border-radius:4px;
+                   text-decoration:none; font-size:0.88em; letter-spacing:0.01em;",
+          tags$i(class = "fa fa-external-link", style = "margin-right:7px;"),
+          "Read the full report"
         )
       ) # end z-index wrapper
     ),
