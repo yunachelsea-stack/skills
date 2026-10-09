@@ -1,6 +1,5 @@
 sampling_tab <- function() {
   section     <- tab_section
-  step        <- tab_step
 
   numbered_step <- function(n, title, ...) {
     tags$details(class = "ca-step",
@@ -22,6 +21,23 @@ sampling_tab <- function() {
     )
   }
 
+  eg <- function(...) {
+    div(style = "background:#f3f7fa; border-left:3px solid #8db4c8;
+                 padding:10px 14px; margin-top:12px;",
+      tags$span(style = "font-size:0.75em; font-weight:700; text-transform:uppercase;
+                          letter-spacing:.06em; color:#607381; display:block; margin-bottom:4px;",
+                "Example"),
+      ...
+    )
+  }
+
+  phase_head <- function(title) {
+    tags$p(style = "font-weight:700; color:#0d3b5e; margin:28px 0 14px;
+                    font-size:0.95em; border-bottom:2px solid #e8a800;
+                    padding-bottom:6px;",
+           title)
+  }
+
   tabPanel("Sampling Methods", value = "sampling",
     div(class = "ca-page",
       div(class = "ca-header",
@@ -39,8 +55,7 @@ sampling_tab <- function() {
             tags$p(style = "margin:0;",
               tags$strong("Target population: "),
               "The group the survey is intended to study and for whom indicators will be measured.
-               Often defined by program or policy eligibility criteria — for example, unemployed
-               individuals ages 19–24 residing in a selected community."
+               Often defined by program or policy eligibility criteria."
             )
           ),
           div(style = "padding:14px 18px; border-bottom:1px solid #dce3e8;",
@@ -64,77 +79,166 @@ sampling_tab <- function() {
         tags$p("Sampling design depends on whether a list of your target population already exists. The two sections below walk through each scenario in detail.")
       ),
 
-      section("Scenario 1: Sampling Frame is Known",
-        when_to_use("program evaluations or interventions where a participant list, registry, or administrative database already exists."),
-        tags$p("Possible sources include program participant databases, voter registries, census microdata or master sampling frames, and ministry or local-government administrative databases."),
+      section("Scenario 1: Sampling Frame Is Known",
+        when_to_use("program evaluations or samples drawn from administrative lists where a complete list of the target population already exists."),
+        tags$p("A sampling frame is a complete list of all elements in the target population from which a sample can be drawn, such as a program participant database. When such a frame exists, the survey can use probability sampling, giving a high level of statistical rigor. Advantages include high efficiency, clear eligibility, and low screening costs."),
+        tags$p("Sampling frames typically draw from four main sources:"),
+        tags$ul(
+          tags$li("Program participant databases (for example, lists from job training initiatives)"),
+          tags$li("Voter registries"),
+          tags$li("Census microdata or master sampling frames"),
+          tags$li("Administrative databases from ministries or local governments")
+        ),
+        eg(
+          tags$p(style = "margin:0;",
+            "A youth employment program has a database of 8,000 participants. The survey aims
+             to measure digital skills among unemployed participants aged 19–24, and requires
+             1,000 completed interviews.")
+        ),
 
         numbered_step("1", "Define the unit of analysis",
-          tags$p("Choose individuals when indicators describe people, or households when collecting household-level conditions.")
+          tags$p("The unit of analysis may be individual-based, if indicators are specific to persons,
+                  or household-based, if collecting data on household conditions."),
+          eg(tags$p(style = "margin:0;",
+            "Digital skills are measured for each person, so the unit of analysis is the individual."))
         ),
-        numbered_step("2", "Finalize the frame using eligibility criteria",
-          tags$p("Use appropriate data sources to list the units in the frame. Filter using the survey's eligibility criteria where needed.")
+
+        numbered_step("2", "Finalize the sampling frame using eligibility criteria",
+          tags$p("Use the appropriate data sources to list the units in the sampling frame.
+                  If necessary, filter the frame using the eligibility criteria."),
+          eg(tags$p(style = "margin:0;",
+            "Filtering the database to participants who are currently aged 19–24 and unemployed
+             leaves 6,500 people. This is the sampling frame."))
         ),
+
         numbered_step("3", "Choose a sampling method",
+          tags$p("Common methods include:"),
           tags$ul(
-            tags$li(tags$strong("Simple random sampling: "), "Every individual in the frame has an equal and independent chance of selection. Straightforward and statistically rigorous, but requires a complete and accurate list."),
-            tags$li(tags$strong("Systematic sampling: "), "Select at regular intervals after a random starting point. Efficient and easy to implement with ordered lists."),
-            tags$li(tags$strong("Cluster sampling: "), "Select groups such as villages or neighborhoods first, then sample individuals within them. Useful when cluster lists exist but a complete individual-level list does not."),
-            tags$li(tags$strong("Stratified sampling: "), "Divide the frame into subgroups — by gender, age, urban/rural location or program participation — and draw samples proportionally or equally to ensure representation of key subgroups.")
+            tags$li(tags$strong("Simple random sampling: "),
+              "Every individual in the frame has an equal chance of being selected."),
+            tags$li(tags$strong("Systematic sampling: "),
+              "Individuals are selected at regular intervals following a random starting point."),
+            tags$li(tags$strong("Stratified sampling: "),
+              "The frame is divided into subgroups, such as gender or urban/rural, and a sample
+               is drawn from each, either proportionally or equally. If strata are sampled equally,
+               weights are needed when combining results.")
+          ),
+          eg(tags$p(style = "margin:0;",
+            "Participants are selected by simple random sampling from the list of 6,500."))
+        ),
+
+        numbered_step("4", "Calculate the sample size",
+          tags$p("Calculate the sample size following Box 7.2. A design effect is applied only if
+                  cluster sampling is used. When individuals are selected directly from a list, no
+                  design effect is needed. Adjust for expected non-response by dividing the required
+                  number of completed interviews by the response rate."),
+          eg(
+            tags$p(style = "margin:0;", "With an expected response rate of 85 percent:"),
+            tags$p(style = "margin:6px 0 0; font-family:monospace;",
+              "1,000 ÷ 0.85 = 1,176.5 → 1,177 participants selected")
           )
         ),
-        numbered_step("4", "Calculate sample size",
-          tags$p("Calculate for each stratum where precise estimates are required. The key inputs are:"),
-          tags$ul(
-            tags$li("Desired confidence level (e.g., 95%)"),
-            tags$li("Margin of error (e.g., ±5%)"),
-            tags$li("Expected indicator prevalence"),
-            tags$li("Design effect (DEFF) — a multiplier for clustered samples; values of 2 or 3 are typical in LMIC surveys")
-          ),
-          tags$p(tags$strong("Worked example: "), "Proportion of youth (ages 10–24) completing an online job application. Assumptions: prevalence unknown (p = 0.50), 95% confidence (Z = 1.96), margin of error 0.05, DEFF = 2.5, response rate = 0.85."),
-          div(class = "ca-flow", style = "margin-top:12px;",
-            div(class = "ca-flow-step", "Base SRS: 384"),
-            div(class = "ca-flow-arrow", "× 2.5 DEFF →"),
-            div(class = "ca-flow-step", "960"),
-            div(class = "ca-flow-arrow", "÷ 0.85 response →"),
-            div(class = "ca-flow-step", "1,130 interviews")
-          ),
-          tags$p(style = "font-size:0.88em; color:#607381; margin-top:10px;",
-            "This is the report's worked illustration, not a recommended size for your study.
-             Use assumptions justified by your own population and design."),
-          tags$p("For small populations, apply finite population correction (FPC) when the sample
-                  exceeds 5% of the total population size.")
-        ),
-        numbered_step("5", "Contact and interview the selected sample",
-          tags$p("Enumerators locate and interview the selected individuals directly from the sample list.")
+
+        numbered_step("5", "Contact and interview sample members",
+          tags$p("Enumerators locate and interview the selected individuals directly from the list."),
+          eg(tags$p(style = "margin:0;",
+            "Enumerators receive the 1,177 names and contact details and aim to complete
+             1,000 interviews."))
         )
       ),
 
-      section("Scenario 2: Sampling Frame is Unknown",
+      section("Scenario 2: Sampling Frame Is Unknown",
         when_to_use("community prevalence studies where no list of eligible individuals exists — household-level screening is used to identify and reach the target group."),
-        tags$p("This approach combines multistage cluster sampling, household listing, eligibility screening, and final sample selection."),
+        tags$p("In many field contexts, especially in low-income or rural settings, no list of eligible
+                individuals exists. In such cases, household screening is needed to identify members
+                of the target group. This involves multistage cluster sampling, household listing,
+                eligibility screening, and final sample selection."),
+        tags$p("A screening tool is used to gather basic eligibility information. Sample size estimation
+                must account for eligibility and response rates (see Box 7.3). The design effect must
+                account for clustering, since people living near each other tend to give similar answers."),
+        tags$p("Sampling without a frame happens in two parts: planning decisions made before fieldwork,
+                followed by selection in the field in three stages — clusters, then households,
+                then individuals."),
+        eg(tags$p(style = "margin:0;",
+          "The survey now aims to represent all unemployed youth aged 19–24 in a region with
+           five districts, not just program participants. No list of these young people exists.
+           The target remains 1,000 completed interviews.")),
 
-        numbered_step("1", "Select clusters (PSUs)",
-          tags$p("Define the administrative divisions for which results should be representative. Identify primary sampling units (PSUs) — villages, urban blocks, wards or enumeration areas — from government or national statistical agency records (e.g., DHS or MICS enumeration areas)."),
-          tags$p("Select PSUs using simple random sampling or probability proportional to size (PPS), which weights selection by population density and can produce a self-weighting sample under constant cluster sizes."),
-          tags$p("A general rule of thumb is to visit 20–40 households per cluster; rare target populations may require larger clusters. Divide the total required sample by the cluster size to determine the number of clusters to visit.")
+        phase_head("Planning the Sample"),
+
+        numbered_step("1", "Define the administrative divisions",
+          tags$p("Define the administrative divisions for which the data should be representative.
+                  Details can be obtained from government records."),
+          eg(tags$p(style = "margin:0;",
+            "Results should be representative of the region, with all five districts included."))
         ),
-        numbered_step("2", "List and randomly select households",
-          tags$p("Map and list all households in each selected PSU. Randomly select the planned number from those lists."),
-          tags$p("Collect household information needed to assess all eligibility criteria — such as household size, member ages and employment status.")
+
+        numbered_step("2", "Define the clusters",
+          tags$p("Determine the primary sampling units (clusters) to visit. Readily identifiable units
+                  such as villages, urban blocks, wards, or enumeration areas may serve as primary
+                  sampling units. Enumeration area lists are available from national statistical
+                  agencies that conduct censuses or large surveys such as the DHS or MICS."),
+          eg(tags$p(style = "margin:0;", "Census enumeration areas are used as clusters."))
         ),
-        numbered_step("3", "Identify and select eligible individuals",
-          tags$p("Flag households with eligible members. Depending on the design, interview all eligible members or randomly select one using a random number generator or lottery based on roster line numbers — not simply the easiest person to reach."),
-          tags$p("Selecting all eligible members may be inefficient when their responses would be identical.")
+
+        numbered_step("3", "Calculate the number of clusters to visit",
+          tags$p("First, calculate the number of households to screen using Box 7.3, since not every
+                  household will contain an eligible person. Then divide the number of households to
+                  screen by the number of households to visit per cluster. A general rule of thumb
+                  is 20 to 40 households per cluster."),
+          eg(
+            tags$p(style = "margin:0;",
+              "If 20 percent of households contain an eligible youth and 90 percent of those
+               complete the interview:"),
+            tags$p(style = "margin:6px 0 0; font-family:monospace;",
+              "Households to screen = 1,000 ÷ (0.20 × 0.90) = 5,556"),
+            tags$p(style = "margin:4px 0 0; font-family:monospace;",
+              "With 30 households per cluster: 5,556 ÷ 30 = 186 clusters")
+          )
         ),
-        numbered_step("4", "Administer the household screening questionnaire",
-          tags$p("Administer a short screener to the household head or a senior member. Key elements to collect:"),
-          tags$ul(
-            tags$li("Number of household members"),
-            tags$li("Ages and genders of members"),
-            tags$li("Employment status of the relevant age group")
-          ),
-          tags$p("Use a roster grid and probe for temporary residents or migrants. Ensure screening questions match your eligibility criteria exactly.")
+
+        numbered_step("4", "Determine appropriate sample weights",
+          tags$p("Divide the clusters among the administrative divisions. If clusters are allocated
+                  in proportion to population size and selected using probability proportional to size
+                  (see Stage 1 below), the sample is self-weighted. If other allocation methods are
+                  used, appropriate weights must be applied."),
+          eg(tags$p(style = "margin:0;",
+            "A district with 30 percent of the region’s population receives 30 percent of
+             the clusters — about 56 of the 186."))
         ),
+
+        phase_head("Selecting the Sample in the Field"),
+
+        numbered_step("1", "Select clusters (primary sampling units)",
+          tags$p("Clusters may be selected using simple random sampling or probability proportional
+                  to size (PPS), where larger clusters are more likely to be selected. PPS results
+                  in a self-weighted sample when the same number of households is selected in
+                  every cluster."),
+          eg(tags$p(style = "margin:0;",
+            "Within each district, enumeration areas are selected using PPS, and 30 households
+             are selected in each."))
+        ),
+
+        numbered_step("2", "Conduct household listing within clusters",
+          tags$p("Enumerators list all households in each selected cluster. From this list, households
+                  are randomly selected, with the number equal to the cluster size determined in Step 3.
+                  Each selected household is screened for eligibility. The screening data should cover
+                  all the eligibility criteria."),
+          eg(tags$p(style = "margin:0;",
+            "In each enumeration area, enumerators list every household, randomly select 30,
+             and screen each one."))
+        ),
+
+        numbered_step("3", "Identify eligible individuals",
+          tags$p("Households with eligible members are flagged for the survey. In households with more
+                  than one eligible member, either all eligible members are interviewed, or one is
+                  selected at random using their roster line number. When one person is selected at
+                  random, a weight equal to the number of eligible members in the household must be
+                  applied at analysis."),
+          eg(tags$p(style = "margin:0;",
+            "A household has two unemployed youth aged 19–24. One is selected at random,
+             and that interview receives a weight of 2."))
+        )
       )
     )
   )
