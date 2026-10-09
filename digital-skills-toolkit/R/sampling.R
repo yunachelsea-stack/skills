@@ -41,8 +41,7 @@ sampling_tab <- function() {
   tabPanel("Sampling Methods", value = "sampling",
     div(class = "ca-page",
       div(class = "ca-header",
-        tags$h2("Determining the Sample Population"),
-        tags$p("Define who the survey represents, choose how to reach them, and plan a sample suited to your objectives and resources.")
+        tags$h2("Determining the Sample Population")
       ),
 
       section(NULL,
@@ -80,7 +79,6 @@ sampling_tab <- function() {
       ),
 
       section("Scenario 1: Sampling Frame Is Known",
-        when_to_use("program evaluations or samples drawn from administrative lists where a complete list of the target population already exists."),
         tags$p("A sampling frame is a complete list of all elements in the target population from which a sample can be drawn, such as a program participant database. When such a frame exists, the survey can use probability sampling, giving a high level of statistical rigor. Advantages include high efficiency, clear eligibility, and low screening costs."),
         tags$p("Sampling frames typically draw from four main sources:"),
         tags$ul(
@@ -148,7 +146,6 @@ sampling_tab <- function() {
       ),
 
       section("Scenario 2: Sampling Frame Is Unknown",
-        when_to_use("community prevalence studies where no list of eligible individuals exists — household-level screening is used to identify and reach the target group."),
         tags$p("In many field contexts, especially in low-income or rural settings, no list of eligible
                 individuals exists. In such cases, household screening is needed to identify members
                 of the target group. This involves multistage cluster sampling, household listing,
