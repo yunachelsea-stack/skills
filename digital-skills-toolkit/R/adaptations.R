@@ -54,10 +54,6 @@ adaptations_tab <- function() {
           div(class = "ca-flow-arrow", "→"),
           div(class = "ca-flow-step", "Survey implementation")
         ),
-        div(class = "ca-note",
-          tags$strong("Ask the survey question first, exactly as written."),
-          tags$p("Record the answer using the available response options. Then probe the respondent’s interpretation—for example, “What does this word mean to you?”—without treating the probe as part of the final survey.")
-        )
       ),
 
       section("Five steps for conducting cognitive interviews",
