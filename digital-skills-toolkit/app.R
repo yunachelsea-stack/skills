@@ -323,13 +323,10 @@ ui <- navbarPage(
            Select the questions you need, ensure comparability across projects and countries,
            and export ready-to-field instruments for your data collection teams."
         ),
-        tags$p(style = "font-size:0.95em; opacity:0.88; max-width:820px; line-height:1.65; margin-bottom:24px;",
-          "Developed to address the lack of standardized measurement tools for LMIC contexts,
-           with practitioner guidance spanning cognitive adaptation, sampling, implementation,
-           quality assurance, and data analysis."
-        ),
-        tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px; margin-bottom:20px;",
-          "Developed by a consortium of partners from the ",
+        tags$p(style = "font-size:0.9em; opacity:0.85; line-height:1.65; max-width:820px; margin-bottom:24px;",
+          "The survey builder and implementation guide here is based on a validated toolkit
+           for measuring digital access, use, and skills in LMICs, developed by a consortium
+           of partners from the ",
           tags$strong("World Bank"),
           " and the ",
           tags$strong("Evidence for Digital Transformation Consortium (EDiT)"),
