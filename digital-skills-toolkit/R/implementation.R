@@ -46,6 +46,11 @@ implementation_tab <- function() {
         div(style = "overflow-x:auto;",
           tags$table(class = "table table-striped",
             tags$caption("Observed and self-reported digital skills: trade-offs"),
+            tags$colgroup(
+              tags$col(style = "width:22%"),
+              tags$col(style = "width:39%"),
+              tags$col(style = "width:39%")
+            ),
             tags$thead(tags$tr(
               tags$th(scope = "col", "Aspect"),
               tags$th(scope = "col", "Observed / demonstrated"),
