@@ -720,8 +720,7 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','adaptations',{priority:'event'})",
             div(class = "lp-card-num", "02"),
             tags$h4("Conceptual Adaptations"),
-            tags$p("Refine your survey through stakeholder consultations,
-                    cognitive interviews and pilot testing.")
+            tags$p("Refine your survey through cognitive interviews and pilot testing.")
           )
         ),
         column(4,
