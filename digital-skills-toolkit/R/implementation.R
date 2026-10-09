@@ -25,7 +25,7 @@ implementation_tab <- function() {
         sub_head("Self-administered surveys"),
         tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill. Limited device access and low literacy can prevent participation or completion. Complex constructs may be difficult to measure without interviewer support. Online surveys may have lower response rates, and it can be difficult to verify who completed the questionnaire."),
         div(class = "ca-note",
-          tags$strong("A note on selection bias"),
+          tags$strong("Selection bias"),
           tags$p("Phone and online modes reach only people who already have some digital access and ability. When the survey's purpose is to measure that access and ability, these modes will tend to overstate digital skills in the wider population. Results from such surveys should be interpreted as describing connected respondents, not the population as a whole."),
           tags$strong("Paper vs. digital data collection"),
           tags$p("Paper remains practical in some low-resource settings. Digital tools such as computer-assisted personal interviewing (CAPI) require investment but streamline data management, strengthen quality assurance and control, reduce errors, and shorten processing time.")
