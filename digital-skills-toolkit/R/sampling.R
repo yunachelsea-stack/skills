@@ -149,11 +149,6 @@ sampling_tab <- function() {
           ),
           tags$p("Use a roster grid and probe for temporary residents or migrants. Ensure screening questions match your eligibility criteria exactly.")
         ),
-        div(class = "ca-note",
-          tags$strong("Planning sample size for Scenario 2"),
-          tags$p("Account for eligibility rate (what proportion of households contain eligible individuals), design effect, and expected non-response. Divide the required final sample by the eligibility rate and response rate to determine how many households must be screened."),
-          tags$p("Allocate clusters proportionally across administrative divisions for a self-weighting design. If allocation or selection deviates from proportional, apply appropriate sample weights to the analysis.")
-        )
       )
     )
   )
