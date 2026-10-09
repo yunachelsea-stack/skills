@@ -319,13 +319,11 @@ ui <- navbarPage(
           "in Low- and Middle-Income Countries"
         ),
         tags$p(class = "lp-lead",
-          "A validated toolkit for measuring digital access, use, and skills in
-           low- and middle-income countries. Developed to address the lack of
-           standardized measurement tools for LMIC contexts, it covers the full
-           survey lifecycle — from question selection and cognitive adaptation to
-           sampling, implementation, quality assurance, and data analysis.
-           Survey questions were developed and cognitively tested with approximately
-           300 participants across India, Kenya, and Nigeria."
+          "A validated toolkit for measuring digital access, use, and skills in LMICs.
+           Developed to address the lack of standardized measurement tools for LMIC
+           contexts, it covers the full survey lifecycle — from question selection
+           and cognitive adaptation to sampling, implementation, quality assurance,
+           and data analysis."
         ),
         tags$p(style = "font-size:0.85em; opacity:0.75; line-height:1.6; max-width:820px; margin-bottom:20px;",
           "Developed by a consortium of partners from the ",
