@@ -18,11 +18,9 @@ quality_tab <- function() {
             tags$li(tags$a(href = "https://data.poverty-action.org/data-collection/", target = "_blank", "IPA: Data Collection"))
           )
         ),
-        tags$ul(
-          tags$li(tags$strong("Quality assurance"), " is about planning preventive processes that ensure adherence to protocols and early detection of errors."),
-          tags$li(tags$strong("Quality control"), " focuses on monitoring outputs from those processes and verifying that they meet established standards."),
-          tags$li(tags$strong("Quality improvement"), " is a proactive effort to continuously strengthen quality assurance and quality control systems.")
-        ),
+        tags$p(tags$strong("Quality assurance"), " is about planning preventive processes that ensure adherence to protocols and early detection of errors."),
+        tags$p(tags$strong("Quality control"), " focuses on monitoring outputs from those processes and verifying that they meet established standards."),
+        tags$p(tags$strong("Quality improvement"), " is a proactive effort to continuously strengthen quality assurance and quality control systems."),
         tags$p("A robust QA/QC framework combines an error detection pipeline with targeted, timely feedback. Its value lies in detecting and resolving problems during data collection, not only after fieldwork ends.")
       ),
 
