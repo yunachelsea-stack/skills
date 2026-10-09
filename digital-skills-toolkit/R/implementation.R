@@ -1,8 +1,10 @@
 implementation_tab <- function() {
   section        <- tab_section
-  step           <- tab_step
   comparison_row <- function(aspect, observed, reported) {
     tags$tr(tags$th(scope = "row", aspect), tags$td(observed), tags$td(reported))
+  }
+  sub_head <- function(title) {
+    tags$p(style = "font-weight:700; color:#0d3b5e; margin:20px 0 6px;", title)
   }
 
   tabPanel("Survey Implementation", value = "implementation",
@@ -16,20 +18,17 @@ implementation_tab <- function() {
       ),
 
       section("1. Mode of Administration",
-        step("Facilitated (in-person) surveys",
-          tags$p("An interviewer supports the respondent through the survey. This can reduce errors caused by misunderstanding, misinterpretation, or low confidence in navigating the questionnaire independently. Facilitated surveys typically achieve higher response rates and allow assessment of a broader and deeper range of skills, including observed tasks. However, they require trained interviewers and additional time and resources. For most digital skills surveys, especially in populations with limited access or literacy, a facilitated survey is the recommended starting point.")
-        ),
-        step("Phone surveys",
-          tags$p("Phone surveys are faster and less costly than in-person interviews, and still allow an interviewer to clarify questions. However, they reach only people who can be contacted by phone. They also leave out people without their own phone or with limited access to one, which are the groups digital inclusion surveys most need to capture. Observed skills assessments are also difficult to conduct by phone.")
-        ),
-        step("Self-administered surveys",
-          tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill."),
-          tags$ul(
-            tags$li("Limited device access and low literacy can prevent participation or completion."),
-            tags$li("Complex constructs may be difficult to measure without interviewer support."),
-            tags$li("Online surveys may have lower response rates."),
-            tags$li("It can be difficult to verify who completed the questionnaire.")
-          )
+        sub_head("Facilitated (in-person) surveys"),
+        tags$p("An interviewer supports the respondent through the survey. This can reduce errors caused by misunderstanding, misinterpretation, or low confidence in navigating the questionnaire independently. Facilitated surveys typically achieve higher response rates and allow assessment of a broader and deeper range of skills, including observed tasks. However, they require trained interviewers and additional time and resources. For most digital skills surveys, especially in populations with limited access or literacy, a facilitated survey is the recommended starting point."),
+        sub_head("Phone surveys"),
+        tags$p("Phone surveys are faster and less costly than in-person interviews, and still allow an interviewer to clarify questions. However, they reach only people who can be contacted by phone. They also leave out people without their own phone or with limited access to one, which are the groups digital inclusion surveys most need to capture. Observed skills assessments are also difficult to conduct by phone."),
+        sub_head("Self-administered surveys"),
+        tags$p("Self-administered surveys can be more efficient and cost-effective. However, online platforms often require respondents to use a phone or computer and log in, assuming a baseline level of digital skill."),
+        tags$ul(
+          tags$li("Limited device access and low literacy can prevent participation or completion."),
+          tags$li("Complex constructs may be difficult to measure without interviewer support."),
+          tags$li("Online surveys may have lower response rates."),
+          tags$li("It can be difficult to verify who completed the questionnaire.")
         ),
         div(class = "ca-note",
           tags$strong("A note on selection bias"),
@@ -65,16 +64,14 @@ implementation_tab <- function() {
               comparison_row("Best use", "When precision is critical and resources allow", "When scale, efficiency, and feasibility are priorities")
             )
           )
-        ),
+        )
       ),
 
       section("3. Framing Skill Items",
-        step("Assisted vs. self-performed skills",
-          tags$p("Record whether help was needed the last time the respondent carried out a task. This adds detail about actual ability. In Bihar, the gap between performing a skill independently and with assistance was at most 5 percentage points across the skills assessed. This held even for more advanced activities, such as creating a social media account or making calls through an app.")
-        ),
-        step("Ever performed, recency, and frequency",
-          tags$p("Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often a skill is performed and can provide richer insights, but is more prone to recall error. The recommended approach is to collect “ever performed” skill items, supplemented with recency or frequency questions where relevant. This is consistent with cognitive interview findings. Questions tied to a fixed period, such as “in the last 12 months,” were difficult for respondents, while asking “Have you ever…?” followed by “When was the last time…?” worked better.")
-        )
+        sub_head("Assisted vs. self-performed skills"),
+        tags$p("Record whether help was needed the last time the respondent carried out a task. This adds detail about actual ability. In Bihar, the gap between performing a skill independently and with assistance was at most 5 percentage points across the skills assessed. This held even for more advanced activities, such as creating a social media account or making calls through an app."),
+        sub_head("Ever performed, recency, and frequency"),
+        tags$p("Recency captures how recently a skill was performed and is easier to standardize. Frequency captures how often a skill is performed and can provide richer insights, but is more prone to recall error. The recommended approach is to collect “ever performed” skill items, supplemented with recency or frequency questions where relevant. This is consistent with cognitive interview findings. Questions tied to a fixed period, such as “in the last 12 months,” were difficult for respondents, while asking “Have you ever…?” followed by “When was the last time…?” worked better.")
       )
     )
   )
