@@ -936,6 +936,8 @@ ui <- navbarPage(
 
 # ── Server ────────────────────────────────────────────────────────────────────
 server <- function(input, output, session) {
+  analysis_server(input, output, session)
+
   observeEvent(input$card_click, {
     updateNavbarPage(session, "main_nav", selected = input$card_click)
   })
