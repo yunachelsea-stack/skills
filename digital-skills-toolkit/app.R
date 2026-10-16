@@ -222,6 +222,14 @@ ui <- navbarPage(
         transition: box-shadow 0.2s;
       }
       .lp-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+      .lp-card-grid {
+        display: grid; gap: 20px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 1fr;
+      }
+      .lp-card-grid .lp-card { margin-bottom: 0; }
+      @media (max-width: 991px) { .lp-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      @media (max-width: 600px) { .lp-card-grid { grid-template-columns: 1fr; } }
       .lp-card.active { cursor: pointer; }
       .lp-card.active  { border-top-color: #e8a800; }
       .lp-card.planned { border-top-color: #8db4c8; }
@@ -705,63 +713,49 @@ ui <- navbarPage(
     # Feature cards
     div(class = "lp-section",
 
-      fluidRow(
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','Survey Builder',{priority:'event'})",
-            div(class = "lp-card-num", "01"),
-            tags$h4("Survey Builder"),
-            tags$p("Build a digital skills measurement survey from the required and optional
-                    questions recommended in the toolkit. Export to Word, Excel or an XLSForm
-                    programming sheet.")
-          )
+      div(class = "lp-card-grid",
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','Survey Builder',{priority:'event'})",
+          div(class = "lp-card-num", "01"),
+          tags$h4("Survey Builder"),
+          tags$p("Build a digital skills measurement survey from the required and optional
+                  questions recommended in the toolkit. Export to Word, Excel or an XLSForm
+                  programming sheet.")
         ),
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','adaptations',{priority:'event'})",
-            div(class = "lp-card-num", "02"),
-            tags$h4("Contextual Adaptations"),
-            tags$p("Refine your survey through cognitive interviews and pilot testing, with
-                    examples of common wording problems and how to fix them.")
-          )
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','adaptations',{priority:'event'})",
+          div(class = "lp-card-num", "02"),
+          tags$h4("Contextual Adaptations"),
+          tags$p("Refine your survey through cognitive interviews and pilot testing, with
+                  examples of common wording problems and how to fix them.")
         ),
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','sampling',{priority:'event'})",
-            div(class = "lp-card-num", "03"),
-            tags$h4("Sampling Methods"),
-            tags$p("Define your target population and plan sampling with a known
-                    frame or household screening.")
-          )
-        )
-      ),
-      fluidRow(
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','implementation',{priority:'event'})",
-            div(class = "lp-card-num", "04"),
-            tags$h4("Survey Implementation"),
-            tags$p("Choose how to administer the survey, whether to observe or self-report
-                    skills, and how to frame skill items.")
-          )
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','sampling',{priority:'event'})",
+          div(class = "lp-card-num", "03"),
+          tags$h4("Sampling Methods"),
+          tags$p("Define your target population and plan sampling with a known
+                  frame or household screening.")
         ),
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','quality',{priority:'event'})",
-            div(class = "lp-card-num", "05"),
-            tags$h4("Data Quality Assurance"),
-            tags$p("Build checks into the survey tool, apply three layers of error checks and
-                    turn flags into feedback for field teams.")
-          )
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','implementation',{priority:'event'})",
+          div(class = "lp-card-num", "04"),
+          tags$h4("Survey Implementation"),
+          tags$p("Choose how to administer the survey, whether to observe or self-report
+                  skills, and how to frame skill items.")
         ),
-        column(4,
-          div(class = "lp-card active",
-              onclick = "Shiny.setInputValue('card_click','analysis',{priority:'event'})",
-            div(class = "lp-card-num", "06"),
-            tags$h4("Analyzing Digital Skills"),
-            tags$p("Score digital skills and calculate the Digital Access and Use Index
-                    with an interactive calculator.")
-          )
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','quality',{priority:'event'})",
+          div(class = "lp-card-num", "05"),
+          tags$h4("Data Quality Assurance"),
+          tags$p("Build checks into the survey tool, apply three layers of error checks and
+                  turn flags into feedback for field teams.")
+        ),
+        div(class = "lp-card active",
+            onclick = "Shiny.setInputValue('card_click','analysis',{priority:'event'})",
+          div(class = "lp-card-num", "06"),
+          tags$h4("Analyzing Digital Skills"),
+          tags$p("Score digital skills and calculate the Digital Access and Use Index
+                  with an interactive calculator.")
         )
       )
     )
