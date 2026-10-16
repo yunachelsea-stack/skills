@@ -42,7 +42,7 @@ adaptations_tab <- function() {
     )
   }
 
-  tabPanel("Conceptual Adaptations", value = "adaptations",
+  tabPanel("Contextual Adaptations", value = "adaptations",
     div(class = "ca-page",
       div(class = "ca-header",
         tags$h2("Contextual Adaptations through Cognitive Interviews"),
@@ -79,6 +79,7 @@ adaptations_tab <- function() {
       ),
 
       section("What to look for — and how wording can change",
+        tags$p(class = "ca-source", style = "margin-top:-6px;", "Source: Scott et al. 2026."),
         qa_pair(
           "Word choice",
           "Some respondents did not recognize WhatsApp or YouTube use as internet use; “any location and any device” distracted respondents away from the core question.",
