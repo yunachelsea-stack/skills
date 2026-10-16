@@ -7,11 +7,14 @@ adaptations_tab <- function() {
     div(class = "ca-example",
       div(class = "ca-example-head", component),
       div(class = "ca-example-body",
-        tags$p(class = "ca-example-issue", issue),
         div(class = "ca-qa-pair",
           div(class = "ca-qa-original",
             div(class = "ca-qa-label", "Original question"),
             tags$p(original)
+          ),
+          div(class = "ca-qa-issue",
+            div(class = "ca-qa-label", "Issue"),
+            tags$p(issue)
           ),
           div(class = "ca-qa-revised",
             div(class = "ca-qa-label", "Revised question"),
@@ -32,6 +35,13 @@ adaptations_tab <- function() {
     )
   }
 
+  ci_process_figure <- function() {
+    tags$figure(class = "ca-figure",
+      div(class = "ca-figure-scroll", HTML("<svg viewBox='0 0 960 462' role='img' aria-labelledby='ci-fig-title ci-fig-desc' style='width:100%;min-width:700px;height:auto;font-family:inherit'><title id='ci-fig-title'>Situating cognitive interviewing within the process for developing survey tools</title><desc id='ci-fig-desc'>Item generation (qualitative research, literature review, existing tools, expert judgement) leads to translation if required. The cognitive interviewing phase follows: decide scope of cognitive interviewing, select and train researchers, sample participants, interviews, research team debrief, then tool revision. If more data are needed, the process returns to sampling participants; if not, it moves to pilot testing, final revisions and survey implementation.</desc><defs><marker id='ci-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0,0 L10,5 L0,10 z' fill='#4a5e6d'/></marker></defs><rect x='10' y='10' width='160' height='108' rx='4' fill='#f9d27a'/><text x='22' y='34' font-size='14' font-weight='700' fill='#0d3b5e'>Item generation</text><text x='22' y='56' font-size='12' fill='#263e50'>&#8226; Qualitative research</text><text x='22' y='73' font-size='12' fill='#263e50'>&#8226; Literature review</text><text x='22' y='90' font-size='12' fill='#263e50'>&#8226; Existing tools</text><text x='22' y='107' font-size='12' fill='#263e50'>&#8226; Expert judgement</text><path d='M170,58 H194' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='196' y='28' width='124' height='60' rx='4' fill='#f9d27a'/><text x='258' y='55.9' text-anchor='middle' font-size='14' font-weight='700' fill='#0d3b5e'>Translation</text><text x='258' y='75.2' text-anchor='middle' font-size='12' font-weight='400' fill='#4a5e6d'>if required</text><rect x='10' y='146' width='940' height='206' rx='8' fill='#eef3f7'/><text x='28' y='217.9' text-anchor='start' font-size='14' font-weight='700' fill='#0d3b5e'>Cognitive</text><text x='28' y='234.9' text-anchor='start' font-size='14' font-weight='700' fill='#0d3b5e'>interviewing</text><text x='28' y='251.9' text-anchor='start' font-size='14' font-weight='700' fill='#0d3b5e'>phase</text><path d='M258,88 V170' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='196' y='172' width='124' height='66' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='258.0' y='193.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Decide scope</text><text x='258.0' y='209.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>of cognitive</text><text x='258.0' y='225.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>interviewing</text><path d='M320,205 H348' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='350' y='172' width='124' height='66' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='412.0' y='193.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Select and</text><text x='412.0' y='209.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>train</text><text x='412.0' y='225.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>researchers</text><path d='M474,205 H502' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='504' y='172' width='124' height='66' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='566.0' y='201.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Sample</text><text x='566.0' y='217.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>participants</text><path d='M628,205 H656' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='658' y='172' width='124' height='66' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='720.0' y='209.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Interviews</text><path d='M782,205 H810' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='812' y='172' width='124' height='66' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='874.0' y='201.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Research team</text><text x='874.0' y='217.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>debrief</text><path d='M874,238 V268' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='812' y='270' width='124' height='52' rx='4' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='874.0' y='292.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Tool</text><text x='874.0' y='308.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>revision</text><polygon points='654,296 720,262 786,296 720,330' fill='#fff' stroke='#0d3b5e' stroke-width='1.5'/><text x='720' y='292.7' text-anchor='middle' font-size='12' font-weight='600' fill='#0d3b5e'>More data</text><text x='720' y='307.7' text-anchor='middle' font-size='12' font-weight='600' fill='#0d3b5e'>needed?</text><path d='M812,296 H788' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><path d='M654,296 H566 V240' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><text x='610' y='290.6' text-anchor='middle' font-size='13' font-weight='700' fill='#0d3b5e'>Yes</text><path d='M720,330 V380 H268 V398' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><text x='494' y='374.6' text-anchor='middle' font-size='13' font-weight='700' fill='#0d3b5e'>No</text><rect x='196' y='400' width='144' height='52' rx='4' fill='#f9d27a'/><text x='268.0' y='430.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Pilot testing</text><path d='M340,426 H366' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='368' y='400' width='144' height='52' rx='4' fill='#f9d27a'/><text x='440.0' y='430.6' text-anchor='middle' font-size='13' font-weight='600' fill='#0d3b5e'>Final revisions</text><path d='M512,426 H538' fill='none' stroke='#4a5e6d' stroke-width='1.6' marker-end='url(#ci-arrow)'/><rect x='540' y='400' width='164' height='52' rx='4' fill='#0d3b5e'/><text x='622.0' y='422.6' text-anchor='middle' font-size='13' font-weight='600' fill='#fff'>Survey</text><text x='622.0' y='438.6' text-anchor='middle' font-size='13' font-weight='600' fill='#fff'>implementation</text></svg>")),
+      tags$figcaption(class = "ca-source", "Source: Scott, Ummer, and LeFevre 2021.")
+    )
+  }
+
   tabPanel("Conceptual Adaptations", value = "adaptations",
     div(class = "ca-page",
       div(class = "ca-header",
@@ -41,19 +51,8 @@ adaptations_tab <- function() {
       section(NULL,
         tags$p("Cognitive interviewing is a qualitative method used to debug survey questions — checking how respondents interpret items, retrieve memories, and map answers to options — so the final instrument actually measures what you intend, especially across language and cultural gaps."),
         tags$p(tags$strong("How cognitive interviews fit into tool development")),
-        div(class = "ca-flow",
-          div(class = "ca-flow-step", "Item generation"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Translation"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Cognitive interviews"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Revise & retest"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Pilot testing"),
-          div(class = "ca-flow-arrow", "→"),
-          div(class = "ca-flow-step", "Survey implementation")
-        ),
+        tags$p("Survey tool development begins with item generation, drawing on qualitative research, literature reviews, existing survey tools and expert judgement. Draft items are translated where needed and then refined through rounds of cognitive interviews, debriefs and revisions, repeated until no more data are needed. The refined tool is then pilot tested with a small sample of the target population before it is finalized."),
+        ci_process_figure()
       ),
 
       section("Five steps for conducting cognitive interviews",
@@ -111,7 +110,7 @@ adaptations_tab <- function() {
         qa_pair(
           "Resonance with local realities — avoid email-centric wording",
           "“Attached file” is email-centric and may not resonate with mobile-first users who primarily use SMS or WhatsApp.",
-          "Did you send a message, for example by e-mail or SMS, with an attached file, for example a document, picture, or video?",
+          "Did you send a message, for example by e-mail, messaging service, or SMS, with an attached file, for example a document, picture, or video?",
           "Have you ever added a picture, video, or document to an email, SMS, or WhatsApp message?"
         ),
 
