@@ -146,14 +146,14 @@ analysis_tab <- function() {
               tags$th(scope = "col", class = "num", "Weight")
             )),
             tags$tbody(
-              score_row("Digital competency", "14 skills, asked through 19 questions",
-                "1 point per skill ever performed", "14", "50%"),
               score_row("Physical access", "Ownership (A), phone type (B), phone condition (C), time of day the phone is available (D)",
                 "(A × B) + C + D", "11", "39%"),
               score_row("Safety and security", "Lock on the phone; lock on banking or other apps",
                 "1 point each", "2", "7%"),
               score_row("Digital agency", "Who decides who can use the phone and when",
-                "1 point if the respondent decides alone", "1", "4%")
+                "1 point if the respondent decides alone", "1", "4%"),
+              score_row("Digital competency", "14 skills, asked through 19 questions",
+                "1 point per skill ever performed", "14", "50%")
             ),
             tags$tfoot(tags$tr(
               tags$th(scope = "row", "Total"), tags$td(), tags$td(),
@@ -163,14 +163,14 @@ analysis_tab <- function() {
         ),
         div(class = "daui-bar", role = "img",
           `aria-label` = "Share of the 28 DAUI points: digital competency 50 percent, physical access 39 percent, safety and security 7 percent, digital agency 4 percent",
-          weight_seg("comp", 50), weight_seg("access", 39.3),
-          weight_seg("safety", 7.1), weight_seg("agency", 3.6)
+          weight_seg("access", 39.3), weight_seg("safety", 7.1),
+          weight_seg("agency", 3.6), weight_seg("comp", 50)
         ),
         div(class = "daui-legend",
-          legend_item("comp", "Digital competency 14"),
           legend_item("access", "Physical access 11"),
           legend_item("safety", "Safety and security 2"),
-          legend_item("agency", "Digital agency 1")
+          legend_item("agency", "Digital agency 1"),
+          legend_item("comp", "Digital competency 14")
         ),
 
         sub_head("Score bands"),
@@ -312,10 +312,10 @@ analysis_server <- function(input, output, session) {
       tags$h4("DAUI score"),
       div(class = "daui-total", tags$span(class = "big", s$total), tags$span(class = "of", "/ 28")),
       div(class = paste("daui-band", band$class), tags$strong(band$label)),
-      comp_bar("Digital competency", s$comp, 14, "#0d3b5e"),
       comp_bar("Physical access", s$phys, 11, "#3d7ea6"),
       comp_bar("Safety and security", s$safety, 2, "#e8a800"),
       comp_bar("Digital agency", s$agency, 1, "#b5651d"),
+      comp_bar("Digital competency", s$comp, 14, "#0d3b5e"),
       div(class = "daui-sub",
         div(tags$strong(paste(s$use, "/ 17")), "Use score"),
         div(tags$strong(paste(s$phys, "/ 11")), "Physical access score")
