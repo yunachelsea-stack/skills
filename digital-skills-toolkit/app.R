@@ -711,8 +711,9 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','Survey Builder',{priority:'event'})",
             div(class = "lp-card-num", "01"),
             tags$h4("Survey Builder"),
-            tags$p("Build a digital skills measurement survey including required and optional
-                    questions recommended in the toolkit. Export as XLSForm or Word.")
+            tags$p("Build a digital skills measurement survey from the required and optional
+                    questions recommended in the toolkit. Export to Word, Excel or an XLSForm
+                    programming sheet.")
           )
         ),
         column(4,
@@ -720,7 +721,8 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','adaptations',{priority:'event'})",
             div(class = "lp-card-num", "02"),
             tags$h4("Contextual Adaptations"),
-            tags$p("Refine your survey through cognitive interviews and pilot testing.")
+            tags$p("Refine your survey through cognitive interviews and pilot testing, with
+                    examples of common wording problems and how to fix them.")
           )
         ),
         column(4,
@@ -739,8 +741,8 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','implementation',{priority:'event'})",
             div(class = "lp-card-num", "04"),
             tags$h4("Survey Implementation"),
-            tags$p("Choose survey modalities, interviewer support and skill
-                    measurement methods while protecting respondents.")
+            tags$p("Choose how to administer the survey, whether to observe or self-report
+                    skills, and how to frame skill items.")
           )
         ),
         column(4,
@@ -748,8 +750,8 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','quality',{priority:'event'})",
             div(class = "lp-card-num", "05"),
             tags$h4("Data Quality Assurance"),
-            tags$p("Plan safeguards, monitor errors and use targeted feedback
-                    to improve data quality during fieldwork.")
+            tags$p("Build checks into the survey tool, apply three layers of error checks and
+                    turn flags into feedback for field teams.")
           )
         ),
         column(4,
@@ -757,8 +759,8 @@ ui <- navbarPage(
               onclick = "Shiny.setInputValue('card_click','analysis',{priority:'event'})",
             div(class = "lp-card-num", "06"),
             tags$h4("Analyzing Digital Skills"),
-            tags$p("Explore competency domains, digital skills scores,
-                    the Digital Access and Use Index, and outcome analysis.")
+            tags$p("Score digital skills and calculate the Digital Access and Use Index
+                    with an interactive calculator.")
           )
         )
       )
