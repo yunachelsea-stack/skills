@@ -78,7 +78,7 @@ adaptations_tab <- function() {
         )
       ),
 
-      section("What to look for — and how wording can change",
+      section("Components of Survey Tools Assessed by Cognitive Interviewing, with Examples",
         tags$p(class = "ca-source", style = "margin-top:-6px;", "Source: Scott et al. 2026."),
         qa_pair(
           "Word choice",
