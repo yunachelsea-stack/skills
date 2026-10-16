@@ -161,6 +161,8 @@ analysis_tab <- function() {
             ))
           )
         ),
+        tags$p(class = "ca-source",
+          "Source: LeFevre AE, et al. Reimagining the Measurement of Digital Inclusion: Introducing the Digital Access and Use Index (DAUI). Manuscript submitted for publication."),
         div(class = "daui-bar", role = "img",
           `aria-label` = "Share of the 28 DAUI points: digital competency 50 percent, physical access 39 percent, safety and security 7 percent, digital agency 4 percent",
           weight_seg("access", 39.3), weight_seg("safety", 7.1),
@@ -264,18 +266,6 @@ analysis_tab <- function() {
             column(5, uiOutput("daui_result"))
           )
         )
-      ),
-
-      section("3. Analyzing the Results",
-        sub_head("Compare groups"),
-        tags$p("Compare score distributions across groups such as women and men, age groups, or rural and urban areas. Looking at the whole distribution, not only the average, shows where gaps are concentrated."),
-        sub_head("Separate use from access"),
-        tags$p("Physical access often drives differences in the total score. Analyzing a use score (skills 14 + safety 2 + agency 1 = 17 points) on its own shows how people use the phones they can reach."),
-        sub_head("Control for type of access"),
-        tags$p("Restrict comparisons to people with the same kind of access, for example smartphone owners only. Remaining differences in use are then not explained by phone type or access quality."),
-        sub_head("Link scores to outcomes"),
-        tags$p("Use skill scores as predictors or stratifiers to examine links with social and economic participation. The High Impact Use Case framework groups uses into domains such as health, economic activity, online learning, e-governance and agriculture. Check whether people with higher scores are more likely to take part in these areas."),
-        tags$p("In regression analysis, include the index as a categorical variable or the raw score as a continuous variable. These comparisons show associations; on their own they do not establish that skills cause the outcome.")
       )
     )
   )
