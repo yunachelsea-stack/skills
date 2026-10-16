@@ -175,12 +175,12 @@ ui <- navbarPage(
   tabPanel("Home",
     tags$head(
       tags$link(rel = "stylesheet",
-                href = "https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap")
+                href = "https://fonts.googleapis.com/css2?family=Faustina:wght@400;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap")
     ),
     tags$style(HTML("
-      body, .navbar { font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; }
+      body, .navbar { font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; }
       h1, h2, h3, .lp-hero h1, .lp-section h2, .lp-section h3 {
-        font-family: 'Lora', Georgia, serif;
+        font-family: 'Faustina', Georgia, serif;
       }
       .lp-hero {
         background: linear-gradient(135deg, #0d3b5e 0%, #1a6694 100%);
@@ -192,7 +192,7 @@ ui <- navbarPage(
       .lp-hero h1 {
         font-size: 2.2em; font-weight: 700;
         line-height: 1.25; margin-bottom: 16px;
-        font-family: 'Lora', Georgia, serif;
+        font-family: 'Faustina', Georgia, serif;
       }
       .lp-lead {
         font-size: 1.05em; opacity: 0.92;
@@ -206,7 +206,7 @@ ui <- navbarPage(
       .lp-section h2 {
         font-size: 1.4em; font-weight: 600;
         color: #0d3b5e; margin-bottom: 6px;
-        font-family: 'Lora', Georgia, serif;
+        font-family: 'Faustina', Georgia, serif;
       }
       .lp-section-sub {
         color: #888; margin-bottom: 32px; font-size: 0.95em;
@@ -285,7 +285,7 @@ ui <- navbarPage(
         display: inline-flex; align-items: center; justify-content: center;
         font-size: 1.05em; font-weight: 700; margin-bottom: 14px;
         border: 2px solid #8db4c8; color: #8db4c8;
-        font-family: 'Lora', Georgia, serif;
+        font-family: 'Faustina', Georgia, serif;
       }
       .lp-card.active .lp-card-num {
         background: #e8a800; border-color: #e8a800; color: #0d3b5e;
@@ -303,7 +303,7 @@ ui <- navbarPage(
       }
       .lp-divider h2 {
         color: white !important; margin: 0; font-size: 1.25em; font-weight: 600;
-        font-family: 'Lora', Georgia, serif;
+        font-family: 'Faustina', Georgia, serif;
       }
       .lp-divider p {
         color: rgba(255,255,255,0.7); margin: 4px 0 0; font-size: 0.9em;
@@ -796,7 +796,7 @@ ui <- navbarPage(
       }
       .sb-subheader h3 {
         margin: 0; font-size: 1.1em; font-weight: 600;
-        font-family: 'Lora', Georgia, serif; color: white !important;
+        font-family: 'Faustina', Georgia, serif; color: white !important;
       }
       .sb-subheader .sb-count {
         font-size: 0.88em; color: rgba(255,255,255,0.8);
