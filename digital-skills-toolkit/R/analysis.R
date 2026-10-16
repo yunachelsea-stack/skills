@@ -134,6 +134,8 @@ analysis_tab <- function() {
       ),
 
       section("2. The Digital Access and Use Index (DAUI)",
+        tags$p(class = "ca-source", style = "margin-top:-6px;",
+          "Source: LeFevre AE, et al. Reimagining the Measurement of Digital Inclusion: Introducing the Digital Access and Use Index (DAUI). Manuscript submitted for publication."),
         tags$p("The DAUI is a composite score of how well people in low-resource settings can access and use mobile phones and the internet. It looks beyond whether someone owns a phone to the quality of their access, their skills, their safety practices and their control over the phone, which makes it useful for measuring the digital gender gap. Its questions were developed through cognitive testing in India, Kenya and Nigeria."),
         div(style = "overflow-x:auto;",
           tags$table(class = "table daui-table",
@@ -161,8 +163,6 @@ analysis_tab <- function() {
             ))
           )
         ),
-        tags$p(class = "ca-source",
-          "Source: LeFevre AE, et al. Reimagining the Measurement of Digital Inclusion: Introducing the Digital Access and Use Index (DAUI). Manuscript submitted for publication."),
         div(class = "daui-bar", role = "img",
           `aria-label` = "Share of the 28 DAUI points: digital competency 50 percent, physical access 39 percent, safety and security 7 percent, digital agency 4 percent",
           weight_seg("access", 39.3), weight_seg("safety", 7.1),
