@@ -374,6 +374,12 @@ ui <- navbarPage(
                 "Choose from pre-validated modules covering different areas of digital skills.
                  Required questions ensure consistency across projects and countries;
                  optional modules allow flexibility."
+              ),
+              tags$a(href = "#",
+                onclick = "Shiny.setInputValue('card_click', 'Survey Builder', {priority: 'event'}); window.scrollTo(0, 0); return false;",
+                style = "display:inline-block; color:#0d3b5e; font-weight:600; font-size:0.92em;
+                         text-decoration:none; border-bottom:2px solid #e8a800; padding-bottom:1px;",
+                "Try the survey builder \u2192"
               )
             )
           ),
