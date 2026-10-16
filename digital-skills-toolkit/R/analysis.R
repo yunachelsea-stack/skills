@@ -181,7 +181,6 @@ analysis_tab <- function() {
           band_chip("medium", "Medium", "11–20"),
           band_chip("high", "High", "21–28")
         ),
-        tags$p("Because skills count toward the total, someone with no phone today who has used one in the past will score above 0. To identify people without current access, look at the physical access score as well."),
 
         step("Physical access scoring codes",
           tags$ul(
