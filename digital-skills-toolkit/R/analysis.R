@@ -68,6 +68,7 @@ analysis_tab <- function() {
       .daui-band.low{background:#fdf1d6;color:#7a5600}
       .daui-band.medium{background:#d8e8f2;color:#0d3b5e}
       .daui-band.high{background:#0d3b5e;color:#fff}
+      #daui-calculator{scroll-margin-top:20px}
       .daui-calc{border:1px solid #dce3e8;border-radius:6px;background:#f8fafb;padding:20px 22px;margin-top:18px}
       .daui-calc h4{color:#0d3b5e;margin:0 0 4px;font-size:15px;font-weight:700}
       .daui-calc .form-group{margin-bottom:16px}
@@ -227,7 +228,7 @@ analysis_tab <- function() {
           )
         ),
 
-        sub_head("Try it: DAUI calculator"),
+        tagAppendAttributes(sub_head("Try it: DAUI calculator"), id = "daui-calculator"),
         tags$p("Enter one respondent’s answers to see how the score is built up."),
         div(class = "daui-calc",
           fluidRow(

@@ -408,8 +408,15 @@ ui <- navbarPage(
                         "Access implementation guide")
               ),
               tags$p(style = "color:#555; line-height:1.65;",
-                "Get practical resources on cognitive testing, sampling, survey implementation
-                 and quality assurance, digital skills analysis."
+                "Get practical guidance on cognitive testing, sampling, survey implementation,
+                 quality assurance and analysis, including an interactive calculator for the
+                 Digital Access and Use Index."
+              ),
+              tags$a(href = "#daui-calculator",
+                onclick = "$('a[data-value=analysis]').tab('show'); setTimeout(function(){ document.getElementById('daui-calculator').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 50); return false;",
+                style = "display:inline-block; color:#0d3b5e; font-weight:600; font-size:0.92em;
+                         text-decoration:none; border-bottom:2px solid #e8a800; padding-bottom:1px;",
+                "Try the DAUI calculator \u2192"
               )
             )
           )
